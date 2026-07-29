@@ -34,92 +34,63 @@ function setupMobileMenu() {
     }
     
     console.log('✅ Menu mobile inicializado correctamente');
-    console.log('🔧 NavToggle:', navToggle);
-    console.log('🔧 NavMenu:', navMenu);
-    console.log('🔧 NavClose:', navClose);
     
     // Función para cerrar el menú
     function cerrarMenu() {
-        console.log('🔴 Cerrando menú...');
         navMenu.classList.remove('active');
         navToggle.classList.remove('active');
         document.body.style.overflow = '';
         menuAbierto = false;
-        console.log('✅ MENU CERRADO');
     }
     
     // Función para abrir el menú
     function abrirMenu() {
-        console.log('🟢 Abriendo menú...');
         navMenu.classList.add('active');
         navToggle.classList.add('active');
         document.body.style.overflow = 'hidden';
         menuAbierto = true;
-        console.log('✅ MENU ABIERTO');
-        console.log('🔍 Clases del menu:', navMenu.classList.toString());
     }
     
-    // Click en el botón CERRAR (X) dentro del menú
     if (navClose) {
         navClose.addEventListener('click', function(e) {
             e.preventDefault();
             e.stopPropagation();
-            console.log('❌ Botón CERRAR clickeado');
             cerrarMenu();
         });
-        console.log('✅ Event listener agregado al botón cerrar');
-    } else {
-        console.warn('⚠️ Botón de cerrar no encontrado');
     }
     
-    // Click en el burger toggle
     navToggle.addEventListener('click', function(e) {
         e.preventDefault();
         e.stopPropagation();
-        console.log('🍔 Burger clickeado');
-        console.log('📊 Estado actual menuAbierto:', menuAbierto);
-        console.log('📊 Clases actuales:', navMenu.classList.toString());
-        
         if (menuAbierto) {
             cerrarMenu();
         } else {
             abrirMenu();
         }
     });
-    console.log('✅ Event listener agregado al burger toggle');
     
-    // Cerrar al hacer click en los links
     const navLinks = document.querySelectorAll('.nav-link, .nav-cta');
-    console.log('🔗 Links encontrados:', navLinks.length);
     navLinks.forEach(function(link) {
         link.addEventListener('click', function() {
-            console.log('🔗 Link clicked:', this.textContent.trim());
             cerrarMenu();
         });
     });
     
-    // Cerrar al hacer click fuera del menú
     document.addEventListener('click', function(e) {
         if (menuAbierto) {
             const clickEnMenu = navMenu.contains(e.target);
             const clickEnToggle = navToggle.contains(e.target);
-            
             if (!clickEnMenu && !clickEnToggle) {
-                console.log('🖱️ Click fuera del menú detectado');
                 cerrarMenu();
             }
         }
     });
     
-    // Cerrar con ESC
     document.addEventListener('keydown', function(e) {
         if (e.key === 'Escape' && menuAbierto) {
-            console.log('⌨️ ESC presionado');
             cerrarMenu();
         }
     });
-    
-    console.log('✅ Todos los event listeners configurados');
 }
 
 // ============ NAVEGACIÓN SUAVE ============
@@ -227,30 +198,24 @@ console.log('%c✅ Totodrilo.tech cargado', 'color: #06d6a0; font-weight: bold;'
 
 // ============ EMAILJS CONFIGURATION ============
 function initEmailJS() {
-    // Inicializar EmailJS con tu Public Key
-    emailjs.init('4bupfioQ6sBuwdkOU');
+    if (typeof emailjs !== 'undefined') {
+        emailjs.init('4bupfioQ6sBuwdkOU');
+    }
     
     const contactForm = document.getElementById('contact-form');
     const submitBtn = document.getElementById('submit-btn');
     const formMessage = document.getElementById('form-message');
     
-    if (!contactForm) {
-        console.error('❌ Formulario de contacto no encontrado');
-        return;
-    }
-    
-    console.log('✅ EmailJS inicializado correctamente');
+    if (!contactForm) return;
     
     contactForm.addEventListener('submit', function(e) {
         e.preventDefault();
         
-        // Deshabilitar botón y mostrar loading
         submitBtn.disabled = true;
-        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Enviando...';
+        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Procesando...';
         formMessage.textContent = '';
         formMessage.className = 'form-message';
         
-        // Obtener los datos del formulario
         const templateParams = {
             name: document.getElementById('name').value,
             email: document.getElementById('email').value,
@@ -259,58 +224,23 @@ function initEmailJS() {
             message: document.getElementById('message').value
         };
         
-        console.log('📧 Enviando email con:', templateParams);
+        const waMsg = encodeURIComponent(`Hola Totodrilo! Mi nombre es ${templateParams.name} (${templateParams.email}, Tel: ${templateParams.phone}). Mi negocio es ${templateParams.business}. Consulta: ${templateParams.message}`);
+        const waUrl = `https://wa.me/5491130960114?text=${waMsg}`;
+
+        formMessage.innerHTML = '¡Formulario recibido! Redirigiendo a WhatsApp... <a href="' + waUrl + '" target="_blank" style="color: #00C6FF; font-weight: bold; text-decoration: underline;">Haz clic aquí si no abre automáticamente</a>';
+        formMessage.className = 'form-message success';
         
-        // Enviar email usando EmailJS
-        emailjs.send(
-            'service_bpjxmaa',  // Tu Service ID
-            'template_foyunhx', // Tu Template ID
-            templateParams
-        )
-        .then(function(response) {
-            console.log('✅ Email enviado exitosamente:', response);
-            
-            // Mostrar mensaje de éxito
-            formMessage.textContent = '¡Mensaje enviado con éxito! Te contactaremos pronto.';
-            formMessage.className = 'form-message success';
-            
-            // Resetear formulario
-            contactForm.reset();
-            
-            // Restaurar botón después de 3 segundos
-            setTimeout(function() {
-                submitBtn.disabled = false;
-                submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Enviar Mensaje';
-            }, 3000);
-            
-        }, function(error) {
-            console.error('❌ Error al enviar email:', error);
-            
-            // Mostrar mensaje de error
-            formMessage.textContent = 'Hubo un error al enviar el mensaje. Por favor, intentá de nuevo o contactanos por WhatsApp.';
-            formMessage.className = 'form-message error';
-            
-            // Restaurar botón
+        if (typeof emailjs !== 'undefined') {
+            emailjs.send('service_bpjxmaa', 'template_foyunhx', templateParams).catch(function(err) {
+                console.warn('EmailJS fallback active:', err);
+            });
+        }
+
+        setTimeout(function() {
+            window.open(waUrl, '_blank');
             submitBtn.disabled = false;
             submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Enviar Mensaje';
-        });
+            contactForm.reset();
+        }, 1000);
     });
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
