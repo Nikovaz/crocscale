@@ -215,9 +215,10 @@ body {
 }
 
 .nav-logo .logo-img {
-    height: 55px;
+    height: 45px;
     width: auto;
-    filter: drop-shadow(0 0 10px rgba(139, 92, 246, 0.5));
+    object-fit: contain;
+    filter: drop-shadow(0 0 10px rgba(0, 242, 254, 0.5));
     transition: transform 0.3s ease;
 }
 
@@ -950,8 +951,20 @@ body {
 
 .services-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: repeat(3, 1fr);
     gap: 2rem;
+}
+
+@media (max-width: 992px) {
+    .services-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 640px) {
+    .services-grid {
+        grid-template-columns: 1fr;
+    }
 }
 
 .service-card {
@@ -2247,14 +2260,13 @@ body::after {
     }
 
     .logo-main-image {
-        height: 594px;
-        /* 10% smaller for better balance */
+        height: 220px;
         width: auto;
         max-width: 90%;
         margin: 0 auto;
         display: block;
         object-fit: contain;
-        filter: drop-shadow(0 0 30px rgba(139, 92, 246, 0.7));
+        filter: drop-shadow(0 0 25px rgba(0, 242, 254, 0.7));
         transition: transform 0.3s ease;
     }
 
