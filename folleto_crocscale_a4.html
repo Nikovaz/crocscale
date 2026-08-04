@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Folleto Ejecutivo A4 — CrocScale Automation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-dark: #0a0c14;
+            --card-bg: #121624;
+            --card-border: #1e2638;
+            --primary-neon: #00f2fe;
+            --purple-neon: #9d4edd;
+            --accent-green: #00e676;
+            --text-main: #f0f4f8;
+            --text-muted: #a0aec0;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #05070a;
+            color: var(--text-main);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px 0;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+
+        /* Formato A4 exacto */
+        .page-a4 {
+            width: 210mm;
+            height: 297mm;
+            background: var(--bg-dark);
+            padding: 12mm 15mm;
+            margin-bottom: 20px;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+            border: 1px solid var(--card-border);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        /* Estilos de Impresión */
+        @media print {
+            body {
+                background: none;
+                padding: 0;
+            }
+            .page-a4 {
+                margin: 0;
+                box-shadow: none;
+                page-break-after: always;
+                border: none;
+            }
+        }
+
+        /* Elementos Decorativos de Fondo */
+        .bg-glow-1 {
+            position: absolute;
+            top: -50px;
+            right: -50px;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(0, 242, 254, 0.15) 0%, rgba(0,0,0,0) 70%);
+            z-index: 1;
+        }
+
+        .bg-glow-2 {
+            position: absolute;
+            bottom: -50px;
+            left: -50px;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(157, 78, 221, 0.15) 0%, rgba(0,0,0,0) 70%);
+            z-index: 1;
+        }
+
+        .content-layer {
+            position: relative;
+            z-index: 2;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        /* Header */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid var(--card-border);
+            padding-bottom: 12px;
+        }
+
+        .brand-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .brand-logo img {
+            width: 45px;
+            height: 45px;
+            object-fit: contain;
+        }
+
+        .brand-title {
+            font-size: 24px;
+            font-weight: 900;
+            letter-spacing: 1px;
+            background: linear-gradient(135deg, var(--primary-neon), var(--purple-neon));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .brand-tagline {
+            font-size: 11px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            font-weight: 600;
+        }
+
+        .header-contact {
+            text-align: right;
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+
+        .header-contact i {
+            color: var(--primary-neon);
+            margin-right: 4px;
+        }
+
+        /* Hook Principal */
+        .hook-box {
+            background: linear-gradient(135deg, rgba(18, 22, 36, 0.9), rgba(30, 38, 56, 0.6));
+            border: 1px solid rgba(0, 242, 254, 0.3);
+            border-left: 4px solid var(--primary-neon);
+            padding: 14px 18px;
+            border-radius: 8px;
+            margin: 12px 0;
+        }
+
+        .hook-box h2 {
+            font-size: 16px;
+            color: #fff;
+            margin-bottom: 4px;
+            font-weight: 800;
+        }
+
+        .hook-box p {
+            font-size: 11.5px;
+            color: var(--text-muted);
+            line-height: 1.4;
+        }
+
+        .highlight-text {
+            color: var(--primary-neon);
+            font-weight: 700;
+        }
+
+        /* Tabla Comparativa Financiera */
+        .comparison-section {
+            margin: 10px 0;
+        }
+
+        .section-title {
+            font-size: 13px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--primary-neon);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .comp-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .comp-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 10px;
+            padding: 12px 14px;
+        }
+
+        .comp-card.negative {
+            border-top: 3px solid #ff4d4d;
+        }
+
+        .comp-card.positive {
+            border-top: 3px solid var(--accent-green);
+            background: linear-gradient(180deg, rgba(0,230,118,0.05) 0%, var(--card-bg) 100%);
+        }
+
+        .comp-card h3 {
+            font-size: 13px;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .comp-list {
+            list-style: none;
+            font-size: 10.5px;
+        }
+
+        .comp-list li {
+            margin-bottom: 6px;
+            display: flex;
+            align-items: flex-start;
+            gap: 6px;
+            color: var(--text-muted);
+        }
+
+        .comp-list li i.fa-xmark {
+            color: #ff4d4d;
+            margin-top: 2px;
+        }
+
+        .comp-list li i.fa-check {
+            color: var(--accent-green);
+            margin-top: 2px;
+        }
+
+        .price-badge-small {
+            font-size: 14px;
+            font-weight: 900;
+            color: var(--accent-green);
+        }
+
+        /* Casos de Éxito */
+        .proof-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+            margin: 10px 0;
+        }
+
+        .proof-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            padding: 10px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .proof-card h4 {
+            font-size: 11px;
+            color: #fff;
+            margin-bottom: 2px;
+        }
+
+        .proof-card p {
+            font-size: 9.5px;
+            color: var(--text-muted);
+        }
+
+        /* Footer & QR */
+        .cta-banner-front {
+            background: linear-gradient(135deg, rgba(157, 78, 221, 0.2), rgba(0, 242, 254, 0.2));
+            border: 1px solid var(--primary-neon);
+            border-radius: 12px;
+            padding: 14px 18px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .cta-text h3 {
+            font-size: 15px;
+            color: #fff;
+            font-weight: 800;
+        }
+
+        .cta-text p {
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+
+        .qr-box {
+            background: #fff;
+            padding: 6px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .qr-box img {
+            width: 65px;
+            height: 65px;
+            display: block;
+        }
+
+        .qr-box span {
+            font-size: 8px;
+            color: #000;
+            font-weight: 700;
+            display: block;
+            margin-top: 2px;
+        }
+
+        /* DORSO (Cara 2) Styles */
+        .pricing-section-title {
+            text-align: center;
+            margin-bottom: 12px;
+        }
+
+        .pricing-section-title h2 {
+            font-size: 18px;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--primary-neon), var(--purple-neon));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .pricing-section-title p {
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+
+        .category-header {
+            font-size: 11.5px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 4px 10px;
+            border-radius: 4px;
+            display: inline-block;
+            margin-bottom: 8px;
+        }
+
+        .cat-green {
+            background: rgba(0, 230, 118, 0.15);
+            color: var(--accent-green);
+            border: 1px solid rgba(0, 230, 118, 0.3);
+        }
+
+        .cat-purple {
+            background: rgba(157, 78, 221, 0.15);
+            color: var(--purple-neon);
+            border: 1px solid rgba(157, 78, 221, 0.3);
+        }
+
+        .plan-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .plan-box {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 10px;
+            padding: 10px 12px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .plan-box.featured {
+            border: 1.5px solid var(--primary-neon);
+            box-shadow: 0 0 15px rgba(0, 242, 254, 0.15);
+        }
+
+        .plan-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 6px;
+        }
+
+        .plan-name {
+            font-size: 13px;
+            font-weight: 800;
+            color: #fff;
+        }
+
+        .plan-price {
+            font-size: 15px;
+            font-weight: 900;
+            color: var(--primary-neon);
+        }
+
+        .plan-setup {
+            font-size: 9.5px;
+            color: var(--text-muted);
+            text-align: right;
+        }
+
+        .plan-volume {
+            font-size: 9.5px;
+            font-weight: 700;
+            color: var(--accent-green);
+            margin-bottom: 6px;
+            background: rgba(0,230,118,0.1);
+            padding: 2px 6px;
+            border-radius: 4px;
+            display: inline-block;
+        }
+
+        .plan-features {
+            list-style: none;
+            font-size: 9.5px;
+            color: var(--text-muted);
+        }
+
+        .plan-features li {
+            margin-bottom: 4px;
+            display: flex;
+            align-items: flex-start;
+            gap: 4px;
+        }
+
+        .plan-features li i {
+            color: var(--primary-neon);
+            margin-top: 2px;
+        }
+
+        /* Banner Meta Ads & Addons */
+        .bottom-services {
+            display: grid;
+            grid-template-columns: 1.3fr 1fr;
+            gap: 10px;
+            margin-top: 6px;
+        }
+
+        .meta-ads-box {
+            background: linear-gradient(135deg, rgba(0, 242, 254, 0.08), rgba(157, 78, 221, 0.08));
+            border: 1px solid var(--primary-neon);
+            border-radius: 10px;
+            padding: 10px 12px;
+        }
+
+        .meta-ads-box h4 {
+            font-size: 11.5px;
+            color: #fff;
+            font-weight: 800;
+            margin-bottom: 4px;
+        }
+
+        .meta-ads-box p {
+            font-size: 9.5px;
+            color: var(--text-muted);
+            margin-bottom: 6px;
+        }
+
+        .fee-cap-badge {
+            background: var(--primary-neon);
+            color: #000;
+            font-weight: 800;
+            font-size: 9.5px;
+            padding: 3px 8px;
+            border-radius: 4px;
+            display: inline-block;
+        }
+
+        .addons-box {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 10px;
+            padding: 10px 12px;
+        }
+
+        .addons-box h4 {
+            font-size: 11.5px;
+            color: #fff;
+            font-weight: 800;
+            margin-bottom: 6px;
+        }
+
+        .addon-item {
+            font-size: 9px;
+            color: var(--text-muted);
+            margin-bottom: 4px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .addon-item strong {
+            color: var(--primary-neon);
+        }
+
+        .footer-bar {
+            border-top: 1px solid var(--card-border);
+            padding-top: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 10px;
+            color: var(--text-muted);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ================= CARA 1: FRENTE ================= -->
+    <div class="page-a4">
+        <div class="bg-glow-1"></div>
+        <div class="bg-glow-2"></div>
+
+        <div class="content-layer">
+            <!-- Header -->
+            <div class="header">
+                <div class="brand-logo">
+                    <img src="./images/logo_crocscale.png" alt="CrocScale Logo">
+                    <div>
+                        <div class="brand-title">CrocScale</div>
+                        <div class="brand-tagline">Automation Built to Scale</div>
+                    </div>
+                </div>
+                <div class="header-contact">
+                    <div><i class="fab fa-whatsapp"></i> +54 9 11 3096-0114</div>
+                    <div><i class="fas fa-globe"></i> crocscale.com</div>
+                    <div><i class="fas fa-book"></i> manual.crocscale.tech</div>
+                </div>
+            </div>
+
+            <!-- Hook de Impacto Nocturno -->
+            <div class="hook-box">
+                <h2>🌙 ¿Sabías que tu e-commerce pierde hasta el 35% de sus ventas entre las 20:00 hs y las 08:00 hs?</h2>
+                <p>Las compras por impulso no tienen horario comercial. Mientras tu equipo descansa, los clientes interesados navegan tus anuncios, preguntan en tu chat y <span class="highlight-text">si no reciben respuesta en 5 minutos, le compran a tu competencia</span>.</p>
+            </div>
+
+            <!-- Comparativa Financiera -->
+            <div class="comparison-section">
+                <div class="section-title">
+                    <i class="fas fa-balance-scale"></i> Comparativa Financiera: Humano vs. Infraestructura CrocScale
+                </div>
+                <div class="comp-grid">
+                    <div class="comp-card negative">
+                        <h3>Atención Humana 24/7 <span style="color:#ff4d4d; font-size:11px;">+$1.800 USD/mes</span></h3>
+                        <ul class="comp-list">
+                            <li><i class="fas fa-xmark"></i> Requiere contratar al menos 3 empleados en turnos rotativos.</li>
+                            <li><i class="fas fa-xmark"></i> Cargas sociales, aguinaldos, licencias y vacaciones.</li>
+                            <li><i class="fas fa-xmark"></i> Errores humanos en consulta de stock y tipeo de precios.</li>
+                            <li><i class="fas fa-xmark"></i> Latencia de respuesta de minutos u horas en horario nocturno.</li>
+                        </ul>
+                    </div>
+
+                    <div class="comp-card positive">
+                        <h3>CrocScale IA 24/7 <span class="price-badge-small">Desde $180 USD/mes</span></h3>
+                        <ul class="comp-list">
+                            <li><i class="fas fa-check"></i> Cobertura ininterrumpida 24/7/365 sin licencias ni vacaciones.</li>
+                            <li><i class="fas fa-check"></i> Respuesta inmediata en menos de 5 segundos con catálogo real.</li>
+                            <li><i class="fas fa-check"></i> Entiende audios de voz, fotos de productos y transferencias (OCR).</li>
+                            <li><i class="fas fa-check"></i> Control de precios y stock en tiempo real desde Google Sheets.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Prueba Social -->
+            <div class="comparison-section">
+                <div class="section-title">
+                    <i class="fas fa-shield-halved"></i> Casos de Éxito Reales en Producción
+                </div>
+                <div class="proof-grid">
+                    <div class="proof-card">
+                        <h4>ADAR</h4>
+                        <p>Ferretería & Bazar Mayorista (Atención 24/7 de catálogo masivo B2B).</p>
+                    </div>
+                    <div class="proof-card">
+                        <h4>Bross Underwear</h4>
+                        <p>Indumentaria & Moda (Ventas directas y catálogo automatizado).</p>
+                    </div>
+                    <div class="proof-card">
+                        <h4>Nacha Home</h4>
+                        <p>Blanquería & Hogar (Chatbot WhatsApp + Auto-Publicador).</p>
+                    </div>
+                    <div class="proof-card">
+                        <h4>NNN Store</h4>
+                        <p>E-commerce Multirrubro (Bot de comentarios + WhatsApp Omnicanal).</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CTA Banner con QR -->
+            <div class="cta-banner-front">
+                <div class="cta-text">
+                    <h3>🚀 Probá la experiencia CrocScale ahora</h3>
+                    <p>Escaneá el código QR con tu celular y chateá en vivo con nuestro bot de prueba.</p>
+                </div>
+                <div class="qr-box">
+                    <img src="./images/qr_crocscale.png" alt="QR Demo CrocScale">
+                    <span>PROBAR DEMO</span>
+                </div>
+            </div>
+
+            <!-- Footer Bar -->
+            <div class="footer-bar">
+                <span><strong>CrocScale IA</strong> — Buenos Aires, Argentina</span>
+                <span>Atención Ejecutiva: WhatsApp +54 9 11 3096-0114</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= CARA 2: DORSO ================= -->
+    <div class="page-a4">
+        <div class="bg-glow-1"></div>
+        <div class="bg-glow-2"></div>
+
+        <div class="content-layer">
+            <!-- Header Dorso -->
+            <div class="pricing-section-title">
+                <h2>Matriz Oficial de Servicios & Tarifas</h2>
+                <p>Elegí la arquitectura de automatización que mejor se adapte al estado actual de tu empresa</p>
+            </div>
+
+            <!-- SECCIÓN A: SIN VERIFICACIÓN META -->
+            <div>
+                <span class="category-header cat-green"><i class="fas fa-bolt"></i> SECCIÓN 1: Cuentas Sin Verificación en Meta (Puesta en marcha en 24-48hs)</span>
+                
+                <div class="plan-row">
+                    <!-- Plan WA Starter -->
+                    <div class="plan-box">
+                        <div>
+                            <div class="plan-header">
+                                <div class="plan-name">Plan WA Starter</div>
+                                <div>
+                                    <div class="plan-price">$180 <span style="font-size:10px;">USD/mes</span></div>
+                                    <div class="plan-setup">+$150 USD Setup</div>
+                                </div>
+                            </div>
+                            <div class="plan-volume">5.000 Conversaciones/mes (≈ 25k-40k mensajes)</div>
+                            <ul class="plan-features">
+                                <li><i class="fas fa-check"></i> Chatbot WhatsApp IA 100% Dedicado 24/7</li>
+                                <li><i class="fas fa-check"></i> Entiende Audios de Voz y Fotos de Productos</li>
+                                <li><i class="fas fa-check"></i> Agente Contador OCR (Verificación de transferencias)</li>
+                                <li><i class="fas fa-check"></i> Catálogo, precios y stock en Google Sheets</li>
+                                <li><i class="fas fa-check"></i> Ideal para campañas Meta Ads Click-to-WhatsApp</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Plan Social Fast-Track -->
+                    <div class="plan-box featured">
+                        <div>
+                            <div class="plan-header">
+                                <div class="plan-name">Social Fast-Track</div>
+                                <div>
+                                    <div class="plan-price">$369 <span style="font-size:10px;">USD/mes</span></div>
+                                    <div class="plan-setup">+$250 USD Setup</div>
+                                </div>
+                            </div>
+                            <div class="plan-volume">7.000 Conversaciones/mes (≈ 35k-56k mensajes)</div>
+                            <ul class="plan-features">
+                                <li><i class="fas fa-check"></i> <strong>Todo lo del Plan WA Starter</strong></li>
+                                <li><i class="fas fa-check"></i> <strong>Bot de Comentarios IG & FB:</strong> Responde comentario público + dispara 1er DM automático a WhatsApp</li>
+                                <li><i class="fas fa-check"></i> <strong>Planificador & Auto-Publicador Social Media</strong></li>
+                                <li><i class="fas fa-check"></i> <strong>0 Burocracia:</strong> Sin espera de verificación en Meta</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SECCIÓN B: VERIFICADAS EN META -->
+            <div>
+                <span class="category-header cat-purple"><i class="fas fa-shield-check"></i> SECCIÓN 2: Cuentas Verificadas en Meta (Omnicanalidad Avanzada)</span>
+                
+                <div class="plan-row">
+                    <!-- Omnicanal Pro -->
+                    <div class="plan-box featured">
+                        <div>
+                            <div class="plan-header">
+                                <div class="plan-name">Omnicanal Pro <span style="font-size:9px; background:var(--purple-neon); color:#fff; padding:1px 4px; border-radius:3px;">MÁS ELEGIDO</span></div>
+                                <div>
+                                    <div class="plan-price">$444 <span style="font-size:10px;">USD/mes</span></div>
+                                    <div class="plan-setup">+$300 USD Setup</div>
+                                </div>
+                            </div>
+                            <div class="plan-volume">10.000 Conversaciones/mes (≈ 50k-80k mensajes)</div>
+                            <ul class="plan-features">
+                                <li><i class="fas fa-check"></i> <strong>Agente IA Omnicanal Continuado:</strong> WhatsApp + IG DMs (ida y vuelta) + FB DMs</li>
+                                <li><i class="fas fa-check"></i> <strong>Verificación de Meta Incluida:</strong> Gestión completa de trámite y App Review ante Meta</li>
+                                <li><i class="fas fa-check"></i> Bot de Comentarios Avanzado + Auto-Publicador</li>
+                                <li><i class="fas fa-check"></i> Bandeja Omnicanal Centralizada (TG/Gmail)</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Plan Corporate -->
+                    <div class="plan-box">
+                        <div>
+                            <div class="plan-header">
+                                <div class="plan-name">Plan Corporate</div>
+                                <div>
+                                    <div class="plan-price">$666 <span style="font-size:10px;">USD/mes</span></div>
+                                    <div class="plan-setup">+$500 USD Setup</div>
+                                </div>
+                            </div>
+                            <div class="plan-volume">20.000 Conversaciones/mes (≈ 100k-160k mensajes)</div>
+                            <ul class="plan-features">
+                                <li><i class="fas fa-check"></i> <strong>Todo lo del Plan Omnicanal Pro</strong></li>
+                                <li><i class="fas fa-check"></i> <strong>Integración Directa MercadoLibre</strong> (Pre/Post-venta)</li>
+                                <li><i class="fas fa-check"></i> <strong>Voice Bots Avanzados:</strong> Notas de voz ultra-naturales</li>
+                                <li><i class="fas fa-check"></i> 1 Campaña de Meta Ads Incluida (Fee 1er mes 100% bonificado)</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Servicios Inferiores: Meta Ads & Add-Ons -->
+            <div class="bottom-services">
+                <div class="meta-ads-box">
+                    <h4>📊 Gestión Estratégica de Meta Ads</h4>
+                    <p>Optimizamos tus campañas de Facebook e Instagram Ads enlazándolas directamente con tus chatbots de IA para triplicar la conversión.</p>
+                    <div>
+                        <span style="font-size:10.5px; font-weight:800; color:#fff;">Honorario: 20% de Inversión</span>
+                        <span class="fee-cap-badge" style="margin-left:6px;">TOPE MÁXIMO DE FEE: $300.000 ARS/mes</span>
+                    </div>
+                </div>
+
+                <div class="addons-box">
+                    <h4>🧩 Módulos Add-On</h4>
+                    <div class="addon-item">
+                        <span>Bloque 1.000 Conv. Extra:</span>
+                        <strong>$39 USD</strong>
+                    </div>
+                    <div class="addon-item">
+                        <span>Bot Comentarios (Add-on WA):</span>
+                        <strong>+$69 USD/mes</strong>
+                    </div>
+                    <div class="addon-item">
+                        <span>Combo WA + Comentarios:</span>
+                        <strong>$249 USD/mes</strong>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer Bar Dorso -->
+            <div class="footer-bar">
+                <span><strong>CrocScale</strong> — crocscale.com</span>
+                <span>Manual de Operaciones: manual.crocscale.tech</span>
+                <span>WhatsApp: +54 9 11 3096-0114</span>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
