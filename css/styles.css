@@ -215,10 +215,10 @@ body {
 }
 
 .nav-logo .logo-img {
-    height: 45px;
+    height: 77px;
     width: auto;
     object-fit: contain;
-    filter: drop-shadow(0 0 10px rgba(0, 242, 254, 0.5));
+    filter: drop-shadow(0 0 12px rgba(0, 242, 254, 0.6));
     transition: transform 0.3s ease;
 }
 
@@ -1626,14 +1626,14 @@ body {
 
 @media (max-width: 968px) {
     .logo-main-image {
-        width: 594px;
-        max-width: 90%;
+        height: 280px;
+        max-width: 95%;
         margin: 0 auto;
         display: block;
     }
 
     .nav-logo .logo-img {
-        height: 148px;
+        height: 60px;
     }
 
     .nav-logo .logo-text {
@@ -1746,14 +1746,7 @@ body {
     outline-offset: 3px;
 }
 
-@media (min-width: 769px) and (max-width: 1024px) {
-    .logo-main-image {
-        width: 675px;
-        max-width: 90%;
-        margin: 0 auto;
-        display: block;
-    }
-}
+
 
 /* ====================================
    PANAL HEXAGONAL - GEOMETRÍA SAGRADA
@@ -2110,14 +2103,16 @@ body::after {
 }
 
 .chat-avatar {
-    width: 35px;
-    height: 35px;
+    width: 60px;
+    height: 60px;
     background: white;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.2rem;
+    font-size: 1.5rem;
+    overflow: hidden;
+    padding: 3px;
 }
 
 .chat-info h4 {
@@ -2260,13 +2255,13 @@ body::after {
     }
 
     .logo-main-image {
-        height: 220px;
+        height: 375px;
         width: auto;
-        max-width: 90%;
+        max-width: 95%;
         margin: 0 auto;
         display: block;
         object-fit: contain;
-        filter: drop-shadow(0 0 25px rgba(0, 242, 254, 0.7));
+        filter: drop-shadow(0 0 35px rgba(0, 242, 254, 0.8));
         transition: transform 0.3s ease;
     }
 
