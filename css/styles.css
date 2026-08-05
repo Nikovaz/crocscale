@@ -2029,36 +2029,7 @@ body {
     --honey-speed: 180s;
 }
 
-/* Background container (keeps content above) */
-body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    /* top:0; right:0; bottom:0; left:0 */
-    z-index: 2;
-    /* sit above section backgrounds but below header (header has high z-index) */
-    pointer-events: none;
-    background-color: transparent;
-    /* Tech Hive Pattern - Subtle and professional */
-    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='60' height='52' viewBox='0 0 60 52'><polygon points='30,0 55,13 55,39 30,52 5,39 5,13' fill='rgba(139, 92, 246, 0.02)' stroke='%238b5cf6' stroke-opacity='0.08' stroke-width='1'/></svg>");
-    background-repeat: repeat;
-    background-size: 60px 52px;
-    background-position: 0 0;
-    mix-blend-mode: normal;
-    opacity: 1;
-    will-change: background-position;
-}
-
-/* Central radial glow */
-body::after {
-    content: '';
-    position: fixed;
-    inset: 0;
-    z-index: 0;
-    pointer-events: none;
-    background: radial-gradient(circle at 50% 30%, rgba(139, 92, 246, 0.08) 0%, rgba(10, 10, 10, 1) 70%);
-    mix-blend-mode: screen;
-}
+/* Superposición de panal eliminada para dejar únicamente el patrón de escamas de cocodrilo */
 
 
 /* Animated drifting of the pattern (subtle) */
