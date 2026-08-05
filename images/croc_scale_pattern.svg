@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="160" height="160" viewBox="0 0 160 160">
+  <defs>
+    <linearGradient id="scaleNeon" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00f2fe" stop-opacity="0.22" />
+      <stop offset="50%" stop-color="#9d4edd" stop-opacity="0.18" />
+      <stop offset="100%" stop-color="#00f2fe" stop-opacity="0.1" />
+    </linearGradient>
+    <linearGradient id="scaleFill" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00f2fe" stop-opacity="0.03" />
+      <stop offset="100%" stop-color="#9d4edd" stop-opacity="0.015" />
+    </linearGradient>
+  </defs>
+
+  <!-- High-Tech Organic Crocodile Scale Tile (Voronoi Osteoderm Pattern) -->
+  <g stroke="url(#scaleNeon)" stroke-width="1.6" fill="url(#scaleFill)" stroke-linejoin="round" stroke-linecap="round">
+    <!-- Main Scale 1: Upper Left -->
+    <path d="M 6 6 C 35 3, 45 3, 74 6 C 77 35, 77 45, 74 74 C 45 77, 35 77, 6 74 C 3 45, 3 35, 6 6 Z" />
+    <path d="M 18 18 C 38 16, 42 16, 62 18 C 64 38, 64 42, 62 62 C 42 64, 38 64, 18 62 C 16 42, 16 38, 18 18 Z" stroke-opacity="0.4" stroke-dasharray="2,3" />
+
+    <!-- Main Scale 2: Upper Right -->
+    <path d="M 86 6 C 115 3, 125 3, 154 6 C 157 35, 157 45, 154 74 C 125 77, 115 77, 86 74 C 83 45, 83 35, 86 6 Z" />
+    <path d="M 98 18 C 118 16, 122 16, 142 18 C 144 38, 144 42, 142 62 C 122 64, 118 64, 98 62 C 96 42, 96 38, 98 18 Z" stroke-opacity="0.4" stroke-dasharray="2,3" />
+
+    <!-- Main Scale 3: Lower Left -->
+    <path d="M 6 86 C 35 83, 45 83, 74 86 C 77 115, 77 125, 74 154 C 45 157, 35 157, 6 154 C 3 125, 3 115, 6 86 Z" />
+    <path d="M 18 98 C 38 96, 42 96, 62 98 C 64 118, 64 122, 62 142 C 42 144, 38 144, 18 142 C 16 122, 16 118, 18 98 Z" stroke-opacity="0.4" stroke-dasharray="2,3" />
+
+    <!-- Main Scale 4: Lower Right -->
+    <path d="M 86 86 C 115 83, 125 83, 154 86 C 157 115, 157 125, 154 154 C 125 157, 115 157, 86 154 C 83 125, 83 115, 86 86 Z" />
+    <path d="M 98 98 C 118 96, 122 96, 142 98 C 144 118, 144 122, 142 142 C 122 144, 118 144, 98 142 C 96 122, 96 118, 98 98 Z" stroke-opacity="0.4" stroke-dasharray="2,3" />
+  </g>
+
+  <!-- Glowing Cyber Nodes in Grooves -->
+  <circle cx="80" cy="80" r="3" fill="#00f2fe" opacity="0.7" />
+  <circle cx="80" cy="0" r="2" fill="#9d4edd" opacity="0.5" />
+  <circle cx="0" cy="80" r="2" fill="#9d4edd" opacity="0.5" />
+  <circle cx="160" cy="80" r="2" fill="#00f2fe" opacity="0.5" />
+  <circle cx="80" cy="160" r="2" fill="#00f2fe" opacity="0.5" />
+</svg>

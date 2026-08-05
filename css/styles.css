@@ -46,6 +46,10 @@ body {
     z-index: 0;
     pointer-events: none;
     overflow: hidden;
+    background-color: #070911;
+    background-image: url('../images/croc_scale_pattern.svg'), radial-gradient(ellipse at 50% 25%, rgba(0, 242, 254, 0.1) 0%, rgba(157, 78, 221, 0.06) 55%, rgba(7, 9, 17, 1) 90%);
+    background-repeat: repeat, no-repeat;
+    background-size: 160px 160px, cover;
 }
 
 .geometric-shapes-global {
