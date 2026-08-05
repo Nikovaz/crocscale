@@ -215,10 +215,10 @@ body {
 }
 
 .nav-logo .logo-img {
-    height: 77px;
+    height: 45px;
     width: auto;
     object-fit: contain;
-    filter: drop-shadow(0 0 12px rgba(0, 242, 254, 0.6));
+    filter: drop-shadow(0 0 10px rgba(0, 242, 254, 0.5));
     transition: transform 0.3s ease;
 }
 
@@ -1626,14 +1626,14 @@ body {
 
 @media (max-width: 968px) {
     .logo-main-image {
-        height: 280px;
-        max-width: 95%;
+        width: 594px;
+        max-width: 90%;
         margin: 0 auto;
         display: block;
     }
 
     .nav-logo .logo-img {
-        height: 60px;
+        height: 148px;
     }
 
     .nav-logo .logo-text {
@@ -1746,7 +1746,14 @@ body {
     outline-offset: 3px;
 }
 
-
+@media (min-width: 769px) and (max-width: 1024px) {
+    .logo-main-image {
+        width: 675px;
+        max-width: 90%;
+        margin: 0 auto;
+        display: block;
+    }
+}
 
 /* ====================================
    PANAL HEXAGONAL - GEOMETRÍA SAGRADA
@@ -2103,25 +2110,14 @@ body::after {
 }
 
 .chat-avatar {
-    width: 65px;
-    height: 65px;
-    background: rgba(18, 22, 36, 0.85);
-    border: 2px solid #00f2fe;
-    box-shadow: 0 0 12px rgba(0, 242, 254, 0.6);
+    width: 35px;
+    height: 35px;
+    background: white;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    overflow: hidden;
-    flex-shrink: 0;
-}
-
-.chat-avatar img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    transform: scale(1.4);
-    filter: drop-shadow(0 0 6px rgba(0, 242, 254, 0.8));
+    font-size: 1.2rem;
 }
 
 .chat-info h4 {
@@ -2135,21 +2131,22 @@ body::after {
 }
 
 .chat-body {
-    padding: 20px;
-    height: 350px;
+    padding: 15px 15px 20px 15px;
+    height: auto;
+    min-height: 390px;
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 10px;
     position: relative;
     background: rgba(20, 20, 20, 0.5);
 }
 
 .chat-message {
-    max-width: 80%;
-    padding: 10px 15px;
-    border-radius: 15px;
-    font-size: 0.85rem;
-    line-height: 1.4;
+    max-width: 85%;
+    padding: 8px 12px;
+    border-radius: 14px;
+    font-size: 0.82rem;
+    line-height: 1.35;
     position: relative;
     opacity: 0;
     transform: translateY(10px);
@@ -2264,13 +2261,13 @@ body::after {
     }
 
     .logo-main-image {
-        height: 375px;
+        height: 220px;
         width: auto;
-        max-width: 95%;
+        max-width: 90%;
         margin: 0 auto;
         display: block;
         object-fit: contain;
-        filter: drop-shadow(0 0 35px rgba(0, 242, 254, 0.8));
+        filter: drop-shadow(0 0 25px rgba(0, 242, 254, 0.7));
         transition: transform 0.3s ease;
     }
 
