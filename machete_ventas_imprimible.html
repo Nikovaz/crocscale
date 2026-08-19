@@ -1,0 +1,370 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Machete Maestro de Ventas & Speeches 2026 — CrocScale IA</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #0070f3;
+            --accent: #00c6ff;
+            --dark: #0f172a;
+            --text: #1e293b;
+            --text-light: #64748b;
+            --bg-card: #f8fafc;
+            --border: #e2e8f0;
+            --green: #10b981;
+            --purple: #8b5cf6;
+        }
+
+        @page {
+            size: A4 portrait;
+            margin: 12mm 15mm;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--text);
+            background: #ffffff;
+            line-height: 1.45;
+            font-size: 10pt;
+            -webkit-print-color-adjust: exact !important;
+            print-color-adjust: exact !important;
+        }
+
+        .header-sheet {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid var(--dark);
+            padding-bottom: 8px;
+            margin-bottom: 14px;
+        }
+
+        .brand-title {
+            font-size: 16pt;
+            font-weight: 900;
+            color: var(--dark);
+            letter-spacing: -0.5px;
+        }
+
+        .brand-subtitle {
+            font-size: 8.5pt;
+            color: var(--text-light);
+            text-transform: uppercase;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        .doc-badge {
+            background: #0f172a;
+            color: #ffffff;
+            font-size: 8pt;
+            font-weight: 800;
+            padding: 4px 10px;
+            border-radius: 4px;
+            text-transform: uppercase;
+        }
+
+        .section-title {
+            font-size: 11pt;
+            font-weight: 800;
+            color: var(--dark);
+            margin: 14px 0 6px 0;
+            border-left: 4px solid var(--primary);
+            padding-left: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        /* Tabla de Precios */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 12px;
+            font-size: 8.5pt;
+        }
+
+        th, td {
+            border: 1px solid var(--border);
+            padding: 6px 8px;
+            text-align: left;
+        }
+
+        th {
+            background: #f1f5f9;
+            font-weight: 800;
+            color: var(--dark);
+        }
+
+        .star-row {
+            background: #f0fdf4;
+            font-weight: 600;
+        }
+
+        .pitch-box {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 8px 10px;
+            margin-bottom: 8px;
+            font-size: 9pt;
+        }
+
+        .pitch-box h4 {
+            font-size: 9.5pt;
+            font-weight: 800;
+            color: var(--dark);
+            margin-bottom: 3px;
+        }
+
+        .pitch-box p {
+            color: #334155;
+            font-style: italic;
+        }
+
+        /* Script / Roleplay */
+        .dialogue {
+            background: #ffffff;
+            border: 1px solid var(--border);
+            border-left: 3px solid var(--purple);
+            border-radius: 4px;
+            padding: 8px;
+            margin-bottom: 8px;
+            font-size: 8.5pt;
+        }
+
+        .dialogue .speaker-client {
+            font-weight: 700;
+            color: #dc2626;
+        }
+
+        .dialogue .speaker-nico {
+            font-weight: 700;
+            color: #2563eb;
+        }
+
+        .non-verbal {
+            color: #64748b;
+            font-size: 7.8pt;
+            font-style: italic;
+        }
+
+        .cheat-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-bottom: 10px;
+        }
+
+        .cheat-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 8px;
+        }
+
+        .cheat-card h4 {
+            font-size: 9pt;
+            font-weight: 800;
+            color: var(--dark);
+            margin-bottom: 4px;
+        }
+
+        .cheat-card ul {
+            list-style: none;
+            font-size: 8pt;
+            color: #334155;
+        }
+
+        .cheat-card ul li {
+            margin-bottom: 3px;
+        }
+
+        .cheat-card ul li strong {
+            color: var(--dark);
+        }
+
+        .page-break {
+            page-break-before: always;
+        }
+
+        .no-break {
+            page-break-inside: avoid;
+        }
+
+        .footer-note {
+            text-align: center;
+            font-size: 7.5pt;
+            color: var(--text-light);
+            margin-top: 10px;
+            border-top: 1px solid var(--border);
+            padding-top: 4px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ================= PÁGINA 1: MATRIZ Y PITCHES DE APERTURA ================= -->
+    <div class="header-sheet">
+        <div>
+            <div class="brand-title">🐊 CrocScale IA — Machete de Bolsillo para Ventas</div>
+            <div class="brand-tagline">Guía Rápida de Llamadas B2B • Fundador: Nicolás Galarza</div>
+        </div>
+        <div class="doc-badge">Confidencial / Uso Interno</div>
+    </div>
+
+    <!-- MATRIZ COMERCIAL DE MEMORIA -->
+    <div class="section-title"><i class="fas fa-coins"></i> 1. Matriz de Precios Oficial (100% Sin Burocracia Meta)</div>
+    <table>
+        <thead>
+            <tr>
+                <th>Plan</th>
+                <th>Abono / Mes</th>
+                <th>Setup Único</th>
+                <th>Volumen</th>
+                <th>Canales & Funcionalidad Clave</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>WA Starter</strong></td>
+                <td><strong>$180 USD</strong></td>
+                <td>$150 USD</td>
+                <td>5.000 conv.</td>
+                <td>WhatsApp 24/7 + Agente Contador OCR + Catálogo Sheets.</td>
+            </tr>
+            <tr class="star-row">
+                <td><strong>Omnicanal Direct ⭐</strong></td>
+                <td><strong>$349 USD</strong></td>
+                <td>$250 USD</td>
+                <td>7.000 conv.</td>
+                <td><strong>WA + IG DMs + FB Messenger</strong> (Ida y vuelta fluido) • 24-48hs.</td>
+            </tr>
+            <tr>
+                <td><strong>Omnicanal Pro</strong></td>
+                <td><strong>$444 USD</strong></td>
+                <td>$300 USD</td>
+                <td>10.000 conv.</td>
+                <td>Todo Omnicanal + <strong>Auto-Publicador IA + Bot Comentarios</strong>.</td>
+            </tr>
+            <tr>
+                <td><strong>Corporate</strong></td>
+                <td><strong>$666 USD</strong></td>
+                <td>$500 USD</td>
+                <td>20.000 conv.</td>
+                <td>Omnicanal Masivo + <strong>MercadoLibre + Voice Bots IA</strong> + Ads.</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div style="font-size: 8pt; color: #475569; margin-bottom: 8px; background: #f8fafc; padding: 4px 8px; border-radius: 4px; border: 1px dashed #cbd5e1;">
+        <strong>🧩 Add-Ons Modulares:</strong> Auto-Publicador IA: +$69/m | Bot Comentarios IG/FB: +$49/m | Pack Marketing: +$99/m | Bloque 1k Conv: $25 | Meta Ads: 20% (Tope $300k ARS)
+    </div>
+
+    <!-- PITCHES DE APERTURA -->
+    <div class="section-title"><i class="fas fa-bullhorn"></i> 2. Pitches de Apertura por Nicho (Primeros 60 Segundos)</div>
+    
+    <div class="pitch-box">
+        <h4>🛍️ E-commerce & Marcas de Indumentaria / Moda</h4>
+        <p>"Hola [Nombre]. Te hago una pregunta muy directa: ¿cuántas ventas creés que perdés los fines de semana a la noche porque los clientes te mandan DMs en Instagram o mensajes a WhatsApp y tardan horas en responderles? En CrocScale conectamos un Agente de IA que atiende en 5 segundos en WhatsApp e Instagram en simultáneo, muestra fotos de las prendas, verifica stock real y valida transferencias automáticamente. Queda activo en 24 a 48 horas sin trámites burocráticos de Meta."</p>
+    </div>
+
+    <div class="pitch-box">
+        <h4>🔧 Mayoristas, Ferreterías & Repuestos B2B (Estilo ADAR)</h4>
+        <p>"Hola [Nombre]. Sé lo agotador que es que te manden 50 audios al día pidiendo presupuestos de 15 productos a la vez. En CrocScale le conectamos a tu WhatsApp un bot de IA que escucha los audios de los clientes, consulta tu lista de 5.000 artículos en Google Sheets al instante, pasa cotizaciones exactas y toma pedidos 24/7 sin que tus vendedores pierdan 20 minutos por cliente."</p>
+    </div>
+
+    <!-- ESTRATEGIA DE ANCLAJE EN VIVO -->
+    <div class="section-title"><i class="fas fa-anchor"></i> 3. Estrategia de Anclaje de Precios en Vivo</div>
+    <div class="pitch-box" style="background: #eff6ff; border-color: #bfdbfe;">
+        <h4>🗣️ Script de Presentación de Tarifas (Técnica Decoy / Anclaje Superior):</h4>
+        <p>"Para que tengas el panorama completo: tenemos planes Enterprise de <strong>$666 USD</strong> con integración directa a MercadoLibre y planes de <strong>$444 USD</strong> con auto-publicador de contenido. Pero para lo que hoy necesita tu negocio, <strong>nuestro plan más recomendado y elegido es el Omnicanal Direct a $349 USD/mes (+ $250 USD Setup)</strong>. Te cubre WhatsApp, Instagram DMs y Facebook con un solo cerebro de IA y queda listo en 24-48hs.<br>
+        <span class="non-verbal">👉 [CALLATE 3 SEGUNDOS COMPLETOS EN SILENCIO]</span><br>
+        ¿Cómo lo ves para implementarlo este fin de semana?"</p>
+    </div>
+
+    <div class="footer-note">CrocScale IA — Hoja 1 de 2 • Soporte Ejecutivo WhatsApp: +54 9 11 3096-0114 • Web: crocscale.com</div>
+
+    <!-- ================= PÁGINA 2: MANEJO DE OBJECIONES Y ROLEPLAY ================= -->
+    <div class="page-break"></div>
+
+    <div class="header-sheet">
+        <div>
+            <div class="brand-title">🐊 CrocScale IA — Simulaciones & Manejo de Objeciones</div>
+            <div class="brand-tagline">Machete de Respuesta Inmediata para Llamadas de Cierre</div>
+        </div>
+        <div class="doc-badge">Hoja de Combate</div>
+    </div>
+
+    <!-- MATRIZ DE OBJECIONES -->
+    <div class="section-title"><i class="fas fa-shield-alt"></i> 4. Respuestas a Objeciones Letales</div>
+
+    <div class="cheat-grid">
+        <div class="cheat-card">
+            <h4>🔴 "Me parece caro el abono o el setup."</h4>
+            <ul>
+                <li><strong>Argumento:</strong> "Te entiendo. Pero hagamos este cálculo: si tu ticket promedio es de $30.000 o $50.000 ARS y recuperás solo 2 ventas por semana que hoy perdés de noche... el bot te generó más de $300.000 ARS de caja extra. No es un gasto, es un recuperador de ventas que se paga solo en 7 días."</li>
+            </ul>
+        </div>
+
+        <div class="cheat-card">
+            <h4>🔴 "A mis clientes no les gustan los robots."</h4>
+            <ul>
+                <li><strong>Argumento:</strong> "Coincido: a nadie le gusta un menú rígido de 'Marque 1'. Nuestro sistema es un modelo de lenguaje avanzado calibrado con el tono exacto de tu marca, entiende modismos argentinos, fotos, audios de voz y responde con calidez. Mirá la demo en vivo."</li>
+            </ul>
+        </div>
+
+        <div class="cheat-card">
+            <h4>🔴 "Ya tengo un empleado que responde."</h4>
+            <ul>
+                <li><strong>Argumento:</strong> "Excelente. El bot no reemplaza a tu vendedor, lo potencia. Filtra a los curiosos, responde las 200 preguntas repetitivas de '¿precio y stock?' y le entrega a tu vendedor el cliente con el comprobante de seña listo para despachar."</li>
+            </ul>
+        </div>
+
+        <div class="cheat-card">
+            <h4>🔴 "Tengo miedo de que Meta me bloquee."</h4>
+            <ul>
+                <li><strong>Argumento:</strong> "Trabajamos exclusivamente con la API Oficial de WhatsApp Business (YCloud / Meta Cloud API). Tu línea tiene respaldo oficial, encriptación y cero riesgo de sanción."</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- CHEAT SHEET DE LLAMADA -->
+    <div class="section-title"><i class="fas fa-clipboard-check"></i> 5. Checklist Mental de los 4 Pasos de la Llamada</div>
+    
+    <div class="dialogue no-break">
+        <p><strong>1. Diagnóstico de Dolor (Minuto 0 a 5):</strong> ¿A qué hora apagan los chats? ¿Cuántos WhatsApps/DMs reciben al día? ¿Cuánto tardan en validar comprobantes de transferencia?</p>
+        <p><strong>2. Demostración en Vivo (Minuto 5 a 12):</strong> Compartir pantalla. Hacer que manden un audio de voz y una foto de comprobante de Mercado Pago para ver el OCR en acción.</p>
+        <p><strong>3. Anclaje y Presentación (Minuto 12 a 16):</strong> Mencionás Corporate ($666) → Pro ($444) → <strong>Aterrizás en Omnicanal Direct ($349)</strong>. Hacés la pausa de 3 segundos de silencio.</p>
+        <p><strong>4. Cierre por Alternativa (Minuto 16 a 20):</strong> <em>"¿Preferís que conectemos primero solo tu WhatsApp o salimos directo con WhatsApp + Instagram DMs este fin de semana?"</em></p>
+    </div>
+
+    <!-- REGLAS NO VERBALES DE ORO -->
+    <div class="section-title"><i class="fas fa-user-secret"></i> 6. Las 3 Reglas de Oro de Lenguaje Corporal & Voz</div>
+    <div class="cheat-grid no-break">
+        <div class="cheat-card" style="border-left: 3px solid #10b981;">
+            <h4>🤫 Regla de los 3 Segundos</h4>
+            <p style="font-size: 8pt; color: #475569;">Al dar el precio ($180, $349, $444 USD), cerrá la boca durante 3 segundos. El primero que habla después de dar el precio pierde la autoridad.</p>
+        </div>
+        <div class="cheat-card" style="border-left: 3px solid #0070f3;">
+            <h4>🎙️ Voz de Locutor Nocturno</h4>
+            <p style="font-size: 8pt; color: #475569;">Bajá medio octavo la voz hacia un tono grave, pausado y cálido. Proyecta control, ingeniería de alto nivel y cero desesperación por vender.</p>
+        </div>
+    </div>
+
+    <div class="footer-note">CrocScale IA — Hoja 2 de 2 • Imprimible A4 de Bolsillo • manual.crocscale.tech</div>
+
+</body>
+</html>
