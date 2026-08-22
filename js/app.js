@@ -1,10 +1,7 @@
-// ============================================
-// TOTODRILO.TECH - JavaScript Principal  
+﻿// ============================================
+// CROCSCALE IA - JavaScript Principal  
 // Automatización con IA para E-commerce
 // ============================================
-
-// Variables globales para el menú
-let menuAbierto = false;
 
 // Inicialización cuando el DOM está listo
 document.addEventListener('DOMContentLoaded', function() {
@@ -22,73 +19,62 @@ function initializeApp() {
     initConsoleMessage();
 }
 
-// ============ MENÚ MÓVIL ============
+// ============ MENÚ MÓVIL (ROBUSTO Y TÁCTIL) ============
 function setupMobileMenu() {
     const navToggle = document.getElementById('nav-toggle');
     const navMenu = document.getElementById('nav-menu');
-    const navClose = document.getElementById('nav-close');
     
     if (!navToggle || !navMenu) {
-        console.error('❌ Nav toggle o nav menu no encontrado');
+        console.warn('⚠️ Nav toggle o nav menu no encontrado');
         return;
     }
     
-    console.log('✅ Menu mobile inicializado correctamente');
+    console.log('✅ Menu mobile CrocScale inicializado');
     
-    // Función para cerrar el menú
-    function cerrarMenu() {
+    function toggleMenu(e) {
+        if (e) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+        const isActive = navMenu.classList.toggle('active');
+        navToggle.classList.toggle('active', isActive);
+        document.body.style.overflow = isActive ? 'hidden' : '';
+        navToggle.setAttribute('aria-expanded', isActive);
+    }
+    
+    function closeMenu() {
         navMenu.classList.remove('active');
         navToggle.classList.remove('active');
         document.body.style.overflow = '';
-        menuAbierto = false;
+        navToggle.setAttribute('aria-expanded', 'false');
     }
     
-    // Función para abrir el menú
-    function abrirMenu() {
-        navMenu.classList.add('active');
-        navToggle.classList.add('active');
-        document.body.style.overflow = 'hidden';
-        menuAbierto = true;
-    }
-    
-    if (navClose) {
-        navClose.addEventListener('click', function(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            cerrarMenu();
-        });
-    }
-    
-    navToggle.addEventListener('click', function(e) {
+    // Click & Touch listeners
+    navToggle.addEventListener('click', toggleMenu);
+    navToggle.addEventListener('touchstart', function(e) {
         e.preventDefault();
-        e.stopPropagation();
-        if (menuAbierto) {
-            cerrarMenu();
-        } else {
-            abrirMenu();
-        }
-    });
+        toggleMenu(e);
+    }, { passive: false });
     
-    const navLinks = document.querySelectorAll('.nav-link, .nav-cta');
+    // Cerrar al hacer clic en cualquier enlace
+    const navLinks = navMenu.querySelectorAll('.nav-link, .nav-cta');
     navLinks.forEach(function(link) {
-        link.addEventListener('click', function() {
-            cerrarMenu();
-        });
+        link.addEventListener('click', closeMenu);
     });
     
+    // Cerrar al hacer clic afuera
     document.addEventListener('click', function(e) {
-        if (menuAbierto) {
-            const clickEnMenu = navMenu.contains(e.target);
-            const clickEnToggle = navToggle.contains(e.target);
-            if (!clickEnMenu && !clickEnToggle) {
-                cerrarMenu();
+        if (navMenu.classList.contains('active')) {
+            if (!navMenu.contains(e.target) && !navToggle.contains(e.target)) {
+                closeMenu();
             }
         }
     });
     
+    // Cerrar con tecla Escape
     document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape' && menuAbierto) {
-            cerrarMenu();
+        if (e.key === 'Escape' && navMenu.classList.contains('active')) {
+            closeMenu();
         }
     });
 }
@@ -100,13 +86,13 @@ function setupSmoothScrolling() {
             const href = this.getAttribute('href');
             if (href === '#' || href === '') return;
             
-            e.preventDefault();
             const targetId = href.substring(1);
             const targetElement = document.getElementById(targetId);
             
             if (targetElement) {
+                e.preventDefault();
                 const header = document.querySelector('.header');
-                const headerHeight = header ? header.offsetHeight : 80;
+                const headerHeight = header ? header.offsetHeight : 70;
                 const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - headerHeight;
                 
                 window.scrollTo({
@@ -125,12 +111,12 @@ function setupHeaderScroll() {
     
     window.addEventListener('scroll', function() {
         const currentScroll = window.pageYOffset;
-        if (currentScroll > 100) {
+        if (currentScroll > 50) {
             header.classList.add('scrolled');
         } else {
             header.classList.remove('scrolled');
         }
-    });
+    }, { passive: true });
 }
 
 // ============ ANIMACIONES DE SCROLL ============
@@ -145,7 +131,7 @@ function setupScrollAnimations() {
         });
     }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
     
-    document.querySelectorAll('.service-card, .case-card, .problem-card, .benefit-item, .testimonial-card, .step-item, .hero-badge, .hero-stats')
+    document.querySelectorAll('.service-card, .case-card, .problem-card, .benefit-item, .testimonial-card, .step-item, .hero-badge, .hero-stats, .pricing-card')
         .forEach(el => observer.observe(el));
 }
 
@@ -163,7 +149,7 @@ window.scrollToSection = function(sectionId) {
     const targetElement = document.getElementById(sectionId);
     if (targetElement) {
         const header = document.querySelector('.header');
-        const headerHeight = header ? header.offsetHeight : 80;
+        const headerHeight = header ? header.offsetHeight : 70;
         const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - headerHeight;
         window.scrollTo({ top: targetPosition, behavior: 'smooth' });
     }
@@ -171,20 +157,20 @@ window.scrollToSection = function(sectionId) {
 
 // ============ MENSAJE DE CONSOLA ============
 function initConsoleMessage() {
-    console.log('%c🤖 Totodrilo.tech', 'color: #8b5cf6; font-size: 24px; font-weight: bold;');
-    console.log('%cAutomatización con IA para E-commerce', 'color: #06d6a0; font-size: 16px;');
+    console.log('%c🐊 CrocScale IA', 'color: #00f2fe; font-size: 22px; font-weight: bold;');
+    console.log('%cAutomation Built to Scale — https://crocscale.com', 'color: #9d4edd; font-size: 14px;');
 }
 
-// ============ ESTILOS CSS ============
+// ============ ESTILOS CSS DINÁMICOS ============
 const style = document.createElement('style');
 style.textContent = `
-    .service-card, .case-card, .problem-card, .benefit-item, .testimonial-card, .step-item {
+    .service-card, .case-card, .problem-card, .benefit-item, .testimonial-card, .step-item, .pricing-card {
         opacity: 0;
-        transform: translateY(30px);
-        transition: opacity 0.6s ease, transform 0.6s ease;
+        transform: translateY(25px);
+        transition: opacity 0.5s ease, transform 0.5s ease;
     }
     .service-card.animate-in, .case-card.animate-in, .problem-card.animate-in, 
-    .benefit-item.animate-in, .testimonial-card.animate-in, .step-item.animate-in {
+    .benefit-item.animate-in, .testimonial-card.animate-in, .step-item.animate-in, .pricing-card.animate-in {
         opacity: 1;
         transform: translateY(0);
     }
@@ -194,9 +180,7 @@ style.textContent = `
 `;
 document.head.appendChild(style);
 
-console.log('%c✅ Totodrilo.tech cargado', 'color: #06d6a0; font-weight: bold;');
-
-// ============ EMAILJS CONFIGURATION ============
+// ============ EMAILJS CONFIGURATION & FORM ============
 function initEmailJS() {
     if (typeof emailjs !== 'undefined') {
         emailjs.init('4bupfioQ6sBuwdkOU');
@@ -224,7 +208,7 @@ function initEmailJS() {
             message: document.getElementById('message').value
         };
         
-        const waMsg = encodeURIComponent(`Hola Totodrilo! Mi nombre es ${templateParams.name} (${templateParams.email}, Tel: ${templateParams.phone}). Mi negocio es ${templateParams.business}. Consulta: ${templateParams.message}`);
+        const waMsg = encodeURIComponent(`Hola CrocScale! Mi nombre es ${templateParams.name} (${templateParams.email}, Tel: ${templateParams.phone}). Mi negocio es ${templateParams.business}. Consulta: ${templateParams.message}`);
         const waUrl = `https://wa.me/5491130960114?text=${waMsg}`;
 
         formMessage.innerHTML = '¡Formulario recibido! Redirigiendo a WhatsApp... <a href="' + waUrl + '" target="_blank" style="color: #00C6FF; font-weight: bold; text-decoration: underline;">Haz clic aquí si no abre automáticamente</a>';

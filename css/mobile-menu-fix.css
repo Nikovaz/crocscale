@@ -1,83 +1,195 @@
-/* MOBILE MENU FIX - FORZAR VISIBILIDAD */
+﻿/* ===================================================
+   CROCSCALE IA — MOBILE NAVBAR & BURGER MENU MODERNO
+   =================================================== */
 
+/* Ajuste general del Header */
+.header {
+    background: rgba(10, 12, 20, 0.92) !important;
+    backdrop-filter: blur(16px) !important;
+    -webkit-backdrop-filter: blur(16px) !important;
+    border-bottom: 1px solid rgba(0, 242, 254, 0.15) !important;
+    height: 70px !important;
+    display: flex !important;
+    align-items: center !important;
+}
+
+.nav {
+    width: 100% !important;
+}
+
+.nav-container {
+    padding: 0 1.25rem !important;
+    height: 100% !important;
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+}
+
+/* Logo elegante y proporcional (sin círculos gigantes que deformen) */
+.nav-logo {
+    display: flex !important;
+    align-items: center !important;
+    gap: 10px !important;
+    text-decoration: none !important;
+    z-index: 1000000 !important;
+}
+
+.nav-logo .logo-img {
+    height: 38px !important;
+    width: 38px !important;
+    object-fit: contain !important;
+    filter: drop-shadow(0 0 8px rgba(0, 242, 254, 0.6)) !important;
+    transition: transform 0.3s ease !important;
+}
+
+.nav-logo .logo-text {
+    font-size: 1.3rem !important;
+    font-weight: 800 !important;
+    color: #ffffff !important;
+    letter-spacing: -0.5px !important;
+}
+
+.nav-logo .logo-accent {
+    color: #00f2fe !important;
+    text-shadow: 0 0 10px rgba(0, 242, 254, 0.6) !important;
+}
+
+/* ====================================
+   BURGER BUTTON (CYBER GLASS DESIGN)
+   ==================================== */
+.nav-toggle {
+    display: none;
+    flex-direction: column !important;
+    justify-content: center !important;
+    align-items: center !important;
+    width: 44px !important;
+    height: 44px !important;
+    background: rgba(18, 22, 36, 0.8) !important;
+    border: 1px solid rgba(0, 242, 254, 0.3) !important;
+    border-radius: 12px !important;
+    cursor: pointer !important;
+    gap: 5px !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5), 0 0 12px rgba(0, 242, 254, 0.15) !important;
+    z-index: 1000000 !important;
+    padding: 0 !important;
+    outline: none !important;
+    user-select: none !important;
+    -webkit-tap-highlight-color: transparent !important;
+}
+
+.nav-toggle:hover, .nav-toggle:focus {
+    background: rgba(0, 242, 254, 0.15) !important;
+    border-color: #00f2fe !important;
+    box-shadow: 0 0 15px rgba(0, 242, 254, 0.4) !important;
+}
+
+.nav-toggle span {
+    display: block !important;
+    width: 22px !important;
+    height: 2.5px !important;
+    background: #00f2fe !important;
+    border-radius: 4px !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    box-shadow: 0 0 6px rgba(0, 242, 254, 0.6) !important;
+    pointer-events: none !important;
+}
+
+/* Estado Activo del Burger (X Animada) */
+.nav-toggle.active {
+    background: rgba(157, 78, 221, 0.25) !important;
+    border-color: #9d4edd !important;
+    box-shadow: 0 0 18px rgba(157, 78, 221, 0.5) !important;
+}
+
+.nav-toggle.active span {
+    background: #9d4edd !important;
+    box-shadow: 0 0 8px rgba(157, 78, 221, 0.8) !important;
+}
+
+.nav-toggle.active span:nth-child(1) {
+    transform: translateY(7.5px) rotate(45deg) !important;
+}
+
+.nav-toggle.active span:nth-child(2) {
+    opacity: 0 !important;
+    transform: scaleX(0) !important;
+}
+
+.nav-toggle.active span:nth-child(3) {
+    transform: translateY(-7.5px) rotate(-45deg) !important;
+}
+
+/* ====================================
+   MOBILE MENU FULLSCREEN OVERLAY
+   ==================================== */
 @media (max-width: 968px) {
-    /* Asegurar que el toggle sea visible y clickeable */
     .nav-toggle {
         display: flex !important;
-        position: relative !important;
-        z-index: 99999 !important;
-        cursor: pointer !important;
-        pointer-events: auto !important;
     }
 
-    /* El toggle siempre debe ser clickeable */
-    .nav-toggle.active {
-        pointer-events: auto !important;
-    }
-
-    /* Menu oculto por defecto */
     .nav-menu {
         position: fixed !important;
         top: 0 !important;
         left: -100% !important;
         width: 100vw !important;
         height: 100vh !important;
-        background: #0a0a0a !important;
-        z-index: 99998 !important;
+        background: rgba(8, 10, 18, 0.98) !important;
+        backdrop-filter: blur(25px) !important;
+        -webkit-backdrop-filter: blur(25px) !important;
         display: flex !important;
         flex-direction: column !important;
-        padding: 100px 2rem 2rem 2rem !important;
-        gap: 1.6rem !important;
+        justify-content: center !important;
+        align-items: center !important;
+        padding: 90px 2rem 2rem 2rem !important;
+        gap: 1.5rem !important;
+        transition: left 0.35s cubic-bezier(0.4, 0, 0.2, 1) !important;
+        z-index: 999998 !important;
         overflow-y: auto !important;
-        transition: left 0.3s ease-in-out !important;
-        align-items: flex-start !important;
     }
 
-    /* Menu visible cuando está activo */
     .nav-menu.active {
         left: 0 !important;
     }
 
-    /* Links del menu */
     .nav-menu .nav-link {
-        display: block !important;
-        width: 100% !important;
-        padding: 0.8rem 0 !important;
-        font-size: 1.1rem !important;
-        color: #ffffff !important;
-        border-bottom: 1px solid rgba(139, 92, 246, 0.1) !important;
+        font-size: 1.3rem !important;
+        font-weight: 700 !important;
+        color: #f0f4f8 !important;
         text-decoration: none !important;
+        padding: 10px 24px !important;
+        border-radius: 12px !important;
+        text-align: center !important;
+        width: 100% !important;
+        max-width: 280px !important;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+        transition: all 0.25s ease !important;
+        letter-spacing: 0.5px !important;
     }
 
-    /* CTA button */
+    .nav-menu .nav-link:hover,
+    .nav-menu .nav-link:active {
+        color: #00f2fe !important;
+        background: rgba(0, 242, 254, 0.08) !important;
+        border-color: rgba(0, 242, 254, 0.3) !important;
+        transform: scale(1.03) !important;
+    }
+
     .nav-menu .nav-cta {
         width: 100% !important;
+        max-width: 280px !important;
         justify-content: center !important;
-        padding: 12px 20px !important;
-        margin-top: 0.5rem !important;
+        padding: 14px 24px !important;
+        margin-top: 0.8rem !important;
+        font-size: 1.1rem !important;
+        font-weight: 800 !important;
+        background: linear-gradient(135deg, #00f2fe, #9d4edd) !important;
+        box-shadow: 0 4px 25px rgba(0, 242, 254, 0.4) !important;
+        color: #000000 !important;
     }
 
-    /* Animación del burger */
-    .nav-toggle span {
-        pointer-events: none !important;
-    }
-    
-    .nav-toggle.active span:nth-child(1) {
-        transform: rotate(45deg) translate(6px, 6px) !important;
-    }
-    
-    .nav-toggle.active span:nth-child(2) {
-        opacity: 0 !important;
-    }
-    
-    .nav-toggle.active span:nth-child(3) {
-        transform: rotate(-45deg) translate(6px, -6px) !important;
-    }
-}
-
-/* Ocultar botón de cerrar en desktop */
-@media (min-width: 969px) {
-    .nav-close {
-        display: none !important;
+    .nav-logo .logo-img {
+        height: 38px !important;
+        width: 38px !important;
     }
 }
