@@ -15,7 +15,13 @@
             --purple-neon: #9d4edd;
             --accent-green: #00e676;
             --text-main: #f0f4f8;
-            --text-muted: #a0aec0;
+            --text-muted: #94a3b8;
+        }
+
+        /* Configuración de Impresión A4 Estricta */
+        @page {
+            size: A4 portrait;
+            margin: 0mm;
         }
 
         * {
@@ -32,27 +38,28 @@
             flex-direction: column;
             align-items: center;
             padding: 20px 0;
-            -webkit-print-color-adjust: exact;
-            print-color-adjust: exact;
+            -webkit-print-color-adjust: exact !important;
+            print-color-adjust: exact !important;
         }
 
-        /* Formato A4 exacto */
+        /* Formato A4 Exacto (210mm x 297mm) */
         .page-a4 {
             width: 210mm;
             height: 297mm;
             background: var(--bg-dark);
-            padding: 12mm 15mm;
-            margin-bottom: 20px;
+            padding: 10mm 12mm;
+            margin-bottom: 30px;
             position: relative;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.8);
             border: 1px solid var(--card-border);
             overflow: hidden;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
+            page-break-after: always;
+            page-break-inside: avoid;
         }
 
-        /* Estilos de Impresión */
         @media print {
             body {
                 background: none;
@@ -61,30 +68,34 @@
             .page-a4 {
                 margin: 0;
                 box-shadow: none;
-                page-break-after: always;
                 border: none;
+                width: 210mm;
+                height: 297mm;
+                page-break-after: always;
+                page-break-inside: avoid;
             }
         }
 
-        /* Elementos Decorativos de Fondo */
         .bg-glow-1 {
             position: absolute;
-            top: -50px;
-            right: -50px;
-            width: 300px;
-            height: 300px;
+            top: -10%;
+            right: -10%;
+            width: 120mm;
+            height: 120mm;
             background: radial-gradient(circle, rgba(0, 242, 254, 0.15) 0%, rgba(0,0,0,0) 70%);
             z-index: 1;
+            pointer-events: none;
         }
 
         .bg-glow-2 {
             position: absolute;
-            bottom: -50px;
-            left: -50px;
-            width: 300px;
-            height: 300px;
+            bottom: -10%;
+            left: -10%;
+            width: 120mm;
+            height: 120mm;
             background: radial-gradient(circle, rgba(157, 78, 221, 0.15) 0%, rgba(0,0,0,0) 70%);
             z-index: 1;
+            pointer-events: none;
         }
 
         .content-layer {
@@ -102,7 +113,7 @@
             justify-content: space-between;
             align-items: center;
             border-bottom: 2px solid var(--card-border);
-            padding-bottom: 12px;
+            padding-bottom: 10px;
         }
 
         .brand-logo {
@@ -112,60 +123,63 @@
         }
 
         .brand-logo img {
-            width: 45px;
-            height: 45px;
+            width: 48px;
+            height: 48px;
             object-fit: contain;
+            filter: drop-shadow(0 0 10px rgba(0, 242, 254, 0.6));
         }
 
         .brand-title {
-            font-size: 24px;
+            font-size: 22px;
             font-weight: 900;
-            letter-spacing: 1px;
+            letter-spacing: 0.5px;
             background: linear-gradient(135deg, var(--primary-neon), var(--purple-neon));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            line-height: 1.1;
         }
 
         .brand-tagline {
-            font-size: 11px;
+            font-size: 10px;
             color: var(--text-muted);
             text-transform: uppercase;
             letter-spacing: 1.5px;
-            font-weight: 600;
+            font-weight: 700;
         }
 
         .header-contact {
             text-align: right;
             font-size: 11px;
             color: var(--text-muted);
+            line-height: 1.5;
         }
 
         .header-contact i {
             color: var(--primary-neon);
-            margin-right: 4px;
         }
 
         /* Hook Principal */
         .hook-box {
-            background: linear-gradient(135deg, rgba(18, 22, 36, 0.9), rgba(30, 38, 56, 0.6));
-            border: 1px solid rgba(0, 242, 254, 0.3);
-            border-left: 4px solid var(--primary-neon);
+            background: linear-gradient(135deg, rgba(18, 22, 36, 0.95), rgba(30, 38, 56, 0.8));
+            border: 1.5px solid rgba(0, 242, 254, 0.4);
+            border-left: 5px solid var(--primary-neon);
             padding: 14px 18px;
-            border-radius: 8px;
-            margin: 12px 0;
+            border-radius: 12px;
+            box-shadow: 0 6px 20px rgba(0, 242, 254, 0.12);
         }
 
         .hook-box h2 {
-            font-size: 16px;
+            font-size: 14.5px;
             color: #fff;
-            margin-bottom: 4px;
+            margin-bottom: 6px;
             font-weight: 800;
+            line-height: 1.35;
         }
 
         .hook-box p {
-            font-size: 11.5px;
+            font-size: 12px;
             color: var(--text-muted);
-            line-height: 1.4;
+            line-height: 1.45;
         }
 
         .highlight-text {
@@ -173,21 +187,17 @@
             font-weight: 700;
         }
 
-        /* Tabla Comparativa Financiera */
-        .comparison-section {
-            margin: 10px 0;
-        }
-
+        /* Comparativa Financiera */
         .section-title {
-            font-size: 13px;
-            font-weight: 800;
+            font-size: 13.5px;
+            font-weight: 900;
             text-transform: uppercase;
             letter-spacing: 1px;
             color: var(--primary-neon);
             margin-bottom: 8px;
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 8px;
         }
 
         .comp-grid {
@@ -198,31 +208,35 @@
 
         .comp-card {
             background: var(--card-bg);
-            border: 1px solid var(--card-border);
-            border-radius: 10px;
-            padding: 12px 14px;
+            border: 1.5px solid var(--card-border);
+            border-radius: 12px;
+            padding: 14px 16px;
         }
 
         .comp-card.negative {
-            border-top: 3px solid #ff4d4d;
+            border-top: 4px solid #ff4d4d;
+            background: linear-gradient(180deg, rgba(255, 77, 77, 0.08) 0%, var(--card-bg) 100%);
         }
 
         .comp-card.positive {
-            border-top: 3px solid var(--accent-green);
-            background: linear-gradient(180deg, rgba(0,230,118,0.05) 0%, var(--card-bg) 100%);
+            border-top: 4px solid var(--accent-green);
+            background: linear-gradient(180deg, rgba(0, 230, 118, 0.08) 0%, var(--card-bg) 100%);
         }
 
         .comp-card h3 {
-            font-size: 13px;
+            font-size: 13.5px;
             margin-bottom: 8px;
             display: flex;
-            align-items: center;
             justify-content: space-between;
+            align-items: center;
+            color: #fff;
+            font-weight: 800;
         }
 
         .comp-list {
             list-style: none;
-            font-size: 10.5px;
+            font-size: 11px;
+            line-height: 1.45;
         }
 
         .comp-list li {
@@ -233,18 +247,11 @@
             color: var(--text-muted);
         }
 
-        .comp-list li i.fa-xmark {
-            color: #ff4d4d;
-            margin-top: 2px;
-        }
-
-        .comp-list li i.fa-check {
-            color: var(--accent-green);
-            margin-top: 2px;
-        }
+        .comp-list li i.fa-xmark { color: #ff4d4d; margin-top: 2px; }
+        .comp-list li i.fa-check { color: var(--accent-green); margin-top: 2px; }
 
         .price-badge-small {
-            font-size: 14px;
+            font-size: 13px;
             font-weight: 900;
             color: var(--accent-green);
         }
@@ -253,80 +260,93 @@
         .proof-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 8px;
-            margin: 10px 0;
+            gap: 10px;
         }
 
         .proof-card {
             background: var(--card-bg);
             border: 1px solid var(--card-border);
-            padding: 10px;
+            padding: 12px 10px;
             border-radius: 8px;
             text-align: center;
         }
 
         .proof-card h4 {
-            font-size: 11px;
+            font-size: 13px;
             color: #fff;
-            margin-bottom: 2px;
-        }
-
-        .proof-card p {
-            font-size: 9.5px;
-            color: var(--text-muted);
-        }
-
-        /* Footer & QR */
-        .cta-banner-front {
-            background: linear-gradient(135deg, rgba(157, 78, 221, 0.2), rgba(0, 242, 254, 0.2));
-            border: 1px solid var(--primary-neon);
-            border-radius: 12px;
-            padding: 14px 18px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .cta-text h3 {
-            font-size: 15px;
-            color: #fff;
+            margin-bottom: 4px;
             font-weight: 800;
         }
 
+        .proof-card p {
+            font-size: 10px;
+            color: var(--text-muted);
+            line-height: 1.3;
+        }
+
+        /* Banner QR */
+        .cta-banner-front {
+            background: linear-gradient(135deg, rgba(0, 242, 254, 0.12), rgba(157, 78, 221, 0.12));
+            border: 2px solid var(--primary-neon);
+            border-radius: 12px;
+            padding: 14px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 6px 25px rgba(0, 242, 254, 0.18);
+        }
+
+        .cta-text h3 {
+            font-size: 16px;
+            color: #fff;
+            font-weight: 900;
+            margin-bottom: 4px;
+        }
+
         .cta-text p {
-            font-size: 11px;
+            font-size: 11.5px;
             color: var(--text-muted);
         }
 
         .qr-box {
             background: #fff;
+            border: 1px solid var(--card-border);
             padding: 6px;
-            border-radius: 8px;
+            border-radius: 10px;
             text-align: center;
         }
 
         .qr-box img {
-            width: 65px;
-            height: 65px;
+            width: 70px;
+            height: 70px;
             display: block;
         }
 
         .qr-box span {
-            font-size: 8px;
+            font-size: 9px;
             color: #000;
-            font-weight: 700;
+            font-weight: 900;
             display: block;
-            margin-top: 2px;
+            margin-top: 3px;
         }
 
-        /* DORSO (Cara 2) Styles */
+        .footer-bar {
+            border-top: 1.5px solid var(--card-border);
+            padding-top: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+
+        /* Estilos Dorso A4 Ampliados */
         .pricing-section-title {
             text-align: center;
-            margin-bottom: 12px;
         }
 
         .pricing-section-title h2 {
-            font-size: 18px;
+            font-size: 20px;
             font-weight: 900;
             background: linear-gradient(135deg, var(--primary-neon), var(--purple-neon));
             -webkit-background-clip: text;
@@ -334,141 +354,111 @@
         }
 
         .pricing-section-title p {
-            font-size: 11px;
+            font-size: 12px;
             color: var(--text-muted);
-        }
-
-        .category-header {
-            font-size: 11.5px;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            padding: 4px 10px;
-            border-radius: 4px;
-            display: inline-block;
-            margin-bottom: 8px;
-        }
-
-        .cat-green {
-            background: rgba(0, 230, 118, 0.15);
-            color: var(--accent-green);
-            border: 1px solid rgba(0, 230, 118, 0.3);
-        }
-
-        .cat-purple {
-            background: rgba(157, 78, 221, 0.15);
-            color: var(--purple-neon);
-            border: 1px solid rgba(157, 78, 221, 0.3);
         }
 
         .plan-row {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 10px;
-            margin-bottom: 10px;
+            gap: 14px;
         }
 
         .plan-box {
             background: var(--card-bg);
-            border: 1px solid var(--card-border);
-            border-radius: 10px;
-            padding: 10px 12px;
+            border: 1.5px solid var(--card-border);
+            border-radius: 12px;
+            padding: 16px 18px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
         }
 
         .plan-box.featured {
-            border: 1.5px solid var(--primary-neon);
-            box-shadow: 0 0 15px rgba(0, 242, 254, 0.15);
+            border: 2px solid var(--primary-neon);
+            background: linear-gradient(180deg, rgba(0, 242, 254, 0.1) 0%, var(--card-bg) 100%);
+            box-shadow: 0 6px 25px rgba(0, 242, 254, 0.18);
         }
 
         .plan-header {
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
-            margin-bottom: 6px;
+            margin-bottom: 8px;
         }
 
         .plan-name {
-            font-size: 13px;
-            font-weight: 800;
+            font-size: 16px;
+            font-weight: 900;
             color: #fff;
         }
 
         .plan-price {
-            font-size: 15px;
+            font-size: 22px;
             font-weight: 900;
             color: var(--primary-neon);
         }
 
         .plan-setup {
-            font-size: 9.5px;
+            font-size: 10px;
             color: var(--text-muted);
             text-align: right;
         }
 
         .plan-volume {
-            font-size: 9.5px;
-            font-weight: 700;
+            font-size: 10.5px;
+            font-weight: 800;
             color: var(--accent-green);
-            margin-bottom: 6px;
-            background: rgba(0,230,118,0.1);
-            padding: 2px 6px;
-            border-radius: 4px;
+            margin-bottom: 10px;
+            background: rgba(0,230,118,0.12);
+            padding: 3px 8px;
+            border-radius: 5px;
             display: inline-block;
         }
 
         .plan-features {
             list-style: none;
-            font-size: 9.5px;
+            font-size: 11px;
             color: var(--text-muted);
+            line-height: 1.55;
         }
 
         .plan-features li {
-            margin-bottom: 4px;
+            margin-bottom: 6px;
             display: flex;
             align-items: flex-start;
-            gap: 4px;
+            gap: 6px;
         }
 
         .plan-features li i {
             color: var(--primary-neon);
-            margin-top: 2px;
+            margin-top: 3px;
+            font-size: 9.5px;
         }
 
-        /* Banner Meta Ads & Addons */
         .bottom-services {
             display: grid;
-            grid-template-columns: 1.3fr 1fr;
-            gap: 10px;
-            margin-top: 6px;
+            grid-template-columns: 1.25fr 1fr;
+            gap: 14px;
         }
 
         .meta-ads-box {
             background: linear-gradient(135deg, rgba(0, 242, 254, 0.08), rgba(157, 78, 221, 0.08));
-            border: 1px solid var(--primary-neon);
-            border-radius: 10px;
-            padding: 10px 12px;
+            border: 1.5px solid var(--primary-neon);
+            border-radius: 12px;
+            padding: 14px 16px;
         }
 
         .meta-ads-box h4 {
-            font-size: 11.5px;
+            font-size: 13px;
             color: #fff;
             font-weight: 800;
-            margin-bottom: 4px;
-        }
-
-        .meta-ads-box p {
-            font-size: 9.5px;
-            color: var(--text-muted);
-            margin-bottom: 6px;
         }
 
         .fee-cap-badge {
             background: var(--primary-neon);
             color: #000;
-            font-weight: 800;
+            font-weight: 900;
             font-size: 9.5px;
             padding: 3px 8px;
             border-radius: 4px;
@@ -477,20 +467,20 @@
 
         .addons-box {
             background: var(--card-bg);
-            border: 1px solid var(--card-border);
-            border-radius: 10px;
-            padding: 10px 12px;
+            border: 1.5px solid var(--card-border);
+            border-radius: 12px;
+            padding: 14px 16px;
         }
 
         .addons-box h4 {
-            font-size: 11.5px;
+            font-size: 13px;
             color: #fff;
             font-weight: 800;
             margin-bottom: 6px;
         }
 
         .addon-item {
-            font-size: 9px;
+            font-size: 10.5px;
             color: var(--text-muted);
             margin-bottom: 4px;
             display: flex;
@@ -500,21 +490,11 @@
         .addon-item strong {
             color: var(--primary-neon);
         }
-
-        .footer-bar {
-            border-top: 1px solid var(--card-border);
-            padding-top: 8px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 10px;
-            color: var(--text-muted);
-        }
     </style>
 </head>
 <body>
 
-    <!-- ================= CARA 1: FRENTE ================= -->
+    <!-- ================= CARA 1: FRENTE A4 ================= -->
     <div class="page-a4">
         <div class="bg-glow-1"></div>
         <div class="bg-glow-2"></div>
@@ -543,16 +523,16 @@
             </div>
 
             <!-- Comparativa Financiera -->
-            <div class="comparison-section">
+            <div>
                 <div class="section-title">
                     <i class="fas fa-balance-scale"></i> Comparativa Financiera: Humano vs. Infraestructura CrocScale
                 </div>
                 <div class="comp-grid">
                     <div class="comp-card negative">
-                        <h3>Atención Humana 24/7 <span style="color:#ff4d4d; font-size:11px;">+$1.800 USD/mes</span></h3>
+                        <h3>Atención Humana 24/7 <span style="color:#ff4d4d; font-size:12px;">+$1.800 USD/mes</span></h3>
                         <ul class="comp-list">
                             <li><i class="fas fa-xmark"></i> Requiere contratar al menos 3 empleados en turnos rotativos.</li>
-                            <li><i class="fas fa-xmark"></i> Cargas sociales, aguinaldos, licencias y vacaciones.</li>
+                            <li><i class="fas fa-xmark"></i> Cargas sociales, aguinaldos, licencias y vacaciones pagas.</li>
                             <li><i class="fas fa-xmark"></i> Errores humanos en consulta de stock y tipeo de precios.</li>
                             <li><i class="fas fa-xmark"></i> Latencia de respuesta de minutos u horas en horario nocturno.</li>
                         </ul>
@@ -570,8 +550,8 @@
                 </div>
             </div>
 
-            <!-- Prueba Social -->
-            <div class="comparison-section">
+            <!-- Casos de Éxito -->
+            <div>
                 <div class="section-title">
                     <i class="fas fa-shield-halved"></i> Casos de Éxito Reales en Producción
                 </div>
@@ -598,12 +578,12 @@
             <!-- CTA Banner con QR -->
             <div class="cta-banner-front">
                 <div class="cta-text">
-                    <h3>🚀 Probá la experiencia CrocScale ahora</h3>
+                    <h3>🚀 Probá los Bots en Producción</h3>
                     <p>Escaneá el código QR para acceder a <strong>crocscale.com/links/</strong> y probar todos los bots en vivo.</p>
                 </div>
                 <div class="qr-box">
                     <img src="./images/qr_crocscale.png" alt="QR Demo CrocScale">
-                    <span>PROBAR DEMO</span>
+                    <span>PROBAR BOTS</span>
                 </div>
             </div>
 
@@ -615,7 +595,7 @@
         </div>
     </div>
 
-    <!-- ================= CARA 2: DORSO ================= -->
+    <!-- ================= CARA 2: DORSO A4 ================= -->
     <div class="page-a4">
         <div class="bg-glow-1"></div>
         <div class="bg-glow-2"></div>
@@ -638,28 +618,28 @@
             </div>
 
             <!-- Header Dorso -->
-            <div class="pricing-section-title" style="margin-top: 6px; margin-bottom: 12px;">
-                <h2 style="font-size: 18px;">Planes Oficiales de Automatización con IA</h2>
-                <p style="font-size: 11px;">100% Sin Burocracia de Meta • Puesta en marcha en 24 a 48 Horas</p>
+            <div class="pricing-section-title">
+                <h2>Planes Oficiales de Automatización con IA</h2>
+                <p>100% Sin Burocracia de Meta • Puesta en marcha en 24 a 48 Horas</p>
             </div>
 
-            <!-- 2 PLANES ESTRELLA (PROTAGONISTAS CON AIRE VISUAL) -->
-            <div class="plan-row" style="gap: 14px; margin-bottom: 14px;">
+            <!-- 2 PLANES ESTRELLA (PROTAGONISTAS AMPLIADOS) -->
+            <div class="plan-row">
                 <!-- Plan WA Starter -->
-                <div class="plan-box" style="padding: 14px 16px;">
+                <div class="plan-box">
                     <div>
-                        <div class="plan-header" style="margin-bottom: 8px;">
+                        <div class="plan-header">
                             <div>
-                                <div class="plan-name" style="font-size: 14px;">Plan WA Starter</div>
-                                <div style="font-size: 9.5px; color: var(--text-muted);">Monocanal WhatsApp 24/7</div>
+                                <div class="plan-name">Plan WA Starter</div>
+                                <div style="font-size: 11px; color: var(--text-muted);">Monocanal WhatsApp 24/7</div>
                             </div>
                             <div style="text-align: right;">
-                                <div class="plan-price" style="font-size: 18px;">$180 <span style="font-size:10px;">USD/mes</span></div>
+                                <div class="plan-price">$180 <span style="font-size:12px;">USD/mes</span></div>
                                 <div class="plan-setup">+$150 USD Setup único</div>
                             </div>
                         </div>
-                        <div class="plan-volume" style="font-size: 9.5px; margin-bottom: 10px;">5.000 Conversaciones/mes (≈ 25k-40k mensajes)</div>
-                        <ul class="plan-features" style="font-size: 10px; line-height: 1.5;">
+                        <div class="plan-volume">5.000 Conversaciones/mes (≈ 25k-40k mensajes)</div>
+                        <ul class="plan-features">
                             <li><i class="fas fa-check"></i> Chatbot WhatsApp IA 100% Dedicado 24/7/365</li>
                             <li><i class="fas fa-check"></i> Entiende Audios de Voz y Fotos de Productos</li>
                             <li><i class="fas fa-check"></i> <strong>Agente Contador OCR:</strong> Lectura y validación de transferencias</li>
@@ -670,20 +650,20 @@
                 </div>
 
                 <!-- Plan Omnicanal Direct -->
-                <div class="plan-box featured" style="padding: 14px 16px; border: 2px solid var(--primary-neon); background: linear-gradient(180deg, rgba(0, 242, 254, 0.08) 0%, var(--card-bg) 100%);">
+                <div class="plan-box featured">
                     <div>
-                        <div class="plan-header" style="margin-bottom: 8px;">
+                        <div class="plan-header">
                             <div>
-                                <div class="plan-name" style="font-size: 14px; color: var(--primary-neon);">Omnicanal Direct ⭐</div>
-                                <div style="font-size: 9.5px; color: var(--accent-green); font-weight: 800;">MÁS ELEGIDO</div>
+                                <div class="plan-name" style="color: var(--primary-neon);">Omnicanal Direct ⭐</div>
+                                <div style="font-size: 11px; color: var(--accent-green); font-weight: 800;">MÁS ELEGIDO</div>
                             </div>
                             <div style="text-align: right;">
-                                <div class="plan-price" style="font-size: 18px;">$349 <span style="font-size:10px;">USD/mes</span></div>
+                                <div class="plan-price">$349 <span style="font-size:12px;">USD/mes</span></div>
                                 <div class="plan-setup">+$250 USD Setup único</div>
                             </div>
                         </div>
-                        <div class="plan-volume" style="font-size: 9.5px; margin-bottom: 10px; background: rgba(0,242,254,0.15); color: var(--primary-neon);">7.000 Conversaciones/mes (≈ 35k-56k mensajes)</div>
-                        <ul class="plan-features" style="font-size: 10px; line-height: 1.5;">
+                        <div class="plan-volume" style="background: rgba(0,242,254,0.15); color: var(--primary-neon);">7.000 Conversaciones/mes (≈ 35k-56k mensajes)</div>
+                        <ul class="plan-features">
                             <li><i class="fas fa-check" style="color:var(--accent-green);"></i> <strong>WhatsApp + Instagram DMs + Facebook Messenger</strong></li>
                             <li><i class="fas fa-check" style="color:var(--accent-green);"></i> <strong>100% Sin Burocracia Meta:</strong> Activo en 24 a 48 horas</li>
                             <li><i class="fas fa-check" style="color:var(--accent-green);"></i> Agente Contador OCR + Audios y fotos multicanal</li>
@@ -694,37 +674,37 @@
                 </div>
             </div>
 
-            <!-- SOLUCIONES AVANZADAS (COMPACTO Y RESUMIDO) -->
-            <div style="background: rgba(255, 255, 255, 0.02); border: 1px solid var(--card-border); border-radius: 10px; padding: 10px 14px; margin-bottom: 12px;">
-                <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 6px; margin-bottom: 8px;">
-                    <span style="font-size: 11px; font-weight: 800; color: #fff;"><i class="fas fa-rocket" style="color:var(--purple-neon);"></i> SOLUCIONES MARKETING SUITE & ENTERPRISE</span>
-                    <span style="font-size: 9.5px; color: var(--text-muted);">Para marcas y empresas de alto volumen</span>
+            <!-- SOLUCIONES AVANZADAS -->
+            <div style="background: rgba(255, 255, 255, 0.03); border: 1.5px solid var(--card-border); border-radius: 12px; padding: 14px 18px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 8px; margin-bottom: 10px;">
+                    <span style="font-size: 13px; font-weight: 900; color: #fff;"><i class="fas fa-rocket" style="color:var(--purple-neon);"></i> SOLUCIONES MARKETING SUITE & ENTERPRISE</span>
+                    <span style="font-size: 11px; color: var(--text-muted);">Para marcas y empresas de alto volumen</span>
                 </div>
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; font-size: 9.5px;">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; font-size: 11.5px; line-height: 1.5;">
                     <div>
-                        <strong style="color:#fff; font-size:10.5px;">🟣 Omnicanal Pro ($444 USD/mes):</strong>
-                        <p style="color:var(--text-muted); margin-top:2px;">Todo Omnicanal Direct + <strong>Auto-Publicador Social Media con IA</strong> (Posts/Reels programados) + <strong>Bot de Comentarios IG & FB</strong> (1er DM automático) + Bandeja centralizada.</p>
+                        <strong style="color:#fff; font-size:12.5px;">🟣 Omnicanal Pro ($444 USD/mes):</strong>
+                        <p style="color:var(--text-muted); margin-top:3px;">Todo Omnicanal Direct + <strong>Auto-Publicador Social Media con IA</strong> (Posts/Reels programados) + <strong>Bot de Comentarios IG & FB</strong> (1er DM automático) + Bandeja centralizada.</p>
                     </div>
                     <div>
-                        <strong style="color:#fff; font-size:10.5px;">🔵 Plan Corporate (A Medida / Consultar):</strong>
-                        <p style="color:var(--text-muted); margin-top:2px;">Omnicanalidad Masiva + <strong>Integración Directa con MercadoLibre</strong> (Pre/Post-venta) + <strong>Voice Bots con IA</strong> + 1 Campaña Meta Ads incluida + Soporte VIP 24/7.</p>
+                        <strong style="color:#fff; font-size:12.5px;">🔵 Plan Corporate (A Medida / Consultar):</strong>
+                        <p style="color:var(--text-muted); margin-top:3px;">Omnicanalidad Masiva + <strong>Integración Directa con MercadoLibre</strong> (Pre/Post-venta) + <strong>Voice Bots con IA</strong> + 1 Campaña Meta Ads incluida + Soporte VIP 24/7.</p>
                     </div>
                 </div>
             </div>
 
-            <!-- SERVICIOS TRANSVERSALES & ADD-ONS (1 FILA LIMPIA) -->
-            <div class="bottom-services" style="gap: 12px;">
-                <div class="meta-ads-box" style="padding: 10px 14px;">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
-                        <h4 style="font-size: 11px; margin: 0;"><i class="fas fa-bullhorn" style="color:var(--primary-neon);"></i> Gestión Estratégica de Meta Ads</h4>
-                        <span class="fee-cap-badge" style="font-size: 8.5px;">TOPE MÁXIMO: $300.000 ARS/mes</span>
+            <!-- SERVICIOS TRANSVERSALES & ADD-ONS -->
+            <div class="bottom-services">
+                <div class="meta-ads-box">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                        <h4 style="margin: 0;"><i class="fas fa-bullhorn" style="color:var(--primary-neon);"></i> Gestión Estratégica de Meta Ads</h4>
+                        <span class="fee-cap-badge">TOPE MÁXIMO: $300.000 ARS/mes</span>
                     </div>
-                    <p style="font-size: 9.2px; margin-bottom: 0;">Optimizamos tus campañas en Facebook e Instagram Ads enlazadas directo a tus chatbots para triplicar la conversión aprovechando la ventana gratuita de 24hs (72hs en anuncios). <strong>Honorario: 20% de Inversión</strong>.</p>
+                    <p style="font-size: 11px; color: var(--text-muted); line-height: 1.45; margin-bottom: 0;">Optimizamos tus campañas en Facebook e Instagram Ads enlazadas directo a tus chatbots para triplicar la conversión aprovechando la ventana gratuita de 24hs (72hs en anuncios). <strong>Honorario: 20% de Inversión</strong>.</p>
                 </div>
 
-                <div class="addons-box" style="padding: 10px 14px;">
-                    <h4 style="font-size: 11px; margin-bottom: 4px;"><i class="fas fa-puzzle-piece" style="color:var(--purple-neon);"></i> Módulos Add-On a la Carta</h4>
-                    <div style="font-size: 9px; color: var(--text-muted); line-height: 1.4;">
+                <div class="addons-box">
+                    <h4 style="margin-bottom: 6px;"><i class="fas fa-puzzle-piece" style="color:var(--purple-neon);"></i> Módulos Add-On a la Carta</h4>
+                    <div style="font-size: 11px; color: var(--text-muted); line-height: 1.5;">
                         <div>• Auto-Publicador Social Media IA: <strong style="color:var(--primary-neon);">+$69 USD/mes</strong></div>
                         <div>• Bot Comentarios IG & FB (1er DM): <strong style="color:var(--primary-neon);">+$49 USD/mes</strong></div>
                         <div>• Bloque 1.000 Conversaciones Extra: <strong style="color:var(--primary-neon);">$25 USD</strong></div>
@@ -733,7 +713,7 @@
             </div>
 
             <!-- Footer Bar Dorso -->
-            <div class="footer-bar" style="margin-top: 6px;">
+            <div class="footer-bar">
                 <span><strong>CrocScale IA</strong> — crocscale.com</span>
                 <span>Manual de Operaciones: manual.crocscale.tech</span>
                 <span>WhatsApp: +54 9 11 3096-0114</span>
