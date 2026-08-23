@@ -47,7 +47,7 @@
             width: 148mm;
             height: 210mm;
             background: var(--bg-dark);
-            padding: 7mm 8mm;
+            padding: 6.5mm 7.5mm;
             margin-bottom: 20px;
             position: relative;
             box-shadow: 0 10px 40px rgba(0,0,0,0.15);
@@ -76,14 +76,13 @@
             }
         }
 
-        /* Efectos de fondo sutiles */
         .bg-glow-1 {
             position: absolute;
             top: -10%;
             right: -10%;
             width: 90mm;
             height: 90mm;
-            background: radial-gradient(circle, rgba(0, 242, 254, 0.12) 0%, rgba(0,0,0,0) 70%);
+            background: radial-gradient(circle, rgba(0, 242, 254, 0.15) 0%, rgba(0,0,0,0) 70%);
             z-index: 1;
             pointer-events: none;
         }
@@ -94,7 +93,7 @@
             left: -10%;
             width: 90mm;
             height: 90mm;
-            background: radial-gradient(circle, rgba(157, 78, 221, 0.12) 0%, rgba(0,0,0,0) 70%);
+            background: radial-gradient(circle, rgba(157, 78, 221, 0.15) 0%, rgba(0,0,0,0) 70%);
             z-index: 1;
             pointer-events: none;
         }
@@ -106,6 +105,7 @@
             display: flex;
             flex-direction: column;
             justify-content: space-between;
+            gap: 5px;
         }
 
         /* Encabezado */
@@ -114,7 +114,7 @@
             justify-content: space-between;
             align-items: center;
             border-bottom: 1.5px solid var(--card-border);
-            padding-bottom: 6px;
+            padding-bottom: 5px;
         }
 
         .brand-logo {
@@ -124,14 +124,14 @@
         }
 
         .brand-logo img {
-            width: 36px;
-            height: 36px;
+            width: 38px;
+            height: 38px;
             object-fit: contain;
             filter: drop-shadow(0 0 8px rgba(0, 242, 254, 0.6));
         }
 
         .brand-title {
-            font-size: 16px;
+            font-size: 18px;
             font-weight: 900;
             letter-spacing: 0.5px;
             background: linear-gradient(135deg, var(--primary-neon), var(--purple-neon));
@@ -141,7 +141,7 @@
         }
 
         .brand-tagline {
-            font-size: 8px;
+            font-size: 8.5px;
             color: var(--text-muted);
             text-transform: uppercase;
             letter-spacing: 1.2px;
@@ -150,7 +150,7 @@
 
         .header-contact {
             text-align: right;
-            font-size: 8.5px;
+            font-size: 9.5px;
             color: var(--text-muted);
             line-height: 1.4;
         }
@@ -164,21 +164,21 @@
             background: #f1f5f9;
             border: 1.5px solid rgba(0, 242, 254, 0.4);
             border-left: 4px solid var(--primary-neon);
-            padding: 10px 12px;
+            padding: 10px 14px;
             border-radius: 8px;
             box-shadow: 0 4px 15px rgba(0, 242, 254, 0.1);
         }
 
         .hook-box h2 {
-            font-size: 11px;
+            font-size: 11.5px;
             color: var(--text-main);
-            margin-bottom: 4px;
+            margin-bottom: 3px;
             font-weight: 800;
             line-height: 1.3;
         }
 
         .hook-box p {
-            font-size: 9px;
+            font-size: 9.5px;
             color: var(--text-muted);
             line-height: 1.4;
         }
@@ -190,12 +190,12 @@
 
         /* Comparativa Financiera */
         .section-title {
-            font-size: 10.5px;
-            font-weight: 800;
+            font-size: 11px;
+            font-weight: 900;
             text-transform: uppercase;
             letter-spacing: 0.8px;
             color: var(--primary-neon);
-            margin-bottom: 6px;
+            margin-bottom: 4px;
             display: flex;
             align-items: center;
             gap: 6px;
@@ -225,8 +225,8 @@
         }
 
         .comp-card h3 {
-            font-size: 10.5px;
-            margin-bottom: 6px;
+            font-size: 11px;
+            margin-bottom: 5px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -236,12 +236,12 @@
 
         .comp-list {
             list-style: none;
-            font-size: 8.8px;
-            line-height: 1.4;
+            font-size: 9.2px;
+            line-height: 1.45;
         }
 
         .comp-list li {
-            margin-bottom: 4px;
+            margin-bottom: 3.5px;
             display: flex;
             align-items: flex-start;
             gap: 5px;
@@ -252,7 +252,7 @@
         .comp-list li i.fa-check { color: #15803d; margin-top: 2px; }
 
         .price-badge-small {
-            font-size: 10px;
+            font-size: 10.5px;
             font-weight: 900;
             color: #15803d;
         }
@@ -273,16 +273,16 @@
         }
 
         .proof-card h4 {
-            font-size: 9.5px;
+            font-size: 10.5px;
             color: var(--text-main);
             margin-bottom: 2px;
             font-weight: 800;
         }
 
         .proof-card p {
-            font-size: 7.8px;
+            font-size: 8.2px;
             color: var(--text-muted);
-            line-height: 1.2;
+            line-height: 1.25;
         }
 
         /* Banner QR */
@@ -298,16 +298,16 @@
         }
 
         .cta-text h3 {
-            font-size: 12px;
+            font-size: 13px;
             color: var(--text-main);
             font-weight: 900;
             margin-bottom: 3px;
         }
 
         .cta-text p {
-            font-size: 9px;
+            font-size: 9.5px;
             color: var(--text-muted);
-            line-height: 1.3;
+            line-height: 1.35;
         }
 
         .qr-box {
@@ -319,13 +319,13 @@
         }
 
         .qr-box img {
-            width: 50px;
-            height: 50px;
+            width: 55px;
+            height: 55px;
             display: block;
         }
 
         .qr-box span {
-            font-size: 7px;
+            font-size: 7.5px;
             color: #ffffff;
             font-weight: 900;
             display: block;
@@ -334,21 +334,22 @@
 
         .footer-bar {
             border-top: 1px solid var(--card-border);
-            padding-top: 5px;
+            padding-top: 4px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            font-size: 8.5px;
+            font-size: 9px;
             color: var(--text-muted);
         }
 
         /* Estilos Dorso A5 Ampliados */
         .pricing-section-title {
             text-align: center;
+            margin-bottom: 2px;
         }
 
         .pricing-section-title h2 {
-            font-size: 15px;
+            font-size: 16px;
             font-weight: 900;
             background: linear-gradient(135deg, var(--primary-neon), var(--purple-neon));
             -webkit-background-clip: text;
@@ -356,7 +357,7 @@
         }
 
         .pricing-section-title p {
-            font-size: 9px;
+            font-size: 9.5px;
             color: var(--text-muted);
         }
 
@@ -368,7 +369,7 @@
 
         .plan-box {
             background: var(--card-bg);
-            border: 1px solid var(--card-border);
+            border: 1.5px solid var(--card-border);
             border-radius: 10px;
             padding: 12px 14px;
             display: flex;
@@ -379,7 +380,7 @@
         .plan-box.featured {
             border: 2px solid var(--primary-neon);
             background: #f0f9ff;
-            box-shadow: 0 4px 20px rgba(0, 242, 254, 0.15);
+            box-shadow: 0 4px 20px rgba(0, 242, 254, 0.18);
         }
 
         .plan-header {
@@ -390,39 +391,39 @@
         }
 
         .plan-name {
-            font-size: 13px;
+            font-size: 14px;
             font-weight: 900;
             color: var(--text-main);
         }
 
         .plan-price {
-            font-size: 16px;
+            font-size: 18px;
             font-weight: 900;
             color: var(--primary-neon);
         }
 
         .plan-setup {
-            font-size: 8px;
+            font-size: 8.5px;
             color: var(--text-muted);
             text-align: right;
         }
 
         .plan-volume {
-            font-size: 8.5px;
+            font-size: 9px;
             font-weight: 800;
             color: #15803d;
             margin-bottom: 8px;
             background: #dcfce7;
-            padding: 2px 6px;
+            padding: 2.5px 7px;
             border-radius: 4px;
             display: inline-block;
         }
 
         .plan-features {
             list-style: none;
-            font-size: 9px;
+            font-size: 9.5px;
             color: var(--text-muted);
-            line-height: 1.45;
+            line-height: 1.5;
         }
 
         .plan-features li {
@@ -435,7 +436,7 @@
         .plan-features li i {
             color: var(--primary-neon);
             margin-top: 2px;
-            font-size: 8px;
+            font-size: 8.5px;
         }
 
         .bottom-services {
@@ -446,13 +447,13 @@
 
         .meta-ads-box {
             background: #f0f9ff; border: 1.5px solid #7dd3fc;
-            border: 1px solid var(--primary-neon);
+            border: 1.5px solid var(--primary-neon);
             border-radius: 8px;
             padding: 10px 12px;
         }
 
         .meta-ads-box h4 {
-            font-size: 10px;
+            font-size: 10.5px;
             color: var(--text-main);
             font-weight: 800;
         }
@@ -460,8 +461,8 @@
         .fee-cap-badge {
             background: var(--primary-neon);
             color: #ffffff;
-            font-weight: 800;
-            font-size: 7.5px;
+            font-weight: 900;
+            font-size: 8px;
             padding: 2px 6px;
             border-radius: 3px;
             display: inline-block;
@@ -469,20 +470,20 @@
 
         .addons-box {
             background: var(--card-bg);
-            border: 1px solid var(--card-border);
+            border: 1.5px solid var(--card-border);
             border-radius: 8px;
             padding: 10px 12px;
         }
 
         .addons-box h4 {
-            font-size: 10px;
+            font-size: 10.5px;
             color: var(--text-main);
             font-weight: 800;
             margin-bottom: 4px;
         }
 
         .addon-item {
-            font-size: 8.5px;
+            font-size: 9px;
             color: var(--text-muted);
             margin-bottom: 3px;
             display: flex;
@@ -530,12 +531,12 @@
                 </div>
                 <div class="comp-grid">
                     <div class="comp-card negative">
-                        <h3>Humano 24/7 <span style="color:#ff4d4d; font-size:9.5px;">+$1.800 USD/m</span></h3>
+                        <h3>Humano 24/7 <span style="color:#ff4d4d; font-size:10px;">+$1.800 USD/m</span></h3>
                         <ul class="comp-list">
                             <li><i class="fas fa-xmark"></i> 3 empleados en turnos rotativos.</li>
                             <li><i class="fas fa-xmark"></i> Cargas sociales y vacaciones.</li>
-                            <li><i class="fas fa-xmark"></i> Errores de tipeo y stock desactualizado.</li>
-                            <li><i class="fas fa-xmark"></i> Demoras nocturnas de minutos u horas.</li>
+                            <li><i class="fas fa-xmark"></i> Errores de tipeo y stock.</li>
+                            <li><i class="fas fa-xmark"></i> Demoras de minutos u horas.</li>
                         </ul>
                     </div>
 
@@ -543,9 +544,9 @@
                         <h3>CrocScale IA <span class="price-badge-small">Desde $180 USD/m</span></h3>
                         <ul class="comp-list">
                             <li><i class="fas fa-check"></i> Cobertura 24/7/365 sin licencias.</li>
-                            <li><i class="fas fa-check"></i> Respuesta en menos de 5 segundos.</li>
+                            <li><i class="fas fa-check"></i> Respuesta en menos de 5 seg.</li>
                             <li><i class="fas fa-check"></i> Entiende audios, fotos y OCR.</li>
-                            <li><i class="fas fa-check"></i> Control total desde Google Sheets.</li>
+                            <li><i class="fas fa-check"></i> Control total en Google Sheets.</li>
                         </ul>
                     </div>
                 </div>
@@ -623,7 +624,7 @@
                 <p>100% Sin Burocracia Meta • Puesta en marcha en 24 a 48 Horas</p>
             </div>
 
-            <!-- 2 PLANES ESTRELLA (PROTAGONISTAS AMPLIADOS) -->
+            <!-- 2 PLANES ESTRELLA -->
             <div class="plan-row">
                 <!-- Plan WA Starter -->
                 <div class="plan-box">
@@ -631,10 +632,10 @@
                         <div class="plan-header">
                             <div>
                                 <div class="plan-name">WA Starter</div>
-                                <div style="font-size: 8px; color: var(--text-muted);">Solo WhatsApp 24/7</div>
+                                <div style="font-size: 8.5px; color: var(--text-muted);">Solo WhatsApp 24/7</div>
                             </div>
                             <div style="text-align: right;">
-                                <div class="plan-price">$180 <span style="font-size:9px;">USD/m</span></div>
+                                <div class="plan-price">$180 <span style="font-size:10px;">USD/m</span></div>
                                 <div class="plan-setup">+$150 Setup único</div>
                             </div>
                         </div>
@@ -655,10 +656,10 @@
                         <div class="plan-header">
                             <div>
                                 <div class="plan-name" style="color: var(--primary-neon);">Omnicanal Direct ⭐</div>
-                                <div style="font-size: 8px; color: #15803d; font-weight: 800;">MÁS ELEGIDO</div>
+                                <div style="font-size: 8.5px; color: #15803d; font-weight: 800;">MÁS ELEGIDO</div>
                             </div>
                             <div style="text-align: right;">
-                                <div class="plan-price">$349 <span style="font-size:9px;">USD/m</span></div>
+                                <div class="plan-price">$349 <span style="font-size:10px;">USD/m</span></div>
                                 <div class="plan-setup">+$250 Setup único</div>
                             </div>
                         </div>
@@ -676,18 +677,18 @@
 
             <!-- SOLUCIONES AVANZADAS -->
             <div style="background: #f8fafc; border: 1.5px solid var(--card-border); border-radius: 8px; padding: 10px 12px;">
-                <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 5px; margin-bottom: 6px;">
-                    <span style="font-size: 9.5px; font-weight: 900; color: var(--text-main);"><i class="fas fa-rocket" style="color:var(--purple-neon);"></i> SOLUCIONES ENTERPRISE & MARKETING</span>
-                    <span style="font-size: 8px; color: var(--text-muted);">Para marcas con alto volumen</span>
+                <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 4px; margin-bottom: 5px;">
+                    <span style="font-size: 10px; font-weight: 900; color: var(--text-main);"><i class="fas fa-rocket" style="color:var(--purple-neon);"></i> SOLUCIONES ENTERPRISE & MARKETING</span>
+                    <span style="font-size: 8.5px; color: var(--text-muted);">Para marcas con alto volumen</span>
                 </div>
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; font-size: 8.5px; line-height: 1.4;">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; font-size: 9px; line-height: 1.4;">
                     <div>
-                        <strong style="color:#fff; font-size: 9.5px;">🟣 Omnicanal Pro ($444 USD/m):</strong>
-                        <p style="color:var(--text-muted); margin-top:2px;">Todo Omnicanal Direct + <strong>Auto-Publicador Social Media IA</strong> + <strong>Bot de Comentarios IG & FB</strong> (1er DM automático) + Bandeja centralizada.</p>
+                        <strong style="color:#fff; font-size: 10px;">🟣 Omnicanal Pro ($444 USD/m):</strong>
+                        <p style="color:var(--text-muted); margin-top:2px;">Todo Omnicanal Direct + <strong>Auto-Publicador Social Media IA</strong> + <strong>Bot de Comentarios IG & FB</strong> + Bandeja centralizada.</p>
                     </div>
                     <div>
-                        <strong style="color:#fff; font-size: 9.5px;">🔵 Plan Corporate (A Medida):</strong>
-                        <p style="color:var(--text-muted); margin-top:2px;">Omnicanal Masivo + <strong>Integración MercadoLibre</strong> + <strong>Voice Bots con IA</strong> + Campaña Meta Ads + Soporte VIP 24/7.</p>
+                        <strong style="color:#fff; font-size: 10px;">🔵 Plan Corporate (A Medida):</strong>
+                        <p style="color:var(--text-muted); margin-top:2px;">Omnicanal Masivo + <strong>Integración MercadoLibre</strong> + <strong>Voice Bots IA</strong> + Campaña Meta Ads + Soporte VIP 24/7.</p>
                     </div>
                 </div>
             </div>
@@ -699,12 +700,12 @@
                         <h4 style="margin: 0;"><i class="fas fa-bullhorn" style="color:var(--primary-neon);"></i> Gestión Meta Ads</h4>
                         <span class="fee-cap-badge">TOPE: $300.000 ARS/m</span>
                     </div>
-                    <p style="font-size: 8px; color: var(--text-muted); line-height: 1.35;">Optimizamos pauta FB/IG Ads directa a tus bots aprovechando la ventana gratis de 24hs (72hs en anuncios). <strong>Honorario: 20% de Inversión</strong>.</p>
+                    <p style="font-size: 8.5px; color: var(--text-muted); line-height: 1.35;">Optimizamos pauta FB/IG Ads directa a tus bots aprovechando la ventana gratis de 24hs (72hs en anuncios). <strong>Honorario: 20% de Inversión</strong>.</p>
                 </div>
 
                 <div class="addons-box">
                     <h4 style="margin-bottom: 4px;"><i class="fas fa-puzzle-piece" style="color:var(--purple-neon);"></i> Add-Ons a la Carta</h4>
-                    <div style="font-size: 8px; color: var(--text-muted); line-height: 1.4;">
+                    <div style="font-size: 8.5px; color: var(--text-muted); line-height: 1.4;">
                         <div>• Auto-Publicador IA: <strong style="color:var(--primary-neon);">+$69/m</strong></div>
                         <div>• Bot Comentarios IG/FB: <strong style="color:var(--primary-neon);">+$49/m</strong></div>
                         <div>• 1.000 Conv. Extra: <strong style="color:var(--primary-neon);">$25 USD</strong></div>
