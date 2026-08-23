@@ -47,7 +47,7 @@
             width: 148mm;
             height: 210mm;
             background: var(--bg-dark);
-            padding: 6.5mm 7.5mm;
+            padding: 8mm 9mm;
             margin-bottom: 20px;
             position: relative;
             box-shadow: 0 10px 40px rgba(0,0,0,0.8);
@@ -105,7 +105,6 @@
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            gap: 5px;
         }
 
         /* Encabezado */
@@ -114,7 +113,7 @@
             justify-content: space-between;
             align-items: center;
             border-bottom: 1.5px solid var(--card-border);
-            padding-bottom: 5px;
+            padding-bottom: 6px;
         }
 
         .brand-logo {
@@ -124,14 +123,14 @@
         }
 
         .brand-logo img {
-            width: 38px;
-            height: 38px;
+            width: 40px;
+            height: 40px;
             object-fit: contain;
             filter: drop-shadow(0 0 8px rgba(0, 242, 254, 0.6));
         }
 
         .brand-title {
-            font-size: 18px;
+            font-size: 19px;
             font-weight: 900;
             letter-spacing: 0.5px;
             background: linear-gradient(135deg, var(--primary-neon), var(--purple-neon));
@@ -141,7 +140,7 @@
         }
 
         .brand-tagline {
-            font-size: 8.5px;
+            font-size: 9px;
             color: var(--text-muted);
             text-transform: uppercase;
             letter-spacing: 1.2px;
@@ -150,9 +149,9 @@
 
         .header-contact {
             text-align: right;
-            font-size: 9.5px;
+            font-size: 10px;
             color: var(--text-muted);
-            line-height: 1.4;
+            line-height: 1.45;
         }
 
         .header-contact i {
@@ -163,24 +162,24 @@
         .hook-box {
             background: linear-gradient(135deg, rgba(18, 22, 36, 0.95), rgba(30, 38, 56, 0.8));
             border: 1.5px solid rgba(0, 242, 254, 0.4);
-            border-left: 4px solid var(--primary-neon);
-            padding: 10px 14px;
-            border-radius: 8px;
-            box-shadow: 0 4px 15px rgba(0, 242, 254, 0.1);
+            border-left: 4.5px solid var(--primary-neon);
+            padding: 14px 16px;
+            border-radius: 10px;
+            box-shadow: 0 4px 18px rgba(0, 242, 254, 0.12);
         }
 
         .hook-box h2 {
-            font-size: 11.5px;
+            font-size: 13px;
             color: #fff;
-            margin-bottom: 3px;
+            margin-bottom: 5px;
             font-weight: 800;
-            line-height: 1.3;
+            line-height: 1.35;
         }
 
         .hook-box p {
-            font-size: 9.5px;
+            font-size: 10.5px;
             color: var(--text-muted);
-            line-height: 1.4;
+            line-height: 1.45;
         }
 
         .highlight-text {
@@ -190,12 +189,12 @@
 
         /* Comparativa Financiera */
         .section-title {
-            font-size: 11px;
+            font-size: 12px;
             font-weight: 900;
             text-transform: uppercase;
             letter-spacing: 0.8px;
             color: var(--primary-neon);
-            margin-bottom: 4px;
+            margin-bottom: 6px;
             display: flex;
             align-items: center;
             gap: 6px;
@@ -204,29 +203,29 @@
         .comp-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 8px;
+            gap: 10px;
         }
 
         .comp-card {
             background: var(--card-bg);
-            border: 1px solid var(--card-border);
-            border-radius: 8px;
-            padding: 10px 12px;
+            border: 1.5px solid var(--card-border);
+            border-radius: 10px;
+            padding: 12px 14px;
         }
 
         .comp-card.negative {
-            border-top: 3px solid #ff4d4d;
+            border-top: 3.5px solid #ff4d4d;
             background: linear-gradient(180deg, rgba(255, 77, 77, 0.08) 0%, var(--card-bg) 100%);
         }
 
         .comp-card.positive {
-            border-top: 3px solid var(--accent-green);
+            border-top: 3.5px solid var(--accent-green);
             background: linear-gradient(180deg, rgba(0, 230, 118, 0.08) 0%, var(--card-bg) 100%);
         }
 
         .comp-card h3 {
-            font-size: 11px;
-            margin-bottom: 5px;
+            font-size: 12px;
+            margin-bottom: 6px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -236,15 +235,15 @@
 
         .comp-list {
             list-style: none;
-            font-size: 9.2px;
-            line-height: 1.45;
+            font-size: 10px;
+            line-height: 1.5;
         }
 
         .comp-list li {
-            margin-bottom: 3.5px;
+            margin-bottom: 5px;
             display: flex;
             align-items: flex-start;
-            gap: 5px;
+            gap: 6px;
             color: var(--text-muted);
         }
 
@@ -252,80 +251,53 @@
         .comp-list li i.fa-check { color: var(--accent-green); margin-top: 2px; }
 
         .price-badge-small {
-            font-size: 10.5px;
+            font-size: 11.5px;
             font-weight: 900;
             color: var(--accent-green);
-        }
-
-        /* Casos de Éxito */
-        .proof-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 6px;
-        }
-
-        .proof-card {
-            background: var(--card-bg);
-            border: 1px solid var(--card-border);
-            padding: 8px 6px;
-            border-radius: 6px;
-            text-align: center;
-        }
-
-        .proof-card h4 {
-            font-size: 10.5px;
-            color: #fff;
-            margin-bottom: 2px;
-            font-weight: 800;
-        }
-
-        .proof-card p {
-            font-size: 8.2px;
-            color: var(--text-muted);
-            line-height: 1.25;
         }
 
         /* Banner QR */
         .cta-banner-front {
             background: linear-gradient(135deg, rgba(0, 242, 254, 0.12), rgba(157, 78, 221, 0.12));
-            border: 1.5px solid var(--primary-neon);
-            border-radius: 10px;
-            padding: 10px 14px;
+            border: 2px solid var(--primary-neon);
+            border-radius: 12px;
+            padding: 14px 18px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            box-shadow: 0 4px 20px rgba(0, 242, 254, 0.15);
+            box-shadow: 0 4px 25px rgba(0, 242, 254, 0.18);
         }
 
         .cta-text h3 {
-            font-size: 13px;
+            font-size: 14px;
             color: #fff;
             font-weight: 900;
-            margin-bottom: 3px;
+            margin-bottom: 4px;
         }
 
         .cta-text p {
-            font-size: 9.5px;
+            font-size: 10.5px;
             color: var(--text-muted);
-            line-height: 1.35;
+            line-height: 1.4;
         }
 
         .qr-box {
             background: #fff;
             border: 1px solid var(--card-border);
-            padding: 4px;
-            border-radius: 8px;
+            padding: 5px;
+            border-radius: 10px;
             text-align: center;
+            margin-left: 12px;
         }
 
         .qr-box img {
-            width: 55px;
-            height: 55px;
+            width: 65px;
+            height: 65px;
             display: block;
         }
 
         .qr-box span {
-            font-size: 7.5px;
+            font-size: 8px;
             color: #000;
             font-weight: 900;
             display: block;
@@ -333,23 +305,23 @@
         }
 
         .footer-bar {
-            border-top: 1px solid var(--card-border);
-            padding-top: 4px;
+            border-top: 1.5px solid var(--card-border);
+            padding-top: 6px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            font-size: 9px;
+            font-size: 9.5px;
             color: var(--text-muted);
         }
 
-        /* Estilos Dorso A5 Ampliados */
+        /* Estilos Dorso A5 */
         .pricing-section-title {
             text-align: center;
-            margin-bottom: 2px;
+            margin-bottom: 4px;
         }
 
         .pricing-section-title h2 {
-            font-size: 16px;
+            font-size: 17px;
             font-weight: 900;
             background: linear-gradient(135deg, var(--primary-neon), var(--purple-neon));
             -webkit-background-clip: text;
@@ -357,7 +329,7 @@
         }
 
         .pricing-section-title p {
-            font-size: 9.5px;
+            font-size: 10px;
             color: var(--text-muted);
         }
 
@@ -397,7 +369,7 @@
         }
 
         .plan-price {
-            font-size: 18px;
+            font-size: 19px;
             font-weight: 900;
             color: var(--primary-neon);
         }
@@ -421,7 +393,7 @@
 
         .plan-features {
             list-style: none;
-            font-size: 9.5px;
+            font-size: 9.8px;
             color: var(--text-muted);
             line-height: 1.5;
         }
@@ -453,7 +425,7 @@
         }
 
         .meta-ads-box h4 {
-            font-size: 10.5px;
+            font-size: 11px;
             color: #fff;
             font-weight: 800;
         }
@@ -476,7 +448,7 @@
         }
 
         .addons-box h4 {
-            font-size: 10.5px;
+            font-size: 11px;
             color: #fff;
             font-weight: 800;
             margin-bottom: 4px;
@@ -520,8 +492,8 @@
 
             <!-- Hook de Impacto Nocturno -->
             <div class="hook-box">
-                <h2>🌙 ¿Sabías que tu e-commerce pierde hasta el 35% de sus ventas de noche?</h2>
-                <p>Mientras tu equipo descansa, los clientes preguntan en tu chat. <span class="highlight-text">Si no reciben respuesta en 5 minutos, le compran a tu competencia</span>.</p>
+                <h2>🌙 ¿Sabías que tu e-commerce pierde hasta el 35% de sus ventas entre las 20:00 hs y las 08:00 hs?</h2>
+                <p>Las compras por impulso no tienen horario comercial. Mientras tu equipo descansa, los clientes preguntan en tu chat. <span class="highlight-text">Si no reciben respuesta en 5 minutos, le compran a tu competencia</span>.</p>
             </div>
 
             <!-- Comparativa Financiera -->
@@ -531,48 +503,23 @@
                 </div>
                 <div class="comp-grid">
                     <div class="comp-card negative">
-                        <h3>Humano 24/7 <span style="color:#ff4d4d; font-size:10px;">+$1.800 USD/m</span></h3>
+                        <h3>Humano 24/7 <span style="color:#ff4d4d; font-size:10.5px;">+$1.800 USD/m</span></h3>
                         <ul class="comp-list">
-                            <li><i class="fas fa-xmark"></i> 3 empleados en turnos rotativos.</li>
-                            <li><i class="fas fa-xmark"></i> Cargas sociales y vacaciones.</li>
-                            <li><i class="fas fa-xmark"></i> Errores de tipeo y stock.</li>
-                            <li><i class="fas fa-xmark"></i> Demoras de minutos u horas.</li>
+                            <li><i class="fas fa-xmark"></i> Requiere contratar al menos 3 empleados en turnos rotativos.</li>
+                            <li><i class="fas fa-xmark"></i> Cargas sociales, aguinaldos y vacaciones.</li>
+                            <li><i class="fas fa-xmark"></i> Errores de tipeo y stock desactualizado.</li>
+                            <li><i class="fas fa-xmark"></i> Demoras de respuesta de minutos u horas.</li>
                         </ul>
                     </div>
 
                     <div class="comp-card positive">
                         <h3>CrocScale IA <span class="price-badge-small">Desde $180 USD/m</span></h3>
                         <ul class="comp-list">
-                            <li><i class="fas fa-check"></i> Cobertura 24/7/365 sin licencias.</li>
-                            <li><i class="fas fa-check"></i> Respuesta en menos de 5 seg.</li>
-                            <li><i class="fas fa-check"></i> Entiende audios, fotos y OCR.</li>
-                            <li><i class="fas fa-check"></i> Control total en Google Sheets.</li>
+                            <li><i class="fas fa-check"></i> Cobertura 24/7/365 sin licencias ni descansos.</li>
+                            <li><i class="fas fa-check"></i> Respuesta inmediata en menos de 5 segundos.</li>
+                            <li><i class="fas fa-check"></i> Entiende audios de voz, fotos y OCR.</li>
+                            <li><i class="fas fa-check"></i> Control total de stock en Google Sheets.</li>
                         </ul>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Casos de Éxito -->
-            <div>
-                <div class="section-title">
-                    <i class="fas fa-shield-halved"></i> Casos Reales en Producción
-                </div>
-                <div class="proof-grid">
-                    <div class="proof-card">
-                        <h4>ADAR</h4>
-                        <p>Ferretería B2B (Atención 24/7 catálogo masivo).</p>
-                    </div>
-                    <div class="proof-card">
-                        <h4>Bross</h4>
-                        <p>Moda (Ventas directas por WhatsApp).</p>
-                    </div>
-                    <div class="proof-card">
-                        <h4>Nacha Home</h4>
-                        <p>Hogar (WhatsApp + Auto-Publicador).</p>
-                    </div>
-                    <div class="proof-card">
-                        <h4>NNN Store</h4>
-                        <p>E-commerce (Comentarios + WA).</p>
                     </div>
                 </div>
             </div>
@@ -580,19 +527,19 @@
             <!-- CTA Banner con QR -->
             <div class="cta-banner-front">
                 <div class="cta-text">
-                    <h3>🚀 Probá la Demo CrocScale</h3>
-                    <p>Escaneá el código QR y probá todos los bots en vivo en <strong>crocscale.com/links/</strong></p>
+                    <h3>🚀 Probá los Bots en Producción en Vivo</h3>
+                    <p>Escaneá el código QR para acceder a <strong>crocscale.com/links/</strong> y chatear en tiempo real con los bots oficiales de nuestros clientes en WhatsApp (Ferretería B2B, Moda, Hogar y E-commerce).</p>
                 </div>
                 <div class="qr-box">
                     <img src="./images/qr_crocscale.png" alt="QR Demo CrocScale">
-                    <span>PROBAR DEMO</span>
+                    <span>PROBAR BOTS</span>
                 </div>
             </div>
 
             <!-- Footer Bar -->
             <div class="footer-bar">
-                <span><strong>CrocScale IA</strong> — Buenos Aires</span>
-                <span>WhatsApp: +54 9 11 3096-0114</span>
+                <span><strong>CrocScale IA</strong> — Buenos Aires, Argentina</span>
+                <span>WhatsApp Directo: +54 9 11 3096-0114</span>
             </div>
         </div>
     </div>
