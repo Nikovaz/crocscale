@@ -37,7 +37,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 10px 0;
+            padding: 15px 0;
             -webkit-print-color-adjust: exact !important;
             print-color-adjust: exact !important;
         }
@@ -47,10 +47,10 @@
             width: 148mm;
             height: 210mm;
             background: var(--bg-dark);
-            padding: 9mm 9mm;
-            margin-bottom: 20px;
+            padding: 8mm 9mm;
+            margin-bottom: 25px;
             position: relative;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.8);
+            box-shadow: 0 12px 45px rgba(0,0,0,0.85);
             border: 1px solid var(--card-border);
             overflow: hidden;
             display: flex;
@@ -105,6 +105,7 @@
             display: flex;
             flex-direction: column;
             justify-content: space-between;
+            gap: 6px;
         }
 
         /* Encabezado */
@@ -123,14 +124,14 @@
         }
 
         .brand-logo img {
-            width: 40px;
-            height: 40px;
+            width: 42px;
+            height: 42px;
             object-fit: contain;
             filter: drop-shadow(0 0 8px rgba(0, 242, 254, 0.6));
         }
 
         .brand-title {
-            font-size: 19px;
+            font-size: 20px;
             font-weight: 900;
             letter-spacing: 0.5px;
             background: linear-gradient(135deg, var(--primary-neon), var(--purple-neon));
@@ -158,18 +159,18 @@
             color: var(--primary-neon);
         }
 
-        /* Hook Principal */
+        /* Hook Principal Frente */
         .hook-box {
             background: linear-gradient(135deg, rgba(18, 22, 36, 0.95), rgba(30, 38, 56, 0.8));
             border: 1.5px solid rgba(0, 242, 254, 0.4);
-            border-left: 4.5px solid var(--primary-neon);
+            border-left: 5px solid var(--primary-neon);
             padding: 14px 16px;
             border-radius: 10px;
             box-shadow: 0 4px 18px rgba(0, 242, 254, 0.12);
         }
 
         .hook-box h2 {
-            font-size: 13px;
+            font-size: 13.5px;
             color: #fff;
             margin-bottom: 5px;
             font-weight: 800;
@@ -177,7 +178,7 @@
         }
 
         .hook-box p {
-            font-size: 10.5px;
+            font-size: 10.8px;
             color: var(--text-muted);
             line-height: 1.45;
         }
@@ -187,9 +188,9 @@
             font-weight: 700;
         }
 
-        /* Comparativa Financiera */
+        /* Comparativa Financiera Frente */
         .section-title {
-            font-size: 12px;
+            font-size: 12.5px;
             font-weight: 900;
             text-transform: uppercase;
             letter-spacing: 0.8px;
@@ -224,7 +225,7 @@
         }
 
         .comp-card h3 {
-            font-size: 12px;
+            font-size: 12.5px;
             margin-bottom: 8px;
             display: flex;
             justify-content: space-between;
@@ -235,7 +236,7 @@
 
         .comp-list {
             list-style: none;
-            font-size: 10.2px;
+            font-size: 10.5px;
             line-height: 1.55;
         }
 
@@ -251,12 +252,12 @@
         .comp-list li i.fa-check { color: var(--accent-green); margin-top: 2px; }
 
         .price-badge-small {
-            font-size: 11.5px;
+            font-size: 12px;
             font-weight: 900;
             color: var(--accent-green);
         }
 
-        /* Banner QR */
+        /* Banner QR Frente */
         .cta-banner-front {
             background: linear-gradient(135deg, rgba(0, 242, 254, 0.12), rgba(157, 78, 221, 0.12));
             border: 2px solid var(--primary-neon);
@@ -269,14 +270,14 @@
         }
 
         .cta-text h3 {
-            font-size: 14.5px;
+            font-size: 15px;
             color: #fff;
             font-weight: 900;
             margin-bottom: 4px;
         }
 
         .cta-text p {
-            font-size: 10.5px;
+            font-size: 11px;
             color: var(--text-muted);
             line-height: 1.45;
         }
@@ -288,11 +289,12 @@
             border-radius: 10px;
             text-align: center;
             margin-left: 12px;
+            flex-shrink: 0;
         }
 
         .qr-box img {
-            width: 68px;
-            height: 68px;
+            width: 70px;
+            height: 70px;
             display: block;
         }
 
@@ -310,12 +312,12 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            font-size: 9.5px;
+            font-size: 10px;
             color: var(--text-muted);
         }
 
         /* ===================================================
-           ESTILOS DORSO A5 (LIMPIO, ESPACIOSO Y ULTRA LEGIBLE)
+           ESTILOS DORSO A5 (TOTALMENTE LLENO Y EQUILIBRADO)
            =================================================== */
         .pricing-section-title {
             text-align: center;
@@ -323,7 +325,7 @@
         }
 
         .pricing-section-title h2 {
-            font-size: 18px;
+            font-size: 19px;
             font-weight: 900;
             background: linear-gradient(135deg, var(--primary-neon), var(--purple-neon));
             -webkit-background-clip: text;
@@ -331,7 +333,7 @@
         }
 
         .pricing-section-title p {
-            font-size: 10.5px;
+            font-size: 11px;
             color: var(--text-muted);
             margin-top: 2px;
         }
@@ -341,14 +343,14 @@
             grid-template-columns: 1fr 1fr;
             gap: 12px;
             flex: 1;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
         }
 
         .plan-box-a5 {
             background: var(--card-bg);
             border: 1.5px solid var(--card-border);
             border-radius: 12px;
-            padding: 16px 14px;
+            padding: 16px 15px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
@@ -357,7 +359,7 @@
         .plan-box-a5.featured {
             border: 2px solid var(--primary-neon);
             background: linear-gradient(180deg, rgba(0, 242, 254, 0.1) 0%, var(--card-bg) 100%);
-            box-shadow: 0 4px 25px rgba(0, 242, 254, 0.2);
+            box-shadow: 0 6px 25px rgba(0, 242, 254, 0.2);
         }
 
         .plan-header-a5 {
@@ -368,28 +370,28 @@
         }
 
         .plan-name-a5 {
-            font-size: 15px;
+            font-size: 16px;
             font-weight: 900;
             color: #fff;
             line-height: 1.2;
         }
 
         .plan-price-a5 {
-            font-size: 20px;
+            font-size: 22px;
             font-weight: 900;
             color: var(--primary-neon);
             line-height: 1;
         }
 
         .plan-setup-a5 {
-            font-size: 9px;
+            font-size: 9.5px;
             color: var(--text-muted);
             text-align: right;
-            margin-top: 2px;
+            margin-top: 3px;
         }
 
         .plan-volume-a5 {
-            font-size: 9.5px;
+            font-size: 10px;
             font-weight: 800;
             color: var(--accent-green);
             margin-bottom: 12px;
@@ -401,31 +403,48 @@
 
         .plan-features-a5 {
             list-style: none;
-            font-size: 10.5px;
+            font-size: 11px;
             color: var(--text-muted);
-            line-height: 1.6;
+            line-height: 1.65;
         }
 
         .plan-features-a5 li {
-            margin-bottom: 7px;
+            margin-bottom: 8px;
             display: flex;
             align-items: flex-start;
-            gap: 6px;
+            gap: 7px;
         }
 
         .plan-features-a5 li i {
             color: var(--primary-neon);
             margin-top: 3px;
-            font-size: 9.5px;
+            font-size: 10px;
             flex-shrink: 0;
         }
 
-        /* Banner Resumen Enterprise & Ads (1 Sola Barra Elegante) */
+        .plan-card-footer {
+            margin-top: 10px;
+            padding-top: 8px;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 9px;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .plan-card-footer span i {
+            color: var(--accent-green);
+            margin-right: 4px;
+        }
+
+        /* Banner Resumen Enterprise & Ads */
         .enterprise-summary-bar {
             background: rgba(255, 255, 255, 0.03);
             border: 1.5px solid var(--card-border);
             border-radius: 10px;
-            padding: 10px 14px;
+            padding: 11px 15px;
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -433,9 +452,9 @@
         }
 
         .enterprise-summary-text {
-            font-size: 9.5px;
+            font-size: 10px;
             color: var(--text-muted);
-            line-height: 1.4;
+            line-height: 1.45;
         }
 
         .enterprise-summary-text strong {
@@ -446,8 +465,8 @@
             background: linear-gradient(135deg, var(--primary-neon), var(--purple-neon));
             color: #000;
             font-weight: 900;
-            font-size: 8.5px;
-            padding: 5px 10px;
+            font-size: 9px;
+            padding: 6px 12px;
             border-radius: 6px;
             white-space: nowrap;
             text-transform: uppercase;
@@ -480,7 +499,7 @@
 
             <!-- Hook de Impacto Nocturno -->
             <div class="hook-box">
-                <h2>🌙 ¿Sabías que tu e-commerce pierde hasta el 35% de sus ventas de noche?</h2>
+                <h2>🌙 ¿Sabías que tu e-commerce pierde hasta el 35% de sus ventas entre las 20:00 hs y las 08:00 hs?</h2>
                 <p>Las compras por impulso no tienen horario comercial. Mientras tu equipo descansa, los clientes preguntan en tu chat. <span class="highlight-text">Si no reciben respuesta en 5 minutos, le compran a tu competencia</span>.</p>
             </div>
 
@@ -491,7 +510,7 @@
                 </div>
                 <div class="comp-grid">
                     <div class="comp-card negative">
-                        <h3>Humano 24/7 <span style="color:#ff4d4d; font-size:10.5px;">+$1.800 USD/m</span></h3>
+                        <h3>Humano 24/7 <span style="color:#ff4d4d; font-size:11px;">+$1.800 USD/m</span></h3>
                         <ul class="comp-list">
                             <li><i class="fas fa-xmark"></i> Requiere contratar al menos 3 empleados.</li>
                             <li><i class="fas fa-xmark"></i> Cargas sociales, aguinaldos y vacaciones.</li>
@@ -567,21 +586,27 @@
                         <div class="plan-header-a5">
                             <div>
                                 <div class="plan-name-a5">WA Starter</div>
-                                <div style="font-size: 9.5px; color: var(--text-muted);">Solo WhatsApp 24/7</div>
+                                <div style="font-size: 10px; color: var(--text-muted);">Solo WhatsApp 24/7</div>
                             </div>
                             <div style="text-align: right;">
-                                <div class="plan-price-a5">$180 <span style="font-size:11px;">USD/m</span></div>
+                                <div class="plan-price-a5">$180 <span style="font-size:12px;">USD/m</span></div>
                                 <div class="plan-setup-a5">+$150 Setup único</div>
                             </div>
                         </div>
                         <div class="plan-volume-a5">5.000 Conv/mes (≈ 25k-40k msgs)</div>
                         <ul class="plan-features-a5">
-                            <li><i class="fas fa-check"></i> Chatbot WhatsApp IA 24/7 exclusivo</li>
-                            <li><i class="fas fa-check"></i> Entiende audios de voz y fotos de productos</li>
-                            <li><i class="fas fa-check"></i> <strong>Agente Contador OCR:</strong> Lee transferencias</li>
-                            <li><i class="fas fa-check"></i> Stock y precios en Google Sheets</li>
-                            <li><i class="fas fa-check"></i> Handoff fluido a humano (Modo Admin)</li>
+                            <li><i class="fas fa-check"></i> <strong>Chatbot WhatsApp IA 24/7</strong> exclusivo</li>
+                            <li><i class="fas fa-check"></i> <strong>Entiende audios de voz y fotos</strong> de catálogo</li>
+                            <li><i class="fas fa-check"></i> <strong>Agente Contador OCR:</strong> Valida transferencias</li>
+                            <li><i class="fas fa-check"></i> <strong>Stock y precios</strong> sincronizados en Sheets</li>
+                            <li><i class="fas fa-check"></i> <strong>Handoff fluido a humano</strong> (Modo Admin)</li>
+                            <li><i class="fas fa-check"></i> <strong>Reportes automáticos</strong> de conversaciones</li>
+                            <li><i class="fas fa-check"></i> <strong>Puesta en marcha:</strong> Activo en 24 a 48 hs</li>
                         </ul>
+                    </div>
+                    <div class="plan-card-footer">
+                        <span><i class="fas fa-bolt"></i> Despliegue Express 24-48h</span>
+                        <span style="color:var(--primary-neon);">Monocanal</span>
                     </div>
                 </div>
 
@@ -591,21 +616,27 @@
                         <div class="plan-header-a5">
                             <div>
                                 <div class="plan-name-a5" style="color: var(--primary-neon);">Omnicanal Direct ⭐</div>
-                                <div style="font-size: 9.5px; color: var(--accent-green); font-weight: 800;">MÁS ELEGIDO</div>
+                                <div style="font-size: 10px; color: var(--accent-green); font-weight: 800;">MÁS ELEGIDO</div>
                             </div>
                             <div style="text-align: right;">
-                                <div class="plan-price-a5">$349 <span style="font-size:11px;">USD/m</span></div>
+                                <div class="plan-price-a5">$349 <span style="font-size:12px;">USD/m</span></div>
                                 <div class="plan-setup-a5">+$250 Setup único</div>
                             </div>
                         </div>
                         <div class="plan-volume-a5" style="background: rgba(0,242,254,0.15); color: var(--primary-neon);">7.000 Conv/mes (≈ 35k-56k msgs)</div>
                         <ul class="plan-features-a5">
                             <li><i class="fas fa-check" style="color:var(--accent-green);"></i> <strong>WhatsApp + Instagram + Facebook DMs</strong></li>
-                            <li><i class="fas fa-check" style="color:var(--accent-green);"></i> <strong>100% Sin Burocracia Meta (24-48hs)</strong></li>
-                            <li><i class="fas fa-check" style="color:var(--accent-green);"></i> Agente Contador OCR + Audios y fotos</li>
-                            <li><i class="fas fa-check" style="color:var(--accent-green);"></i> Un solo cerebro IA para todos tus chats</li>
-                            <li><i class="fas fa-check" style="color:var(--accent-green);"></i> Detección y cierre de intención de compra</li>
+                            <li><i class="fas fa-check" style="color:var(--accent-green);"></i> <strong>100% Sin Burocracia Meta:</strong> Activo en 24-48h</li>
+                            <li><i class="fas fa-check" style="color:var(--accent-green);"></i> <strong>Un solo cerebro de IA</strong> en todas tus bandejas</li>
+                            <li><i class="fas fa-check" style="color:var(--accent-green);"></i> <strong>Agente Contador OCR</strong> + Audios y fotos</li>
+                            <li><i class="fas fa-check" style="color:var(--accent-green);"></i> <strong>Detección y cierre</strong> de intención de compra</li>
+                            <li><i class="fas fa-check" style="color:var(--accent-green);"></i> <strong>Respuestas simultáneas</strong> en menos de 5 seg</li>
+                            <li><i class="fas fa-check" style="color:var(--accent-green);"></i> <strong>Alertas prioritarias</strong> derivadas a tu equipo</li>
                         </ul>
+                    </div>
+                    <div class="plan-card-footer" style="border-top-color: rgba(0,242,254,0.2);">
+                        <span style="color:var(--accent-green);"><i class="fas fa-star"></i> Solución Recomendada</span>
+                        <span style="color:var(--primary-neon);">Omnicanal Total</span>
                     </div>
                 </div>
             </div>
