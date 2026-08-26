@@ -37,20 +37,18 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 20px 10px;
+            padding: 20px 0;
             -webkit-print-color-adjust: exact !important;
             print-color-adjust: exact !important;
             width: 100%;
-            overflow-x: hidden;
         }
 
         /* Contenedor A5 Exacto (148mm x 210mm) */
         .page-a5 {
             width: 148mm;
             height: 210mm;
-            max-width: 100%;
             background: var(--bg-dark);
-            padding: 8mm 9mm;
+            padding: 7.5mm 8.5mm;
             margin-bottom: 25px;
             position: relative;
             box-shadow: 0 12px 45px rgba(0,0,0,0.85);
@@ -86,25 +84,26 @@
             }
         }
 
-        /* Adaptabilidad en Celulares (Pantallas < 580px) */
+        /* Adaptabilidad en Celulares */
         @media screen and (max-width: 580px) {
             body {
-                padding: 10px 5px;
+                padding: 10px;
             }
             .page-a5 {
                 width: 100%;
+                max-width: 100%;
                 height: auto;
-                min-height: 100vh;
-                padding: 16px 14px;
+                padding: 18px 14px;
                 margin-bottom: 20px;
                 border-radius: 12px;
+                gap: 16px;
             }
             .comp-grid, .plan-row-a5 {
                 grid-template-columns: 1fr !important;
                 gap: 14px !important;
             }
             .brand-title {
-                font-size: 18px !important;
+                font-size: 19px !important;
             }
             .cta-banner-front {
                 flex-direction: column !important;
@@ -150,7 +149,7 @@
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            gap: 6px;
+            gap: 7px;
         }
 
         /* Encabezado */
@@ -169,14 +168,14 @@
         }
 
         .brand-logo img {
-            width: 40px;
-            height: 40px;
+            width: 42px;
+            height: 42px;
             object-fit: contain;
             filter: drop-shadow(0 0 8px rgba(0, 242, 254, 0.6));
         }
 
         .brand-title {
-            font-size: 19px;
+            font-size: 20px;
             font-weight: 900;
             letter-spacing: 0.5px;
             background: linear-gradient(135deg, var(--primary-neon), var(--purple-neon));
@@ -186,7 +185,7 @@
         }
 
         .brand-tagline {
-            font-size: 8.5px;
+            font-size: 9px;
             color: var(--text-muted);
             text-transform: uppercase;
             letter-spacing: 1.2px;
@@ -195,7 +194,7 @@
 
         .header-contact {
             text-align: right;
-            font-size: 9.5px;
+            font-size: 10px;
             color: var(--text-muted);
             line-height: 1.45;
         }
@@ -209,21 +208,21 @@
             background: linear-gradient(135deg, rgba(18, 22, 36, 0.95), rgba(30, 38, 56, 0.8));
             border: 1.5px solid rgba(0, 242, 254, 0.4);
             border-left: 5px solid var(--primary-neon);
-            padding: 12px 14px;
+            padding: 13px 15px;
             border-radius: 10px;
             box-shadow: 0 4px 18px rgba(0, 242, 254, 0.12);
         }
 
         .hook-box h2 {
-            font-size: 12.5px;
+            font-size: 13.5px;
             color: #fff;
-            margin-bottom: 4px;
+            margin-bottom: 5px;
             font-weight: 800;
             line-height: 1.35;
         }
 
         .hook-box p {
-            font-size: 10px;
+            font-size: 10.5px;
             color: var(--text-muted);
             line-height: 1.45;
         }
@@ -235,12 +234,12 @@
 
         /* Comparativa Financiera Frente */
         .section-title {
-            font-size: 11.5px;
+            font-size: 12px;
             font-weight: 900;
             text-transform: uppercase;
             letter-spacing: 0.8px;
             color: var(--primary-neon);
-            margin-bottom: 5px;
+            margin-bottom: 6px;
             display: flex;
             align-items: center;
             gap: 6px;
@@ -249,14 +248,14 @@
         .comp-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 9px;
+            gap: 10px;
         }
 
         .comp-card {
             background: var(--card-bg);
             border: 1.5px solid var(--card-border);
             border-radius: 10px;
-            padding: 12px 12px;
+            padding: 13px 13px;
         }
 
         .comp-card.negative {
@@ -270,8 +269,8 @@
         }
 
         .comp-card h3 {
-            font-size: 11.5px;
-            margin-bottom: 6px;
+            font-size: 12.5px;
+            margin-bottom: 7px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -281,23 +280,23 @@
 
         .comp-list {
             list-style: none;
-            font-size: 9.5px;
-            line-height: 1.45;
+            font-size: 10.2px;
+            line-height: 1.55;
         }
 
         .comp-list li {
-            margin-bottom: 4px;
+            margin-bottom: 5px;
             display: flex;
             align-items: flex-start;
             gap: 6px;
             color: var(--text-muted);
         }
 
-        .comp-list li i.fa-xmark { color: #ff4d4d; margin-top: 2px; flex-shrink: 0; }
-        .comp-list li i.fa-check { color: var(--accent-green); margin-top: 2px; flex-shrink: 0; }
+        .comp-list li i.fa-xmark { color: #ff4d4d; margin-top: 3px; flex-shrink: 0; font-size: 10px; }
+        .comp-list li i.fa-check { color: var(--accent-green); margin-top: 3px; flex-shrink: 0; font-size: 10px; }
 
         .price-badge-small {
-            font-size: 11px;
+            font-size: 12px;
             font-weight: 900;
             color: var(--accent-green);
         }
@@ -307,7 +306,7 @@
             background: linear-gradient(135deg, rgba(0, 242, 254, 0.12), rgba(157, 78, 221, 0.12));
             border: 1.5px solid var(--primary-neon);
             border-radius: 10px;
-            padding: 12px 14px;
+            padding: 14px 16px;
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -315,36 +314,36 @@
         }
 
         .cta-text h3 {
-            font-size: 13.5px;
+            font-size: 14.5px;
             color: #fff;
             font-weight: 900;
-            margin-bottom: 3px;
+            margin-bottom: 4px;
         }
 
         .cta-text p {
-            font-size: 9.8px;
+            font-size: 10.5px;
             color: var(--text-muted);
-            line-height: 1.4;
+            line-height: 1.45;
         }
 
         .qr-box {
             background: #fff;
             border: 1px solid var(--card-border);
-            padding: 4px;
+            padding: 5px;
             border-radius: 8px;
             text-align: center;
-            margin-left: 10px;
+            margin-left: 12px;
             flex-shrink: 0;
         }
 
         .qr-box img {
-            width: 62px;
-            height: 62px;
+            width: 68px;
+            height: 68px;
             display: block;
         }
 
         .qr-box span {
-            font-size: 7.5px;
+            font-size: 8px;
             color: #000;
             font-weight: 900;
             display: block;
@@ -353,11 +352,11 @@
 
         .footer-bar {
             border-top: 1.5px solid var(--card-border);
-            padding-top: 5px;
+            padding-top: 6px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            font-size: 9px;
+            font-size: 9.5px;
             color: var(--text-muted);
         }
 
@@ -366,11 +365,11 @@
            =================================================== */
         .pricing-section-title {
             text-align: center;
-            margin-bottom: 4px;
+            margin-bottom: 6px;
         }
 
         .pricing-section-title h2 {
-            font-size: 17px;
+            font-size: 18.5px;
             font-weight: 900;
             background: linear-gradient(135deg, var(--primary-neon), var(--purple-neon));
             -webkit-background-clip: text;
@@ -378,15 +377,15 @@
         }
 
         .pricing-section-title p {
-            font-size: 9.5px;
+            font-size: 10.5px;
             color: var(--text-muted);
-            margin-top: 1px;
+            margin-top: 2px;
         }
 
         .plan-row-a5 {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 10px;
+            gap: 11px;
             flex: 1;
             margin-bottom: 6px;
         }
@@ -394,8 +393,8 @@
         .plan-box-a5 {
             background: var(--card-bg);
             border: 1.5px solid var(--card-border);
-            border-radius: 10px;
-            padding: 12px 12px;
+            border-radius: 11px;
+            padding: 14px 14px 12px 14px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
@@ -404,66 +403,66 @@
         .plan-box-a5.featured {
             border: 2px solid var(--primary-neon);
             background: linear-gradient(180deg, rgba(0, 242, 254, 0.1) 0%, var(--card-bg) 100%);
-            box-shadow: 0 4px 20px rgba(0, 242, 254, 0.18);
+            box-shadow: 0 4px 22px rgba(0, 242, 254, 0.18);
         }
 
         .plan-header-a5 {
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
-            margin-bottom: 6px;
+            margin-bottom: 7px;
         }
 
         .plan-name-a5 {
-            font-size: 14.5px;
+            font-size: 15.5px;
             font-weight: 900;
             color: #fff;
             line-height: 1.2;
         }
 
         .plan-price-a5 {
-            font-size: 19px;
+            font-size: 22px;
             font-weight: 900;
             color: var(--primary-neon);
             line-height: 1;
         }
 
         .plan-setup-a5 {
-            font-size: 8.5px;
+            font-size: 9px;
             color: var(--text-muted);
             text-align: right;
-            margin-top: 2px;
+            margin-top: 3px;
         }
 
         .plan-volume-a5 {
-            font-size: 9px;
+            font-size: 10px;
             font-weight: 800;
             color: var(--accent-green);
-            margin-bottom: 8px;
+            margin-bottom: 10px;
             background: rgba(0,230,118,0.12);
-            padding: 2px 6px;
+            padding: 3px 8px;
             border-radius: 4px;
             display: inline-block;
         }
 
         .plan-features-a5 {
             list-style: none;
-            font-size: 9.5px;
+            font-size: 10.5px;
             color: var(--text-muted);
-            line-height: 1.45;
+            line-height: 1.58;
         }
 
         .plan-features-a5 li {
-            margin-bottom: 5px;
+            margin-bottom: 7px;
             display: flex;
             align-items: flex-start;
-            gap: 6px;
+            gap: 7px;
         }
 
         .plan-features-a5 li i {
             color: var(--primary-neon);
-            margin-top: 2px;
-            font-size: 9px;
+            margin-top: 3px;
+            font-size: 10px;
             flex-shrink: 0;
         }
 
@@ -473,38 +472,38 @@
         }
 
         .plan-card-footer {
-            margin-top: 8px;
-            padding-top: 6px;
+            margin-top: 10px;
+            padding-top: 8px;
             border-top: 1px solid rgba(255, 255, 255, 0.08);
             display: flex;
             align-items: center;
             justify-content: space-between;
-            font-size: 8.5px;
+            font-size: 9px;
             font-weight: 700;
             color: #fff;
         }
 
         .plan-card-footer span i {
             color: var(--accent-green);
-            margin-right: 3px;
+            margin-right: 4px;
         }
 
         /* Banner Resumen Enterprise & Ads */
         .enterprise-summary-bar {
             background: rgba(255, 255, 255, 0.03);
             border: 1.5px solid var(--card-border);
-            border-radius: 8px;
-            padding: 8px 12px;
+            border-radius: 9px;
+            padding: 10px 14px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 8px;
+            gap: 10px;
         }
 
         .enterprise-summary-text {
-            font-size: 9px;
+            font-size: 9.8px;
             color: var(--text-muted);
-            line-height: 1.35;
+            line-height: 1.4;
         }
 
         .enterprise-summary-text strong {
@@ -515,8 +514,8 @@
             background: linear-gradient(135deg, var(--primary-neon), var(--purple-neon));
             color: #000;
             font-weight: 900;
-            font-size: 8px;
-            padding: 5px 10px;
+            font-size: 8.5px;
+            padding: 6px 12px;
             border-radius: 5px;
             white-space: nowrap;
             text-transform: uppercase;
@@ -560,7 +559,7 @@
                 </div>
                 <div class="comp-grid">
                     <div class="comp-card negative">
-                        <h3>Humano 24/7 <span style="color:#ff4d4d; font-size:10px;">+$1.800 USD/m</span></h3>
+                        <h3>Humano 24/7 <span style="color:#ff4d4d; font-size:11px;">+$1.800 USD/m</span></h3>
                         <ul class="comp-list">
                             <li><i class="fas fa-xmark"></i> <span class="feat-text">Requiere contratar al menos 3 empleados.</span></li>
                             <li><i class="fas fa-xmark"></i> <span class="feat-text">Cargas sociales, aguinaldos y vacaciones.</span></li>
@@ -636,10 +635,10 @@
                         <div class="plan-header-a5">
                             <div>
                                 <div class="plan-name-a5">WA Starter</div>
-                                <div style="font-size: 9px; color: var(--text-muted);">Solo WhatsApp 24/7</div>
+                                <div style="font-size: 9.5px; color: var(--text-muted);">Solo WhatsApp 24/7</div>
                             </div>
                             <div style="text-align: right;">
-                                <div class="plan-price-a5">$249 <span style="font-size:11px;">USD/m</span></div>
+                                <div class="plan-price-a5">$249 <span style="font-size:12px;">USD/m</span></div>
                                 <div class="plan-setup-a5">+$150 Setup único</div>
                             </div>
                         </div>
@@ -652,6 +651,8 @@
                             <li><i class="fas fa-check"></i> <span class="feat-text"><strong>Impresión de Tickets Térmicos</strong> con 1 clic</span></li>
                             <li><i class="fas fa-check"></i> <span class="feat-text"><strong>Stock y precios</strong> sincronizados en Sheets</span></li>
                             <li><i class="fas fa-check"></i> <span class="feat-text"><strong>Handoff fluido a humano</strong> (Modo Admin)</span></li>
+                            <li><i class="fas fa-check"></i> <span class="feat-text"><strong>Reportes automáticos</strong> semanales de ventas</span></li>
+                            <li><i class="fas fa-check"></i> <span class="feat-text"><strong>Soporte y Mantenimiento</strong> continuo</span></li>
                         </ul>
                     </div>
                     <div class="plan-card-footer">
@@ -666,10 +667,10 @@
                         <div class="plan-header-a5">
                             <div>
                                 <div class="plan-name-a5" style="color: var(--primary-neon);">Omnicanal Direct ⭐</div>
-                                <div style="font-size: 9px; color: var(--accent-green); font-weight: 800;">MÁS ELEGIDO</div>
+                                <div style="font-size: 9.5px; color: var(--accent-green); font-weight: 800;">MÁS ELEGIDO</div>
                             </div>
                             <div style="text-align: right;">
-                                <div class="plan-price-a5">$399 <span style="font-size:11px;">USD/m</span></div>
+                                <div class="plan-price-a5">$399 <span style="font-size:12px;">USD/m</span></div>
                                 <div class="plan-setup-a5">+$250 Setup único</div>
                             </div>
                         </div>
@@ -681,7 +682,9 @@
                             <li><i class="fas fa-check" style="color:var(--accent-green);"></i> <span class="feat-text"><strong>Un solo cerebro de IA</strong> en todas tus bandejas</span></li>
                             <li><i class="fas fa-check" style="color:var(--accent-green);"></i> <span class="feat-text"><strong>Agente Contador OCR</strong> + Audios y fotos</span></li>
                             <li><i class="fas fa-check" style="color:var(--accent-green);"></i> <span class="feat-text"><strong>Detección y cierre</strong> de intención de compra</span></li>
+                            <li><i class="fas fa-check" style="color:var(--accent-green);"></i> <span class="feat-text"><strong>Respuestas simultáneas</strong> en menos de 5 seg</span></li>
                             <li><i class="fas fa-check" style="color:var(--accent-green);"></i> <span class="feat-text"><strong>Alertas prioritarias</strong> derivadas a tu equipo</span></li>
+                            <li><i class="fas fa-check" style="color:var(--accent-green);"></i> <span class="feat-text"><strong>Soporte prioritario</strong> y optimizaciones</span></li>
                         </ul>
                     </div>
                     <div class="plan-card-footer" style="border-top-color: rgba(0,242,254,0.2);">
