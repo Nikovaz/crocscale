@@ -1,10 +1,10 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Folleto Ejecutivo A5 — CrocScale Automation</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
@@ -20,7 +20,7 @@
 
         /* Configuración de Impresión A5 Estricta */
         @page {
-            size: A5 portrait;
+            size: 148mm 210mm;
             margin: 0mm;
         }
 
@@ -37,15 +37,18 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 15px 0;
+            padding: 20px 10px;
             -webkit-print-color-adjust: exact !important;
             print-color-adjust: exact !important;
+            width: 100%;
+            overflow-x: hidden;
         }
 
-        /* Formato A5 Exacto (148mm x 210mm) */
+        /* Contenedor A5 Exacto (148mm x 210mm) */
         .page-a5 {
             width: 148mm;
             height: 210mm;
+            max-width: 100%;
             background: var(--bg-dark);
             padding: 8mm 9mm;
             margin-bottom: 25px;
@@ -62,17 +65,59 @@
 
         @media print {
             body {
-                background: none;
-                padding: 0;
+                background: #0a0c14 !important;
+                padding: 0 !important;
+                margin: 0 !important;
+                width: 148mm !important;
             }
             .page-a5 {
-                margin: 0;
-                box-shadow: none;
-                border: none;
-                width: 148mm;
-                height: 210mm;
-                page-break-after: always;
-                page-break-inside: avoid;
+                margin: 0 !important;
+                box-shadow: none !important;
+                border: none !important;
+                width: 148mm !important;
+                height: 210mm !important;
+                min-height: 210mm !important;
+                max-height: 210mm !important;
+                page-break-after: always !important;
+                page-break-inside: avoid !important;
+                overflow: hidden !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+        }
+
+        /* Adaptabilidad en Celulares (Pantallas < 580px) */
+        @media screen and (max-width: 580px) {
+            body {
+                padding: 10px 5px;
+            }
+            .page-a5 {
+                width: 100%;
+                height: auto;
+                min-height: 100vh;
+                padding: 16px 14px;
+                margin-bottom: 20px;
+                border-radius: 12px;
+            }
+            .comp-grid, .plan-row-a5 {
+                grid-template-columns: 1fr !important;
+                gap: 14px !important;
+            }
+            .brand-title {
+                font-size: 18px !important;
+            }
+            .cta-banner-front {
+                flex-direction: column !important;
+                text-align: center !important;
+                gap: 12px !important;
+            }
+            .qr-box {
+                margin-left: 0 !important;
+            }
+            .enterprise-summary-bar {
+                flex-direction: column !important;
+                text-align: center !important;
+                gap: 10px !important;
             }
         }
 
@@ -124,14 +169,14 @@
         }
 
         .brand-logo img {
-            width: 42px;
-            height: 42px;
+            width: 40px;
+            height: 40px;
             object-fit: contain;
             filter: drop-shadow(0 0 8px rgba(0, 242, 254, 0.6));
         }
 
         .brand-title {
-            font-size: 20px;
+            font-size: 19px;
             font-weight: 900;
             letter-spacing: 0.5px;
             background: linear-gradient(135deg, var(--primary-neon), var(--purple-neon));
@@ -141,7 +186,7 @@
         }
 
         .brand-tagline {
-            font-size: 9px;
+            font-size: 8.5px;
             color: var(--text-muted);
             text-transform: uppercase;
             letter-spacing: 1.2px;
@@ -150,7 +195,7 @@
 
         .header-contact {
             text-align: right;
-            font-size: 10px;
+            font-size: 9.5px;
             color: var(--text-muted);
             line-height: 1.45;
         }
@@ -164,21 +209,21 @@
             background: linear-gradient(135deg, rgba(18, 22, 36, 0.95), rgba(30, 38, 56, 0.8));
             border: 1.5px solid rgba(0, 242, 254, 0.4);
             border-left: 5px solid var(--primary-neon);
-            padding: 14px 16px;
+            padding: 12px 14px;
             border-radius: 10px;
             box-shadow: 0 4px 18px rgba(0, 242, 254, 0.12);
         }
 
         .hook-box h2 {
-            font-size: 13.5px;
+            font-size: 12.5px;
             color: #fff;
-            margin-bottom: 5px;
+            margin-bottom: 4px;
             font-weight: 800;
             line-height: 1.35;
         }
 
         .hook-box p {
-            font-size: 10.8px;
+            font-size: 10px;
             color: var(--text-muted);
             line-height: 1.45;
         }
@@ -190,12 +235,12 @@
 
         /* Comparativa Financiera Frente */
         .section-title {
-            font-size: 12.5px;
+            font-size: 11.5px;
             font-weight: 900;
             text-transform: uppercase;
             letter-spacing: 0.8px;
             color: var(--primary-neon);
-            margin-bottom: 6px;
+            margin-bottom: 5px;
             display: flex;
             align-items: center;
             gap: 6px;
@@ -204,14 +249,14 @@
         .comp-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 10px;
+            gap: 9px;
         }
 
         .comp-card {
             background: var(--card-bg);
             border: 1.5px solid var(--card-border);
             border-radius: 10px;
-            padding: 14px 14px;
+            padding: 12px 12px;
         }
 
         .comp-card.negative {
@@ -225,8 +270,8 @@
         }
 
         .comp-card h3 {
-            font-size: 12.5px;
-            margin-bottom: 8px;
+            font-size: 11.5px;
+            margin-bottom: 6px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -236,23 +281,23 @@
 
         .comp-list {
             list-style: none;
-            font-size: 10.5px;
-            line-height: 1.55;
+            font-size: 9.5px;
+            line-height: 1.45;
         }
 
         .comp-list li {
-            margin-bottom: 5px;
+            margin-bottom: 4px;
             display: flex;
             align-items: flex-start;
             gap: 6px;
             color: var(--text-muted);
         }
 
-        .comp-list li i.fa-xmark { color: #ff4d4d; margin-top: 2px; }
-        .comp-list li i.fa-check { color: var(--accent-green); margin-top: 2px; }
+        .comp-list li i.fa-xmark { color: #ff4d4d; margin-top: 2px; flex-shrink: 0; }
+        .comp-list li i.fa-check { color: var(--accent-green); margin-top: 2px; flex-shrink: 0; }
 
         .price-badge-small {
-            font-size: 12px;
+            font-size: 11px;
             font-weight: 900;
             color: var(--accent-green);
         }
@@ -260,46 +305,46 @@
         /* Banner QR Frente */
         .cta-banner-front {
             background: linear-gradient(135deg, rgba(0, 242, 254, 0.12), rgba(157, 78, 221, 0.12));
-            border: 2px solid var(--primary-neon);
-            border-radius: 12px;
-            padding: 16px 18px;
+            border: 1.5px solid var(--primary-neon);
+            border-radius: 10px;
+            padding: 12px 14px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            box-shadow: 0 4px 25px rgba(0, 242, 254, 0.18);
+            box-shadow: 0 4px 20px rgba(0, 242, 254, 0.15);
         }
 
         .cta-text h3 {
-            font-size: 15px;
+            font-size: 13.5px;
             color: #fff;
             font-weight: 900;
-            margin-bottom: 4px;
+            margin-bottom: 3px;
         }
 
         .cta-text p {
-            font-size: 11px;
+            font-size: 9.8px;
             color: var(--text-muted);
-            line-height: 1.45;
+            line-height: 1.4;
         }
 
         .qr-box {
             background: #fff;
             border: 1px solid var(--card-border);
-            padding: 5px;
-            border-radius: 10px;
+            padding: 4px;
+            border-radius: 8px;
             text-align: center;
-            margin-left: 12px;
+            margin-left: 10px;
             flex-shrink: 0;
         }
 
         .qr-box img {
-            width: 70px;
-            height: 70px;
+            width: 62px;
+            height: 62px;
             display: block;
         }
 
         .qr-box span {
-            font-size: 8px;
+            font-size: 7.5px;
             color: #000;
             font-weight: 900;
             display: block;
@@ -308,11 +353,11 @@
 
         .footer-bar {
             border-top: 1.5px solid var(--card-border);
-            padding-top: 6px;
+            padding-top: 5px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            font-size: 10px;
+            font-size: 9px;
             color: var(--text-muted);
         }
 
@@ -321,11 +366,11 @@
            =================================================== */
         .pricing-section-title {
             text-align: center;
-            margin-bottom: 6px;
+            margin-bottom: 4px;
         }
 
         .pricing-section-title h2 {
-            font-size: 19px;
+            font-size: 17px;
             font-weight: 900;
             background: linear-gradient(135deg, var(--primary-neon), var(--purple-neon));
             -webkit-background-clip: text;
@@ -333,24 +378,24 @@
         }
 
         .pricing-section-title p {
-            font-size: 11px;
+            font-size: 9.5px;
             color: var(--text-muted);
-            margin-top: 2px;
+            margin-top: 1px;
         }
 
         .plan-row-a5 {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 12px;
+            gap: 10px;
             flex: 1;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
         }
 
         .plan-box-a5 {
             background: var(--card-bg);
             border: 1.5px solid var(--card-border);
-            border-radius: 12px;
-            padding: 16px 15px;
+            border-radius: 10px;
+            padding: 12px 12px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
@@ -359,102 +404,107 @@
         .plan-box-a5.featured {
             border: 2px solid var(--primary-neon);
             background: linear-gradient(180deg, rgba(0, 242, 254, 0.1) 0%, var(--card-bg) 100%);
-            box-shadow: 0 6px 25px rgba(0, 242, 254, 0.2);
+            box-shadow: 0 4px 20px rgba(0, 242, 254, 0.18);
         }
 
         .plan-header-a5 {
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
         }
 
         .plan-name-a5 {
-            font-size: 16px;
+            font-size: 14.5px;
             font-weight: 900;
             color: #fff;
             line-height: 1.2;
         }
 
         .plan-price-a5 {
-            font-size: 22px;
+            font-size: 19px;
             font-weight: 900;
             color: var(--primary-neon);
             line-height: 1;
         }
 
         .plan-setup-a5 {
-            font-size: 9.5px;
+            font-size: 8.5px;
             color: var(--text-muted);
             text-align: right;
-            margin-top: 3px;
+            margin-top: 2px;
         }
 
         .plan-volume-a5 {
-            font-size: 10px;
+            font-size: 9px;
             font-weight: 800;
             color: var(--accent-green);
-            margin-bottom: 12px;
+            margin-bottom: 8px;
             background: rgba(0,230,118,0.12);
-            padding: 3px 8px;
-            border-radius: 5px;
+            padding: 2px 6px;
+            border-radius: 4px;
             display: inline-block;
         }
 
         .plan-features-a5 {
             list-style: none;
-            font-size: 11px;
+            font-size: 9.5px;
             color: var(--text-muted);
-            line-height: 1.65;
+            line-height: 1.45;
         }
 
         .plan-features-a5 li {
-            margin-bottom: 8px;
+            margin-bottom: 5px;
             display: flex;
             align-items: flex-start;
-            gap: 7px;
+            gap: 6px;
         }
 
         .plan-features-a5 li i {
             color: var(--primary-neon);
-            margin-top: 3px;
-            font-size: 10px;
+            margin-top: 2px;
+            font-size: 9px;
             flex-shrink: 0;
         }
 
+        .plan-features-a5 li .feat-text {
+            display: inline;
+            flex: 1;
+        }
+
         .plan-card-footer {
-            margin-top: 10px;
-            padding-top: 8px;
+            margin-top: 8px;
+            padding-top: 6px;
             border-top: 1px solid rgba(255, 255, 255, 0.08);
             display: flex;
             align-items: center;
             justify-content: space-between;
-            font-size: 9px;
+            font-size: 8.5px;
             font-weight: 700;
             color: #fff;
         }
 
         .plan-card-footer span i {
             color: var(--accent-green);
-            margin-right: 4px;
+            margin-right: 3px;
         }
 
         /* Banner Resumen Enterprise & Ads */
         .enterprise-summary-bar {
             background: rgba(255, 255, 255, 0.03);
             border: 1.5px solid var(--card-border);
-            border-radius: 10px;
-            padding: 11px 15px;
+            border-radius: 8px;
+            padding: 8px 12px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 10px;
+            gap: 8px;
         }
 
         .enterprise-summary-text {
-            font-size: 10px;
+            font-size: 9px;
             color: var(--text-muted);
-            line-height: 1.45;
+            line-height: 1.35;
         }
 
         .enterprise-summary-text strong {
@@ -465,9 +515,9 @@
             background: linear-gradient(135deg, var(--primary-neon), var(--purple-neon));
             color: #000;
             font-weight: 900;
-            font-size: 9px;
-            padding: 6px 12px;
-            border-radius: 6px;
+            font-size: 8px;
+            padding: 5px 10px;
+            border-radius: 5px;
             white-space: nowrap;
             text-transform: uppercase;
             letter-spacing: 0.5px;
@@ -510,22 +560,22 @@
                 </div>
                 <div class="comp-grid">
                     <div class="comp-card negative">
-                        <h3>Humano 24/7 <span style="color:#ff4d4d; font-size:11px;">+$1.800 USD/m</span></h3>
+                        <h3>Humano 24/7 <span style="color:#ff4d4d; font-size:10px;">+$1.800 USD/m</span></h3>
                         <ul class="comp-list">
-                            <li><i class="fas fa-xmark"></i> Requiere contratar al menos 3 empleados.</li>
-                            <li><i class="fas fa-xmark"></i> Cargas sociales, aguinaldos y vacaciones.</li>
-                            <li><i class="fas fa-xmark"></i> Errores de tipeo y stock desactualizado.</li>
-                            <li><i class="fas fa-xmark"></i> Demoras de respuesta de minutos u horas.</li>
+                            <li><i class="fas fa-xmark"></i> <span class="feat-text">Requiere contratar al menos 3 empleados.</span></li>
+                            <li><i class="fas fa-xmark"></i> <span class="feat-text">Cargas sociales, aguinaldos y vacaciones.</span></li>
+                            <li><i class="fas fa-xmark"></i> <span class="feat-text">Errores de tipeo y stock desactualizado.</span></li>
+                            <li><i class="fas fa-xmark"></i> <span class="feat-text">Demoras de respuesta de minutos u horas.</span></li>
                         </ul>
                     </div>
 
                     <div class="comp-card positive">
                         <h3>CrocScale IA <span class="price-badge-small">Desde $249 USD/m</span></h3>
                         <ul class="comp-list">
-                            <li><i class="fas fa-check"></i> Cobertura 24/7/365 sin licencias ni descansos.</li>
-                            <li><i class="fas fa-check"></i> Respuesta inmediata en menos de 5 segundos.</li>
-                            <li><i class="fas fa-check"></i> Entiende audios de voz, fotos y transferencias.</li>
-                            <li><i class="fas fa-check"></i> Control total de stock en Google Sheets.</li>
+                            <li><i class="fas fa-check"></i> <span class="feat-text">Cobertura 24/7/365 sin licencias ni descansos.</span></li>
+                            <li><i class="fas fa-check"></i> <span class="feat-text">Respuesta inmediata en menos de 5 segundos.</span></li>
+                            <li><i class="fas fa-check"></i> <span class="feat-text">Entiende audios de voz, fotos y transferencias.</span></li>
+                            <li><i class="fas fa-check"></i> <span class="feat-text">Dashboard de métricas y tickets térmicos.</span></li>
                         </ul>
                     </div>
                 </div>
@@ -575,7 +625,7 @@
             <!-- Header Dorso -->
             <div class="pricing-section-title">
                 <h2>Planes Oficiales de Automatización</h2>
-                <p>100% Sin Burocracia Meta • 100% Sin Burocracia Meta</p>
+                <p>100% Sin Burocracia Meta • Setup al iniciar • Plan en 2 partes (50% al encender)</p>
             </div>
 
             <!-- 2 TARJETAS PROTAGONISTAS AMPLIAS Y ESPACIOSAS -->
@@ -586,22 +636,22 @@
                         <div class="plan-header-a5">
                             <div>
                                 <div class="plan-name-a5">WA Starter</div>
-                                <div style="font-size: 10px; color: var(--text-muted);">Solo WhatsApp 24/7</div>
+                                <div style="font-size: 9px; color: var(--text-muted);">Solo WhatsApp 24/7</div>
                             </div>
                             <div style="text-align: right;">
-                                <div class="plan-price-a5">$249 <span style="font-size:12px;">USD/m</span></div>
+                                <div class="plan-price-a5">$249 <span style="font-size:11px;">USD/m</span></div>
                                 <div class="plan-setup-a5">+$150 Setup único</div>
                             </div>
                         </div>
                         <div class="plan-volume-a5">5.000 Conversaciones / mes</div>
                         <ul class="plan-features-a5">
-                            <li><i class="fas fa-check"></i> <strong>Chatbot WhatsApp IA 24/7</strong> exclusivo</li>
-                            <li><i class="fas fa-check"></i> <strong>Entiende audios de voz y fotos</strong> de catálogo</li>
-                            <li><i class="fas fa-check"></i> <strong>Agente Contador OCR:</strong> Valida transferencias</li>
-                            <li><i class="fas fa-check"></i> <strong>Dashboard app.crocscale.com:</strong> Métricas en vivo</li>
-                            <li><i class="fas fa-check"></i> <strong>Impresión de Tickets Térmicos</strong> con 1 clic</li>
-                            <li><i class="fas fa-check"></i> <strong>Stock y precios</strong> sincronizados en Sheets</li>
-                            <li><i class="fas fa-check"></i> <strong>Handoff fluido a humano</strong> (Modo Admin)</li>
+                            <li><i class="fas fa-check"></i> <span class="feat-text"><strong>Chatbot WhatsApp IA 24/7</strong> exclusivo</span></li>
+                            <li><i class="fas fa-check"></i> <span class="feat-text"><strong>Entiende audios de voz y fotos</strong> de catálogo</span></li>
+                            <li><i class="fas fa-check"></i> <span class="feat-text"><strong>Agente Contador OCR:</strong> Valida transferencias</span></li>
+                            <li><i class="fas fa-check"></i> <span class="feat-text"><strong>Dashboard app.crocscale.com:</strong> Métricas en vivo</span></li>
+                            <li><i class="fas fa-check"></i> <span class="feat-text"><strong>Impresión de Tickets Térmicos</strong> con 1 clic</span></li>
+                            <li><i class="fas fa-check"></i> <span class="feat-text"><strong>Stock y precios</strong> sincronizados en Sheets</span></li>
+                            <li><i class="fas fa-check"></i> <span class="feat-text"><strong>Handoff fluido a humano</strong> (Modo Admin)</span></li>
                         </ul>
                     </div>
                     <div class="plan-card-footer">
@@ -616,22 +666,22 @@
                         <div class="plan-header-a5">
                             <div>
                                 <div class="plan-name-a5" style="color: var(--primary-neon);">Omnicanal Direct ⭐</div>
-                                <div style="font-size: 10px; color: var(--accent-green); font-weight: 800;">MÁS ELEGIDO</div>
+                                <div style="font-size: 9px; color: var(--accent-green); font-weight: 800;">MÁS ELEGIDO</div>
                             </div>
                             <div style="text-align: right;">
-                                <div class="plan-price-a5">$399 <span style="font-size:12px;">USD/m</span></div>
+                                <div class="plan-price-a5">$399 <span style="font-size:11px;">USD/m</span></div>
                                 <div class="plan-setup-a5">+$250 Setup único</div>
                             </div>
                         </div>
                         <div class="plan-volume-a5" style="background: rgba(0,242,254,0.15); color: var(--primary-neon);">7.000 Conversaciones / mes</div>
                         <ul class="plan-features-a5">
-                            <li><i class="fas fa-check" style="color:var(--accent-green);"></i> <strong>WhatsApp + Instagram + Facebook DMs</strong></li>
-                            <li><i class="fas fa-check" style="color:var(--accent-green);"></i> <strong>100% Sin Burocracia Meta</strong> (Sin esperas)</li>
-                            <li><i class="fas fa-check" style="color:var(--accent-green);"></i> <strong>Dashboard app.crocscale.com + Tickets térmicos</strong></li>
-                            <li><i class="fas fa-check" style="color:var(--accent-green);"></i> <strong>Un solo cerebro de IA</strong> en todas tus bandejas</li>
-                            <li><i class="fas fa-check" style="color:var(--accent-green);"></i> <strong>Agente Contador OCR</strong> + Audios y fotos</li>
-                            <li><i class="fas fa-check" style="color:var(--accent-green);"></i> <strong>Detección y cierre</strong> de intención de compra</li>
-                            <li><i class="fas fa-check" style="color:var(--accent-green);"></i> <strong>Alertas prioritarias</strong> derivadas a tu equipo</li>
+                            <li><i class="fas fa-check" style="color:var(--accent-green);"></i> <span class="feat-text"><strong>WhatsApp + Instagram + Facebook DMs</strong></span></li>
+                            <li><i class="fas fa-check" style="color:var(--accent-green);"></i> <span class="feat-text"><strong>100% Sin Burocracia Meta</strong> (Sin esperas)</span></li>
+                            <li><i class="fas fa-check" style="color:var(--accent-green);"></i> <span class="feat-text"><strong>Dashboard app.crocscale.com + Tickets térmicos</strong></span></li>
+                            <li><i class="fas fa-check" style="color:var(--accent-green);"></i> <span class="feat-text"><strong>Un solo cerebro de IA</strong> en todas tus bandejas</span></li>
+                            <li><i class="fas fa-check" style="color:var(--accent-green);"></i> <span class="feat-text"><strong>Agente Contador OCR</strong> + Audios y fotos</span></li>
+                            <li><i class="fas fa-check" style="color:var(--accent-green);"></i> <span class="feat-text"><strong>Detección y cierre</strong> de intención de compra</span></li>
+                            <li><i class="fas fa-check" style="color:var(--accent-green);"></i> <span class="feat-text"><strong>Alertas prioritarias</strong> derivadas a tu equipo</span></li>
                         </ul>
                     </div>
                     <div class="plan-card-footer" style="border-top-color: rgba(0,242,254,0.2);">
