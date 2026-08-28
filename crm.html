@@ -819,7 +819,6 @@
 
     #toast.show { transform: translateX(-50%) translateY(0); }
 
-    /* RESPONSIVE BREAKPOINT PARA CELULARES */
     @media (max-width: 600px) {
       .header-inner {
         flex-direction: row;
@@ -969,11 +968,11 @@
             <input type="tel" id="phoneBusiness" placeholder="Ej: 11 4455-6677">
           </div>
 
-          <!-- DIRECCIÓN CON GEOCODIFICACIÓN Y GPS -->
+          <!-- DIRECCIÓN CON GEOCODIFICACIÓN PRECISA (CABA, GBA O PROVINCIAS) -->
           <div class="form-group full-width">
-            <label for="address"><i class="fa-solid fa-map-pin" style="color:var(--primary);"></i> Dirección (Geocodificación para el Mapa)</label>
+            <label for="address"><i class="fa-solid fa-map-pin" style="color:var(--primary);"></i> Dirección (Ej: <em>Av. Santa Fe 1200, Martínez</em> o <em>Mitre 500, Avellaneda</em>)</label>
             <div class="input-with-gps">
-              <input type="text" id="address" placeholder="Ej: Av. Rivadavia 2715, CABA" style="flex:1;">
+              <input type="text" id="address" placeholder="Ej: Av. Rivadavia 2715, Balvanera o Av. Maipú 1500, Vicente López" style="flex:1;">
               <button type="button" class="btn-gps-here" onclick="getCurrentLocationGPS()" title="Detectar mi ubicación actual exacta">
                 <i class="fa-solid fa-crosshairs"></i> Mi GPS
               </button>
@@ -1050,7 +1049,7 @@
               <select id="monthlyPlan">
                 <option value="200">Tarifa Acordada ($200 USD/m)</option>
                 <option value="180">Tarifa Clásica ($180 USD/m)</option>
-                <option value="269">Plan WA Starter ($269 USD/m)</option>
+                <option value="249">Plan WA Starter ($249 USD/m)</option>
                 <option value="399">Omnicanal Direct ($399 USD/m)</option>
                 <option value="555">Omnicanal Pro ($555 USD/m)</option>
                 <option value="0">Sin abono / Venta única</option>
@@ -1131,7 +1130,6 @@
   <div id="toast"><i class="fa-solid fa-circle-check" style="color: var(--primary);"></i> <span id="toast-msg">Guardado</span></div>
 
   <script>
-    // SUPABASE CONFIGURATION (CONEXIÓN OFICIAL EN LA NUBE)
     const SUPABASE_URL = 'https://jsbkzlgjnwfqbjkkgqbe.supabase.co';
     const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpzYmt6bGdqbndmcWJqa2tncWJlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjQ3OTc1NzcsImV4cCI6MjA4MDM3MzU3N30.QXK8ulyAckDhfnYB8iuBs-MTW8v0Q8irbaRTgbgqAdk';
     
@@ -1141,15 +1139,14 @@
         supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
       }
     } catch(e) {
-      console.warn('Supabase JS load error:', e);
+      console.warn('Supabase load notice:', e);
     }
 
-    const STORAGE_KEY = 'crocscale_crm_street_v12';
+    const STORAGE_KEY = 'crocscale_crm_street_v13';
     let currentMode = 'street';
     let currentPhotoBase64 = '';
     let isEditing = false;
     
-    // DATOS INICIALES POR DEFECTO
     const DEFAULT_PROSPECTS = [
       {
         id: 'adar_01',
@@ -1169,7 +1166,7 @@
         metaAdsCap: '$200.000 ARS (Tope Fee)',
         billingDay: '16',
         paymentStatus: 'al_dia',
-        address: 'Gallo 823, CABA',
+        address: 'Gallo 823, Balvanera, CABA',
         lat: -34.5999626,
         lng: -58.4121197,
         photo: '',
@@ -1195,7 +1192,7 @@
         metaAdsCap: '$300.000 ARS (20% Fee)',
         billingDay: '2',
         paymentStatus: 'pendiente',
-        address: 'Av. Rivadavia 2715, CABA',
+        address: 'Av. Rivadavia 2715, Balvanera, CABA',
         lat: -34.6099213,
         lng: -58.4048591,
         photo: '',
@@ -1221,7 +1218,7 @@
         metaAdsCap: 'Sin Ads',
         billingDay: '10',
         paymentStatus: 'al_dia',
-        address: 'Av. Corrientes 3023, CABA',
+        address: 'Av. Corrientes 3023, Balvanera, CABA',
         lat: -34.6040946,
         lng: -58.4080818,
         photo: '',
@@ -1246,7 +1243,6 @@
       setupRealtimeSync();
     });
 
-    // SINCRONIZAR DESDE SUPABASE EN LA NUBE
     async function syncFromSupabase() {
       const syncEl = document.getElementById('sync-status');
       if (!supabaseClient) return;
@@ -1331,18 +1327,18 @@
       }
     }
 
+    // GEOCODIFICADOR INTELIGENTE (CABA, GBA, PROVINCIAS & EXTERIOR)
     async function geocodeAddress(addressStr) {
-      if (!addressStr || addressStr.trim().length < 4) return null;
+      if (!addressStr || addressStr.trim().length < 3) return null;
 
       try {
-        let query = addressStr.trim();
-        if (!query.toLowerCase().includes('argentina') && !query.toLowerCase().includes('caba') && !query.toLowerCase().includes('buenos aires')) {
-          query += ', CABA, Argentina';
-        } else if (!query.toLowerCase().includes('argentina')) {
-          query += ', Argentina';
+        let clean = addressStr.trim();
+        // Si no tiene país, agregar Argentina
+        if (!clean.toLowerCase().includes('argentina') && !clean.toLowerCase().includes('uruguay') && !clean.toLowerCase().includes('chile')) {
+          clean += ', Argentina';
         }
 
-        const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}&limit=1`;
+        const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(clean)}&limit=1&addressdetails=1`;
         const resp = await fetch(url, { headers: { 'Accept': 'application/json' } });
         const data = await resp.json();
 
@@ -1375,14 +1371,16 @@
           const data = await resp.json();
 
           if (data && data.display_name) {
-            const shortAddr = (data.address.road || '') + ' ' + (data.address.house_number || '') + ', ' + (data.address.suburb || data.address.city || 'CABA');
-            document.getElementById('address').value = shortAddr.trim();
+            const road = data.address.road || '';
+            const house = data.address.house_number || '';
+            const city = data.address.city || data.address.town || data.address.suburb || 'Buenos Aires';
+            document.getElementById('address').value = `${road} ${house}, ${city}`.trim();
           } else {
-            document.getElementById('address').value = `Ubicación GPS (${lat.toFixed(4)}, ${lng.toFixed(4)})`;
+            document.getElementById('address').value = `GPS: ${lat.toFixed(5)}, ${lng.toFixed(5)}`;
           }
           showToast('✅ Ubicación GPS detectada');
         } catch (e) {
-          document.getElementById('address').value = `GPS: ${lat.toFixed(4)}, ${lng.toFixed(4)}`;
+          document.getElementById('address').value = `GPS: ${lat.toFixed(5)}, ${lng.toFixed(5)}`;
         }
       }, (err) => {
         showToast('⚠️ Error GPS: ' + err.message);
@@ -1593,7 +1591,7 @@
 
     function initMap() {
       if (!map) {
-        map = L.map('map-element').setView([-34.6060, -58.4060], 13);
+        map = L.map('map-element').setView([-34.6060, -58.4060], 12);
         L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
           attribution: '&copy; OpenStreetMap &copy; CARTO',
           maxZoom: 19
@@ -1606,8 +1604,10 @@
       const validMarkers = [];
 
       prospects.forEach((p, idx) => {
-        const lat = p.lat || (-34.605 + (idx % 5) * 0.004);
-        const lng = p.lng || (-58.405 + ((idx * 3) % 5) * 0.004);
+        if (!p.lat || !p.lng) return;
+
+        const lat = p.lat;
+        const lng = p.lng;
 
         let color = '#00f2fe';
         if (p.status === 'cerrado') color = '#10b981';
@@ -1619,12 +1619,26 @@
         
         const customIcon = L.divIcon({
           className: 'custom-pin',
-          html: `<div style="background:${color}; width:14px; height:14px; border-radius:50%; border:2px solid #fff; box-shadow:0 0 8px ${color};"></div>`,
-          iconSize: [14, 14]
+          html: `<div style="background:${color}; width:16px; height:16px; border-radius:50%; border:2px solid #fff; box-shadow:0 0 10px ${color};"></div>`,
+          iconSize: [16, 16]
         });
 
-        const marker = L.marker([lat, lng], { icon: customIcon }).addTo(markersLayer);
+        // Pin arrastrable para ajuste de precisión
+        const marker = L.marker([lat, lng], { icon: customIcon, draggable: true }).addTo(markersLayer);
         validMarkers.push([lat, lng]);
+
+        marker.on('dragend', async function(ev) {
+          const newPos = ev.target.getLatLng();
+          p.lat = newPos.lat;
+          p.lng = newPos.lng;
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(prospects));
+          if (supabaseClient) {
+            try {
+              await supabaseClient.from('crm_prospects').update({ lat: newPos.lat, lng: newPos.lng }).eq('id', p.id);
+            } catch(e){}
+          }
+          showToast(`📍 Ubicación de ${p.businessName} ajustada con éxito`);
+        });
 
         const bestPhone = (p.phone || p.phoneBusiness || '').replace(/[^0-9]/g, '');
         const formattedPhone = bestPhone.startsWith('54') ? bestPhone : '549' + bestPhone;
@@ -1642,6 +1656,7 @@
               ${bestPhone ? `<a href="https://wa.me/${formattedPhone}" target="_blank" style="background:#10b981; color:#fff; padding:3px 6px; border-radius:4px; text-decoration:none; font-size:0.7rem; font-weight:700;">💬 WSP</a>` : ''}
               <a href="https://maps.google.com/?q=${encodeURIComponent(p.address || p.businessName)}" target="_blank" style="background:#00a8b5; color:#fff; padding:3px 6px; border-radius:4px; text-decoration:none; font-size:0.7rem; font-weight:700;">📍 GPS</a>
             </div>
+            <p style="font-size:0.65rem; color:#888; margin-top:4px;">💡 Tip: Podés arrastrar el punto si querés moverlo de puerta.</p>
           </div>
         `);
       });
@@ -1649,7 +1664,7 @@
       if (validMarkers.length > 0 && map) {
         try {
           const bounds = L.latLngBounds(validMarkers);
-          map.fitBounds(bounds, { padding: [30, 30], maxZoom: 15 });
+          map.fitBounds(bounds, { padding: [35, 35], maxZoom: 15 });
         } catch(e){}
       }
 
