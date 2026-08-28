@@ -263,6 +263,26 @@
       padding: 20px;
       margin-bottom: 24px;
       box-shadow: var(--shadow);
+      position: relative;
+      transition: all 0.3s;
+    }
+
+    .main-card.editing-mode {
+      border-color: var(--accent-gold);
+      box-shadow: 0 0 25px rgba(245, 158, 11, 0.3);
+    }
+
+    .edit-banner-strip {
+      background: linear-gradient(90deg, rgba(245, 158, 11, 0.25), rgba(245, 158, 11, 0.1));
+      border: 1px solid var(--accent-gold);
+      border-radius: 8px;
+      padding: 8px 12px;
+      margin-bottom: 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.82rem;
+      color: #fcd34d;
     }
 
     .form-mode-tabs {
@@ -376,6 +396,12 @@
       gap: 6px;
     }
 
+    .form-actions-row {
+      display: flex;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
     .btn-submit {
       background: linear-gradient(135deg, var(--primary), var(--accent-purple));
       border: none;
@@ -386,8 +412,7 @@
       padding: 13px;
       border-radius: 10px;
       cursor: pointer;
-      width: 100%;
-      margin-top: 16px;
+      flex: 1;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -396,7 +421,27 @@
       transition: transform 0.15s;
     }
 
-    .btn-submit:active {
+    .btn-submit.btn-update {
+      background: linear-gradient(135deg, var(--accent-gold), #ea580c);
+      color: #000;
+      box-shadow: 0 0 15px rgba(245, 158, 11, 0.4);
+    }
+
+    .btn-cancel-edit {
+      background: rgba(239, 68, 68, 0.15);
+      border: 1px solid var(--accent-red);
+      color: #f87171;
+      padding: 13px 18px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 0.88rem;
+      display: none;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .btn-submit:active, .btn-cancel-edit:active {
       transform: scale(0.98);
     }
 
@@ -643,9 +688,11 @@
 
     .card-footer-manage {
       display: flex;
-      justify-content: flex-end;
-      gap: 12px;
-      margin-top: 8px;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 10px;
+      padding-top: 8px;
+      border-top: 1px dashed rgba(255, 255, 255, 0.06);
       font-size: 0.75rem;
     }
 
@@ -654,13 +701,18 @@
       border: none;
       color: var(--text-muted);
       cursor: pointer;
-      display: flex;
+      display: inline-flex;
       align-items: center;
-      gap: 4px;
+      gap: 5px;
+      padding: 4px 8px;
+      border-radius: 4px;
+      transition: all 0.2s;
     }
 
-    .btn-text-action:hover { color: var(--primary); }
-    .btn-text-action.delete:hover { color: var(--accent-red); }
+    .btn-text-action:hover { background: rgba(255, 255, 255, 0.05); color: var(--primary); }
+    .btn-text-action.edit-btn { color: #fcd34d; background: rgba(245, 158, 11, 0.1); border: 1px solid rgba(245, 158, 11, 0.3); font-weight: 600; }
+    .btn-text-action.edit-btn:hover { background: var(--accent-gold); color: #000; }
+    .btn-text-action.delete:hover { color: var(--accent-red); background: rgba(239, 68, 68, 0.1); }
 
     /* TOAST */
     #toast {
@@ -757,9 +809,15 @@
       <input type="text" id="search-input" placeholder="Buscar por negocio, dueño, teléfono o rubro..." oninput="handleSearch()">
     </div>
 
-    <!-- MAIN CARD: FORMULARIO CON SELECTOR DE MODO -->
+    <!-- MAIN CARD: FORMULARIO CON SELECTOR DE MODO Y EDICIÓN -->
     <div class="main-card" id="form-container">
       
+      <!-- BANNER DE MODO EDICIÓN (Oculto por defecto) -->
+      <div id="edit-banner" class="edit-banner-strip" style="display: none;">
+        <span><i class="fa-solid fa-pen-to-square"></i> Editando registro: <strong id="edit-target-name">...</strong></span>
+        <button type="button" onclick="cancelEditing()" style="background:none; border:none; color:#f87171; font-weight:700; cursor:pointer;"><i class="fa-solid fa-xmark"></i> Cancelar</button>
+      </div>
+
       <!-- SELECTOR DE MODO -->
       <div class="form-mode-tabs">
         <button type="button" class="btn-mode-tab active" id="tab-street-mode" onclick="setFormMode('street')">
@@ -772,6 +830,9 @@
 
       <!-- FORMULARIO ROBUSTO -->
       <form id="crm-form" onsubmit="saveRecord(event)">
+        <!-- ID OCULTO PARA EDICIÓN -->
+        <input type="hidden" id="editingRecordId" value="">
+
         <div class="form-grid">
           
           <!-- DATOS DE CONTACTO (COMUNES) -->
@@ -786,7 +847,7 @@
           </div>
 
           <div class="form-group">
-            <label for="visitDate">Fecha de Visita / Registro (Por defecto HOY)</label>
+            <label for="visitDate">Fecha de Visita / Registro</label>
             <input type="date" id="visitDate" required>
           </div>
 
@@ -913,9 +974,14 @@
 
         </div>
 
-        <button type="submit" class="btn-submit" id="btn-submit-label">
-          <i class="fa-solid fa-location-dot"></i> Guardar Visita de Calle en CRM
-        </button>
+        <div class="form-actions-row">
+          <button type="button" class="btn-cancel-edit" id="btn-cancel-edit" onclick="cancelEditing()">
+            <i class="fa-solid fa-xmark"></i> Cancelar
+          </button>
+          <button type="submit" class="btn-submit" id="btn-submit-label">
+            <i class="fa-solid fa-location-dot"></i> Guardar Visita de Calle en CRM
+          </button>
+        </div>
       </form>
     </div>
 
@@ -940,9 +1006,10 @@
   <div id="toast"><i class="fa-solid fa-circle-check" style="color: var(--primary);"></i> <span id="toast-msg">Guardado</span></div>
 
   <script>
-    const STORAGE_KEY = 'crocscale_crm_street_v8';
+    const STORAGE_KEY = 'crocscale_crm_street_v9';
     let currentMode = 'street';
     let currentPhotoBase64 = '';
+    let isEditing = false;
     
     // DATOS REALES CON FECHAS Y FOTOS
     const DEFAULT_PROSPECTS = [
@@ -1052,7 +1119,7 @@
     function setDefaultTodayDate() {
       const todayStr = new Date().toISOString().slice(0, 10);
       const dateInput = document.getElementById('visitDate');
-      if (dateInput) dateInput.value = todayStr;
+      if (dateInput && !dateInput.value) dateInput.value = todayStr;
     }
 
     function setFormMode(mode) {
@@ -1068,13 +1135,13 @@
         tabClient.classList.remove('active');
         streetGroup.style.display = 'block';
         clientFields.style.display = 'none';
-        btnSubmit.innerHTML = '<i class="fa-solid fa-location-dot"></i> Guardar Visita de Calle en CRM';
+        if (!isEditing) btnSubmit.innerHTML = '<i class="fa-solid fa-location-dot"></i> Guardar Visita de Calle en CRM';
       } else {
         tabClient.classList.add('active');
         tabStreet.classList.remove('active');
         streetGroup.style.display = 'none';
         clientFields.style.display = 'grid';
-        btnSubmit.innerHTML = '<i class="fa-solid fa-briefcase"></i> Guardar Cliente Confirmado / Sistema';
+        if (!isEditing) btnSubmit.innerHTML = '<i class="fa-solid fa-briefcase"></i> Guardar Cliente Confirmado / Sistema';
       }
     }
 
@@ -1121,6 +1188,85 @@
       document.getElementById('cardPhotoInput').value = '';
       document.getElementById('photoPreview').style.display = 'none';
       document.getElementById('btnRemovePhoto').style.display = 'none';
+    }
+
+    // EDITAR CLIENTE / REGISTRO EXISTENTE
+    function editProspect(id) {
+      const p = prospects.find(item => item.id === id);
+      if (!p) return;
+
+      isEditing = true;
+      document.getElementById('editingRecordId').value = p.id;
+      document.getElementById('businessName').value = p.businessName || '';
+      document.getElementById('contactName').value = p.contactName || '';
+      document.getElementById('phone').value = p.phone || '';
+      document.getElementById('rubro').value = p.rubro || 'Indumentaria / Ropa';
+      document.getElementById('address').value = p.address || '';
+      document.getElementById('visitDate').value = p.visitDate || new Date().toISOString().slice(0, 10);
+      document.getElementById('notes').value = p.notes || '';
+
+      // Foto
+      if (p.photo) {
+        currentPhotoBase64 = p.photo;
+        const preview = document.getElementById('photoPreview');
+        preview.src = p.photo;
+        preview.style.display = 'block';
+        document.getElementById('btnRemovePhoto').style.display = 'inline-block';
+      } else {
+        removePhoto();
+      }
+
+      // Determinar si es modo calle o cliente
+      const isClientMode = (p.status === 'cerrado' || p.monthlyPlan > 0 || (p.systemTotal && p.systemTotal !== '$0'));
+      
+      if (isClientMode) {
+        setFormMode('client');
+        document.getElementById('serviceType').value = p.serviceType || 'chatbot';
+        document.getElementById('clientStatus').value = p.status || 'cerrado';
+        document.getElementById('monthlyPlan').value = p.monthlyPlan || '0';
+        document.getElementById('systemTotal').value = p.systemTotal || '$0';
+        document.getElementById('setupPrice').value = p.setupPrice || '';
+        document.getElementById('metaAdsCap').value = p.metaAdsCap || '';
+        document.getElementById('billingDay').value = p.billingDay || '16';
+        document.getElementById('paymentStatus').value = p.paymentStatus || 'al_dia';
+      } else {
+        setFormMode('street');
+        document.getElementById('streetResult').value = p.status || 'visitado';
+      }
+
+      // Estilo de banner y botones de edición
+      const formCard = document.getElementById('form-container');
+      formCard.classList.add('editing-mode');
+      document.getElementById('edit-banner').style.display = 'flex';
+      document.getElementById('edit-target-name').innerText = p.businessName;
+      
+      const btnSubmit = document.getElementById('btn-submit-label');
+      btnSubmit.innerHTML = '<i class="fa-solid fa-floppy-disk"></i> Guardar Cambios / Actualizar';
+      btnSubmit.classList.add('btn-update');
+      document.getElementById('btn-cancel-edit').style.display = 'inline-flex';
+
+      // Scroll suave hacia el formulario
+      formCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      showToast('✏️ Editando: ' + p.businessName);
+    }
+
+    function cancelEditing() {
+      isEditing = false;
+      document.getElementById('editingRecordId').value = '';
+      document.getElementById('crm-form').reset();
+      removePhoto();
+      setDefaultTodayDate();
+
+      const formCard = document.getElementById('form-container');
+      formCard.classList.remove('editing-mode');
+      document.getElementById('edit-banner').style.display = 'none';
+      
+      const btnSubmit = document.getElementById('btn-submit-label');
+      btnSubmit.classList.remove('btn-update');
+      document.getElementById('btn-cancel-edit').style.display = 'none';
+      
+      setFormMode(currentMode);
+      showToast('Edición cancelada');
     }
 
     function checkBillingAlerts() {
@@ -1341,7 +1487,12 @@
           </div>
 
           <div class="card-footer-manage">
-            <button class="btn-text-action delete" onclick="deleteProspect('${p.id}')"><i class="fa-regular fa-trash-can"></i> Borrar</button>
+            <button class="btn-text-action edit-btn" onclick="editProspect('${p.id}')">
+              <i class="fa-solid fa-pen-to-square"></i> Editar
+            </button>
+            <button class="btn-text-action delete" onclick="deleteProspect('${p.id}')">
+              <i class="fa-regular fa-trash-can"></i> Borrar
+            </button>
           </div>
         `;
         container.appendChild(card);
@@ -1360,11 +1511,12 @@
       showToast(p.paymentStatus === 'al_dia' ? '🟢 Marcado como Al Día (Pagado)' : '🔴 Marcado como Pendiente');
     }
 
-    // GUARDAR ROBUSTO (SIN ERRORES)
+    // GUARDAR O ACTUALIZAR ROBUSTO (SIN ERRORES)
     function saveRecord(e) {
       e.preventDefault();
       
       try {
+        const editingId = document.getElementById('editingRecordId').value;
         const isStreet = (currentMode === 'street');
         const businessName = document.getElementById('businessName').value.trim();
         const contactName = document.getElementById('contactName').value.trim();
@@ -1396,39 +1548,65 @@
           paymentStatusValue = document.getElementById('paymentStatus') ? document.getElementById('paymentStatus').value : 'al_dia';
         }
 
-        const newRecord = {
-          id: 'rec_' + Date.now(),
-          businessName,
-          contactName,
-          phone,
-          rubro,
-          serviceType: serviceTypeValue,
-          status: statusValue,
-          monthlyPlan: monthlyValue,
-          systemTotal: systemTotalValue,
-          setupPrice: setupPriceValue,
-          metaAdsCap: metaAdsCapValue,
-          billingDay: billingDayValue,
-          paymentStatus: paymentStatusValue,
-          address,
-          notes,
-          visitDate,
-          photo: currentPhotoBase64,
-          createdAt: new Date().toISOString()
-        };
+        if (editingId) {
+          // ACTUALIZAR REGISTRO EXISTENTE
+          const index = prospects.findIndex(item => item.id === editingId);
+          if (index !== -1) {
+            prospects[index] = {
+              ...prospects[index],
+              businessName,
+              contactName,
+              phone,
+              rubro,
+              serviceType: serviceTypeValue,
+              status: statusValue,
+              monthlyPlan: monthlyValue,
+              systemTotal: systemTotalValue,
+              setupPrice: setupPriceValue,
+              metaAdsCap: metaAdsCapValue,
+              billingDay: billingDayValue,
+              paymentStatus: paymentStatusValue,
+              address,
+              notes,
+              visitDate,
+              photo: currentPhotoBase64 || prospects[index].photo || '',
+              updatedAt: new Date().toISOString()
+            };
+          }
+          showToast('✏️ ¡Registro actualizado con éxito!');
+        } else {
+          // CREAR NUEVO REGISTRO
+          const newRecord = {
+            id: 'rec_' + Date.now(),
+            businessName,
+            contactName,
+            phone,
+            rubro,
+            serviceType: serviceTypeValue,
+            status: statusValue,
+            monthlyPlan: monthlyValue,
+            systemTotal: systemTotalValue,
+            setupPrice: setupPriceValue,
+            metaAdsCap: metaAdsCapValue,
+            billingDay: billingDayValue,
+            paymentStatus: paymentStatusValue,
+            address,
+            notes,
+            visitDate,
+            photo: currentPhotoBase64,
+            createdAt: new Date().toISOString()
+          };
+          prospects.unshift(newRecord);
+          showToast(isStreet ? '🚶‍♂️ ¡Visita de calle guardada!' : '💼 ¡Cliente guardado con éxito!');
+        }
 
-        prospects.unshift(newRecord);
         localStorage.setItem(STORAGE_KEY, JSON.stringify(prospects));
         
-        document.getElementById('crm-form').reset();
-        removePhoto();
-        setDefaultTodayDate();
-        
+        cancelEditing();
         renderCards();
         updateMetrics();
         checkBillingAlerts();
         if (map) initMap();
-        showToast(isStreet ? '🚶‍♂️ ¡Visita de calle guardada con éxito!' : '💼 ¡Cliente guardado con éxito!');
       } catch (err) {
         console.error('Error al guardar:', err);
         alert('Hubo un problema al guardar. Revisá los campos.');
