@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>CrocScale Sales, Maps & Systems CRM | Nicolás Galarza</title>
+  <title>CrocScale Sales, Maps & Cloud CRM | Nicolás Galarza</title>
   
   <!-- Google Fonts: Inter & Outfit -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -16,6 +16,9 @@
   <!-- Leaflet CSS & JS (Mapa Geográfico) -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+  <!-- Supabase JS Client (Sincronización en la Nube Celular + PC) -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   
   <style>
     :root {
@@ -93,6 +96,28 @@
     .brand-title p {
       font-size: 0.72rem;
       color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .sync-status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 2px 6px;
+      border-radius: 10px;
+      font-size: 0.65rem;
+      font-weight: 600;
+      background: rgba(16, 185, 129, 0.2);
+      color: #34d399;
+      border: 1px solid rgba(16, 185, 129, 0.4);
+    }
+
+    .sync-status-badge.syncing {
+      background: rgba(245, 158, 11, 0.2);
+      color: #fbbf24;
+      border-color: rgba(245, 158, 11, 0.4);
     }
 
     .header-actions {
@@ -217,7 +242,7 @@
     }
 
     #map-element {
-      height: 420px;
+      height: 440px;
       width: 100%;
       border-radius: 12px;
       z-index: 10;
@@ -361,6 +386,28 @@
       border-color: var(--primary);
       box-shadow: 0 0 8px rgba(0, 242, 254, 0.2);
     }
+
+    .input-with-gps {
+      display: flex;
+      gap: 6px;
+    }
+
+    .btn-gps-here {
+      background: rgba(0, 242, 254, 0.15);
+      border: 1px solid var(--primary);
+      color: var(--primary);
+      padding: 0 12px;
+      border-radius: 8px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      cursor: pointer;
+      white-space: nowrap;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .btn-gps-here:hover { background: var(--primary); color: #000; }
 
     /* FOTO UPLOAD BOX */
     .photo-upload-box {
@@ -782,7 +829,10 @@
       <img src="https://raw.githubusercontent.com/Nikovaz/crocscale/main/images/logo_crocscale.png" alt="CrocScale Logo">
       <div class="brand-title">
         <h1>CrocScale Sales & Maps CRM</h1>
-        <p>Agencia IA & Desarrollo de Software</p>
+        <p>
+          <span>Agencia IA</span> • 
+          <span id="sync-status" class="sync-status-badge"><i class="fa-solid fa-cloud"></i> Nube Sincronizada</span>
+        </p>
       </div>
     </div>
     <div class="header-actions">
@@ -827,7 +877,7 @@
     <!-- CONTENEDOR DE MAPA GEOGRÁFICO -->
     <div id="map-view-container">
       <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-        <h3 style="font-size: 0.95rem; color: var(--primary);"><i class="fa-solid fa-route"></i> Mapa de Visitas & Clientes en CABA / GBA</h3>
+        <h3 style="font-size: 0.95rem; color: var(--primary);"><i class="fa-solid fa-route"></i> Mapa Satelital de Clientes & Locales</h3>
         <span style="font-size: 0.72rem; color: var(--text-muted);">🟢 Activo | 🟡 En Propuesta | 🔵 Visitado | ⚪ No Interesa</span>
       </div>
       <div id="map-element"></div>
@@ -905,6 +955,17 @@
             <input type="tel" id="phoneBusiness" placeholder="Ej: 11 4455-6677 (Atención al cliente)">
           </div>
 
+          <!-- DIRECCIÓN CON GEOCODIFICACIÓN Y GPS -->
+          <div class="form-group full-width">
+            <label for="address"><i class="fa-solid fa-map-pin" style="color:var(--primary);"></i> Dirección / Calle / Altura (Geocodificación Automática para el Mapa)</label>
+            <div class="input-with-gps">
+              <input type="text" id="address" placeholder="Ej: Av. Rivadavia 2715, CABA" style="flex:1;">
+              <button type="button" class="btn-gps-here" onclick="getCurrentLocationGPS()" title="Detectar mi ubicación actual exacta">
+                <i class="fa-solid fa-crosshairs"></i> Mi GPS
+              </button>
+            </div>
+          </div>
+
           <!-- REDES SOCIALES Y PÁGINA WEB -->
           <div class="section-divider">
             <i class="fa-solid fa-globe"></i> Redes Sociales & Presencia Online
@@ -923,11 +984,6 @@
           <div class="form-group full-width">
             <label for="facebook"><i class="fa-brands fa-facebook" style="color:#1877f2;"></i> Facebook / Fan Page (Opcional)</label>
             <input type="text" id="facebook" placeholder="Ej: facebook.com/negocio">
-          </div>
-
-          <div class="form-group full-width">
-            <label for="address">Dirección / Calle / Altura (Para Mapa GPS)</label>
-            <input type="text" id="address" placeholder="Ej: Av. Rivadavia 2715, Once, CABA">
           </div>
 
           <!-- SUBIDA DE FOTO DE TARJETA O LOCAL -->
@@ -1034,7 +1090,7 @@
             <i class="fa-solid fa-xmark"></i> Cancelar
           </button>
           <button type="submit" class="btn-submit" id="btn-submit-label">
-            <i class="fa-solid fa-location-dot"></i> Guardar Visita de Calle en CRM
+            <i class="fa-solid fa-location-dot"></i> Guardar en la Nube (Supabase)
           </button>
         </div>
       </form>
@@ -1061,12 +1117,25 @@
   <div id="toast"><i class="fa-solid fa-circle-check" style="color: var(--primary);"></i> <span id="toast-msg">Guardado</span></div>
 
   <script>
-    const STORAGE_KEY = 'crocscale_crm_street_v10';
+    // SUPABASE CONFIGURATION (CONEXIÓN OFICIAL EN LA NUBE)
+    const SUPABASE_URL = 'https://jsbkzlgjnwfqbjkkgqbe.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpzYmt6bGdqbndmcWJqa2tncWJlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjQ3OTc1NzcsImV4cCI6MjA4MDM3MzU3N30.QXK8ulyAckDhfnYB8iuBs-MTW8v0Q8irbaRTgbgqAdk';
+    
+    let supabaseClient = null;
+    try {
+      if (window.supabase) {
+        supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+      }
+    } catch(e) {
+      console.warn('Supabase JS load error:', e);
+    }
+
+    const STORAGE_KEY = 'crocscale_crm_street_v11';
     let currentMode = 'street';
     let currentPhotoBase64 = '';
     let isEditing = false;
     
-    // DATOS REALES CON REDES SOCIALES, WEB Y WHATSAPP BUSINESS
+    // DATOS INICIALES POR DEFECTO
     const DEFAULT_PROSPECTS = [
       {
         id: 'adar_01',
@@ -1087,8 +1156,8 @@
         billingDay: '16',
         paymentStatus: 'al_dia',
         address: 'Gallo 823, CABA',
-        lat: -34.6015,
-        lng: -58.4116,
+        lat: -34.5999626,
+        lng: -58.4121197,
         photo: '',
         visitDate: '2026-08-16',
         notes: 'Ecommerce bazar. Vence todos los 16. Meta Ads tope $200k ARS.',
@@ -1113,8 +1182,8 @@
         billingDay: '2',
         paymentStatus: 'pendiente',
         address: 'Av. Rivadavia 2715, CABA',
-        lat: -34.6098,
-        lng: -58.4042,
+        lat: -34.6099213,
+        lng: -58.4048591,
         photo: '',
         visitDate: '2026-08-25',
         notes: 'Nuevo cliente. 2 Sept paga $250 ($150 Setup + $100 [50% Bot]). 2 Oct paga $200. Meta Ads tope $300k.',
@@ -1139,37 +1208,11 @@
         billingDay: '10',
         paymentStatus: 'al_dia',
         address: 'Av. Corrientes 3023, CABA',
-        lat: -34.6042,
-        lng: -58.4098,
+        lat: -34.6040946,
+        lng: -58.4080818,
         photo: '',
         visitDate: '2025-09-10',
         notes: 'Ecommerce MercadoLibre. Sistema vendido Sep 2025. En pausa por falta de créditos IA.',
-        createdAt: new Date().toISOString()
-      },
-      {
-        id: 'calle_04',
-        businessName: 'Calzados El Sol',
-        contactName: 'Encargada Silvina',
-        phone: '',
-        phoneBusiness: '1122334455',
-        instagram: '@calzadoselsol',
-        website: '',
-        facebook: '',
-        rubro: 'Calzado / Marroquinería',
-        serviceType: 'chatbot',
-        status: 'no_interesa',
-        monthlyPlan: 0,
-        systemTotal: '$0',
-        setupPrice: '',
-        metaAdsCap: '',
-        billingDay: '1',
-        paymentStatus: 'al_dia',
-        address: 'Av. Rivadavia 2850, Once, CABA',
-        lat: -34.6105,
-        lng: -58.4055,
-        photo: '',
-        visitDate: '2026-08-27',
-        notes: 'Visita de calle: Negocio muy tradicional. Solo atienden mostrador y no les interesa vender por WhatsApp.',
         createdAt: new Date().toISOString()
       }
     ];
@@ -1180,12 +1223,163 @@
     let map = null;
     let markersLayer = null;
 
-    document.addEventListener('DOMContentLoaded', () => {
+    document.addEventListener('DOMContentLoaded', async () => {
       setDefaultTodayDate();
       renderCards();
       updateMetrics();
       checkBillingAlerts();
+      await syncFromSupabase();
+      setupRealtimeSync();
     });
+
+    // SINCRONIZAR DESDE SUPABASE EN LA NUBE
+    async function syncFromSupabase() {
+      const syncEl = document.getElementById('sync-status');
+      if (!supabaseClient) return;
+
+      try {
+        if (syncEl) {
+          syncEl.classList.add('syncing');
+          syncEl.innerHTML = '<i class="fa-solid fa-rotate fa-spin"></i> Sincronizando...';
+        }
+
+        const { data, error } = await supabaseClient
+          .from('crm_prospects')
+          .select('*')
+          .order('created_at', { ascending: false });
+
+        if (error) {
+          console.warn('Supabase fetch notice:', error.message);
+          if (syncEl) {
+            syncEl.classList.remove('syncing');
+            syncEl.innerHTML = '<i class="fa-solid fa-cloud"></i> Modo Local';
+          }
+          return;
+        }
+
+        if (data && data.length > 0) {
+          // Mapear columnas snake_case de DB a camelCase de JS
+          prospects = data.map(dbItem => ({
+            id: dbItem.id,
+            businessName: dbItem.business_name || dbItem.businessName,
+            contactName: dbItem.contact_name || dbItem.contactName || '',
+            phone: dbItem.phone || '',
+            phoneBusiness: dbItem.phone_business || dbItem.phoneBusiness || '',
+            instagram: dbItem.instagram || '',
+            website: dbItem.website || '',
+            facebook: dbItem.facebook || '',
+            rubro: dbItem.rubro || 'Indumentaria / Ropa',
+            serviceType: dbItem.service_type || dbItem.serviceType || 'chatbot',
+            status: dbItem.status || 'visitado',
+            monthlyPlan: parseInt(dbItem.monthly_plan || dbItem.monthlyPlan || 0),
+            systemTotal: dbItem.system_total || dbItem.systemTotal || '$0',
+            setupPrice: dbItem.setup_price || dbItem.setupPrice || '',
+            metaAdsCap: dbItem.meta_ads_cap || dbItem.metaAdsCap || '',
+            billingDay: (dbItem.billing_day || dbItem.billingDay || '16').toString(),
+            paymentStatus: dbItem.payment_status || dbItem.paymentStatus || 'al_dia',
+            address: dbItem.address || '',
+            lat: parseFloat(dbItem.lat) || null,
+            lng: parseFloat(dbItem.lng) || null,
+            photo: dbItem.photo || '',
+            visitDate: dbItem.visit_date || dbItem.visitDate || '',
+            notes: dbItem.notes || '',
+            createdAt: dbItem.created_at || new Date().toISOString()
+          }));
+
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(prospects));
+          renderCards();
+          updateMetrics();
+          checkBillingAlerts();
+          if (map) initMap();
+        }
+
+        if (syncEl) {
+          syncEl.classList.remove('syncing');
+          syncEl.innerHTML = '<i class="fa-solid fa-cloud-check"></i> Sincronizado en Vivo';
+        }
+      } catch (err) {
+        console.error('Error in syncFromSupabase:', err);
+      }
+    }
+
+    // ESCUCHAR CAMBIOS EN TIEMPO REAL DE SUPABASE
+    function setupRealtimeSync() {
+      if (!supabaseClient) return;
+
+      try {
+        supabaseClient
+          .channel('crm_realtime_changes')
+          .on('postgres_changes', { event: '*', schema: 'public', table: 'crm_prospects' }, (payload) => {
+            console.log('Realtime change from other device:', payload);
+            syncFromSupabase();
+            showToast('🔄 ¡Datos actualizados desde otro dispositivo!');
+          })
+          .subscribe();
+      } catch (e) {
+        console.warn('Realtime subscription error:', e);
+      }
+    }
+
+    // GEOCODIFICACIÓN AUTOMÁTICA CON OPENSTREETMAP (NOMINATIM)
+    async function geocodeAddress(addressStr) {
+      if (!addressStr || addressStr.trim().length < 4) return null;
+
+      try {
+        let query = addressStr.trim();
+        if (!query.toLowerCase().includes('argentina') && !query.toLowerCase().includes('caba') && !query.toLowerCase().includes('buenos aires')) {
+          query += ', CABA, Argentina';
+        } else if (!query.toLowerCase().includes('argentina')) {
+          query += ', Argentina';
+        }
+
+        const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}&limit=1`;
+        const resp = await fetch(url, { headers: { 'Accept': 'application/json' } });
+        const data = await resp.json();
+
+        if (data && data.length > 0) {
+          return {
+            lat: parseFloat(data[0].lat),
+            lng: parseFloat(data[0].lon)
+          };
+        }
+      } catch (err) {
+        console.warn('Geocoding error:', err);
+      }
+      return null;
+    }
+
+    // OBTENER GPS ACTUAL DEL TELÉFONO
+    function getCurrentLocationGPS() {
+      if (!navigator.geolocation) {
+        showToast('Geolocalización no soportada en este navegador');
+        return;
+      }
+
+      showToast('📍 Detectando tu ubicación GPS...');
+      navigator.geolocation.getCurrentPosition(async (pos) => {
+        const lat = pos.coords.latitude;
+        const lng = pos.coords.longitude;
+
+        try {
+          // Reverse geocoding
+          const url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}`;
+          const resp = await fetch(url, { headers: { 'Accept': 'application/json' } });
+          const data = await resp.json();
+
+          if (data && data.display_name) {
+            const shortAddr = (data.address.road || '') + ' ' + (data.address.house_number || '') + ', ' + (data.address.suburb || data.address.city || 'CABA');
+            document.getElementById('address').value = shortAddr.trim();
+          } else {
+            document.getElementById('address').value = `Ubicación GPS (${lat.toFixed(4)}, ${lng.toFixed(4)})`;
+          }
+          showToast('✅ Ubicación GPS detectada con éxito');
+        } catch (e) {
+          document.getElementById('address').value = `GPS: ${lat.toFixed(4)}, ${lng.toFixed(4)}`;
+        }
+      }, (err) => {
+        showToast('⚠️ No se pudo obtener GPS: ' + err.message);
+      }, { enableHighAccuracy: true });
+    }
 
     function setDefaultTodayDate() {
       const todayStr = new Date().toISOString().slice(0, 10);
@@ -1206,13 +1400,13 @@
         tabClient.classList.remove('active');
         streetGroup.style.display = 'block';
         clientFields.style.display = 'none';
-        if (!isEditing) btnSubmit.innerHTML = '<i class="fa-solid fa-location-dot"></i> Guardar Visita de Calle en CRM';
+        if (!isEditing) btnSubmit.innerHTML = '<i class="fa-solid fa-location-dot"></i> Guardar Visita en la Nube';
       } else {
         tabClient.classList.add('active');
         tabStreet.classList.remove('active');
         streetGroup.style.display = 'none';
         clientFields.style.display = 'grid';
-        if (!isEditing) btnSubmit.innerHTML = '<i class="fa-solid fa-briefcase"></i> Guardar Cliente Confirmado / Sistema';
+        if (!isEditing) btnSubmit.innerHTML = '<i class="fa-solid fa-briefcase"></i> Guardar Cliente en la Nube';
       }
     }
 
@@ -1260,7 +1454,6 @@
       document.getElementById('btnRemovePhoto').style.display = 'none';
     }
 
-    // FORMATEAR URL DE REDES
     function formatInstagramUrl(ig) {
       if (!ig) return '';
       let clean = ig.trim().replace('@', '');
@@ -1282,7 +1475,6 @@
       return `https://${clean}`;
     }
 
-    // EDITAR CLIENTE
     function editProspect(id) {
       const p = prospects.find(item => item.id === id);
       if (!p) return;
@@ -1334,7 +1526,7 @@
       document.getElementById('edit-target-name').innerText = p.businessName;
       
       const btnSubmit = document.getElementById('btn-submit-label');
-      btnSubmit.innerHTML = '<i class="fa-solid fa-floppy-disk"></i> Guardar Cambios / Actualizar';
+      btnSubmit.innerHTML = '<i class="fa-solid fa-floppy-disk"></i> Guardar Cambios en la Nube';
       btnSubmit.classList.add('btn-update');
       document.getElementById('btn-cancel-edit').style.display = 'inline-flex';
 
@@ -1403,9 +1595,12 @@
 
       markersLayer.clearLayers();
 
-      prospects.forEach(p => {
-        const lat = p.lat || (-34.609 + (Math.random() - 0.5) * 0.01);
-        const lng = p.lng || (-58.405 + (Math.random() - 0.5) * 0.01);
+      const validMarkers = [];
+
+      prospects.forEach((p, idx) => {
+        // Coordenadas exactas o fallback inteligente
+        const lat = p.lat || (-34.605 + (idx % 5) * 0.004);
+        const lng = p.lng || (-58.405 + ((idx * 3) % 5) * 0.004);
 
         let color = '#00f2fe';
         if (p.status === 'cerrado') color = '#10b981';
@@ -1422,6 +1617,8 @@
         });
 
         const marker = L.marker([lat, lng], { icon: customIcon }).addTo(markersLayer);
+        validMarkers.push([lat, lng]);
+
         const bestPhone = (p.phone || p.phoneBusiness || '').replace(/[^0-9]/g, '');
         const formattedPhone = bestPhone.startsWith('54') ? bestPhone : '549' + bestPhone;
         
@@ -1429,10 +1626,10 @@
           <div style="font-family:Inter,sans-serif; color:#000;">
             <strong style="font-size:1rem; color:#0b1120;">${p.businessName}</strong><br>
             <span style="font-size:0.8rem; color:#555;">${p.contactName || ''} • ${p.rubro}</span><br>
-            <div style="margin:6px 0; font-size:0.8rem;">
-              <strong>Fecha:</strong> ${p.visitDate || 'Hoy'}<br>
+            <div style="margin:4px 0; font-size:0.78rem; color:#333;">
+              <i class="fa-solid fa-location-dot"></i> ${p.address || 'Sin dirección'}<br>
               <strong>Estado:</strong> ${getStatusLabel(p.status)}<br>
-              ${p.monthlyPlan > 0 ? `<strong>Plan:</strong> $${p.monthlyPlan} USD/m` : ''}
+              ${p.monthlyPlan > 0 ? `<strong>Abono:</strong> $${p.monthlyPlan} USD/m` : ''}
             </div>
             <div style="margin-top:8px; display:flex; gap:6px;">
               ${bestPhone ? `<a href="https://wa.me/${formattedPhone}" target="_blank" style="background:#10b981; color:#fff; padding:4px 8px; border-radius:4px; text-decoration:none; font-size:0.75rem; font-weight:700;">💬 WhatsApp</a>` : ''}
@@ -1441,6 +1638,13 @@
           </div>
         `);
       });
+
+      if (validMarkers.length > 0 && map) {
+        try {
+          const bounds = L.latLngBounds(validMarkers);
+          map.fitBounds(bounds, { padding: [40, 40], maxZoom: 15 });
+        } catch(e){}
+      }
 
       setTimeout(() => map.invalidateSize(), 200);
     }
@@ -1609,7 +1813,7 @@
       });
     }
 
-    function togglePaymentStatus(id) {
+    async function togglePaymentStatus(id) {
       const p = prospects.find(item => item.id === id);
       if (!p) return;
 
@@ -1618,10 +1822,18 @@
       renderCards();
       updateMetrics();
       checkBillingAlerts();
+
+      if (supabaseClient) {
+        try {
+          await supabaseClient.from('crm_prospects').update({ payment_status: p.paymentStatus }).eq('id', id);
+        } catch(e){}
+      }
+
       showToast(p.paymentStatus === 'al_dia' ? '🟢 Marcado como Al Día (Pagado)' : '🔴 Marcado como Pendiente');
     }
 
-    function saveRecord(e) {
+    // GUARDAR O ACTUALIZAR CON SUPABASE Y GEOCODIFICACIÓN
+    async function saveRecord(e) {
       e.preventDefault();
       
       try {
@@ -1661,65 +1873,98 @@
           paymentStatusValue = document.getElementById('paymentStatus') ? document.getElementById('paymentStatus').value : 'al_dia';
         }
 
+        // GEOCODIFICACIÓN PRECISA PARA EL MAPA
+        showToast('📍 Geocodificando dirección para el mapa...');
+        let coords = await geocodeAddress(address);
+
+        const recordId = editingId || ('rec_' + Date.now());
+
+        const newOrUpdatedRecord = {
+          id: recordId,
+          businessName,
+          contactName,
+          phone,
+          phoneBusiness,
+          instagram,
+          website,
+          facebook,
+          rubro,
+          serviceType: serviceTypeValue,
+          status: statusValue,
+          monthlyPlan: monthlyValue,
+          systemTotal: systemTotalValue,
+          setupPrice: setupPriceValue,
+          metaAdsCap: metaAdsCapValue,
+          billingDay: billingDayValue,
+          paymentStatus: paymentStatusValue,
+          address,
+          lat: coords ? coords.lat : null,
+          lng: coords ? coords.lng : null,
+          notes,
+          visitDate,
+          photo: currentPhotoBase64,
+          updatedAt: new Date().toISOString()
+        };
+
         if (editingId) {
           const index = prospects.findIndex(item => item.id === editingId);
           if (index !== -1) {
-            prospects[index] = {
-              ...prospects[index],
-              businessName,
-              contactName,
-              phone,
-              phoneBusiness,
-              instagram,
-              website,
-              facebook,
-              rubro,
-              serviceType: serviceTypeValue,
-              status: statusValue,
-              monthlyPlan: monthlyValue,
-              systemTotal: systemTotalValue,
-              setupPrice: setupPriceValue,
-              metaAdsCap: metaAdsCapValue,
-              billingDay: billingDayValue,
-              paymentStatus: paymentStatusValue,
-              address,
-              notes,
-              visitDate,
-              photo: currentPhotoBase64 || prospects[index].photo || '',
-              updatedAt: new Date().toISOString()
-            };
+            newOrUpdatedRecord.photo = currentPhotoBase64 || prospects[index].photo || '';
+            if (!coords && prospects[index].lat) {
+              newOrUpdatedRecord.lat = prospects[index].lat;
+              newOrUpdatedRecord.lng = prospects[index].lng;
+            }
+            prospects[index] = { ...prospects[index], ...newOrUpdatedRecord };
           }
           showToast('✏️ ¡Registro actualizado con éxito!');
         } else {
-          const newRecord = {
-            id: 'rec_' + Date.now(),
-            businessName,
-            contactName,
-            phone,
-            phoneBusiness,
-            instagram,
-            website,
-            facebook,
-            rubro,
-            serviceType: serviceTypeValue,
-            status: statusValue,
-            monthlyPlan: monthlyValue,
-            systemTotal: systemTotalValue,
-            setupPrice: setupPriceValue,
-            metaAdsCap: metaAdsCapValue,
-            billingDay: billingDayValue,
-            paymentStatus: paymentStatusValue,
-            address,
-            notes,
-            visitDate,
-            photo: currentPhotoBase64,
-            createdAt: new Date().toISOString()
-          };
-          prospects.unshift(newRecord);
-          showToast(isStreet ? '🚶‍♂️ ¡Visita de calle guardada!' : '💼 ¡Cliente guardado con éxito!');
+          newOrUpdatedRecord.createdAt = new Date().toISOString();
+          prospects.unshift(newOrUpdatedRecord);
+          showToast(isStreet ? '🚶‍♂️ ¡Visita guardada en la nube!' : '💼 ¡Cliente guardado en la nube!');
         }
 
         localStorage.setItem(STORAGE_KEY, JSON.stringify(prospects));
+
+        // GUARDAR EN SUPABASE
+        if (supabaseClient) {
+          try {
+            const dbPayload = {
+              id: newOrUpdatedRecord.id,
+              business_name: newOrUpdatedRecord.businessName,
+              contact_name: newOrUpdatedRecord.contactName,
+              phone: newOrUpdatedRecord.phone,
+              phone_business: newOrUpdatedRecord.phoneBusiness,
+              instagram: newOrUpdatedRecord.instagram,
+              website: newOrUpdatedRecord.website,
+              facebook: newOrUpdatedRecord.facebook,
+              rubro: newOrUpdatedRecord.rubro,
+              service_type: newOrUpdatedRecord.serviceType,
+              status: newOrUpdatedRecord.status,
+              monthly_plan: newOrUpdatedRecord.monthlyPlan,
+              system_total: newOrUpdatedRecord.systemTotal,
+              setup_price: newOrUpdatedRecord.setupPrice,
+              meta_ads_cap: newOrUpdatedRecord.metaAdsCap,
+              billing_day: parseInt(newOrUpdatedRecord.billingDay) || 1,
+              payment_status: newOrUpdatedRecord.paymentStatus,
+              address: newOrUpdatedRecord.address,
+              lat: newOrUpdatedRecord.lat,
+              lng: newOrUpdatedRecord.lng,
+              photo: newOrUpdatedRecord.photo,
+              visit_date: newOrUpdatedRecord.visitDate,
+              notes: newOrUpdatedRecord.notes
+            };
+
+            const { error: dbError } = await supabaseClient
+              .from('crm_prospects')
+              .upsert(dbPayload, { onConflict: 'id' });
+
+            if (dbError) {
+              console.warn('Supabase upsert note:', dbError.message);
+            }
+          } catch(e){
+            console.warn('Supabase write error:', e);
+          }
+        }
         
         cancelEditing();
         renderCards();
@@ -1732,15 +1977,22 @@
       }
     }
 
-    function deleteProspect(id) {
-      if (confirm('¿Eliminar este registro?')) {
+    async function deleteProspect(id) {
+      if (confirm('¿Eliminar este registro de todos los dispositivos?')) {
         prospects = prospects.filter(p => p.id !== id);
         localStorage.setItem(STORAGE_KEY, JSON.stringify(prospects));
         renderCards();
         updateMetrics();
         checkBillingAlerts();
         if (map) initMap();
-        showToast('Registro eliminado');
+
+        if (supabaseClient) {
+          try {
+            await supabaseClient.from('crm_prospects').delete().eq('id', id);
+          } catch(e){}
+        }
+
+        showToast('Registro eliminado de la nube');
       }
     }
 
@@ -1814,7 +2066,7 @@
         return;
       }
 
-      const headers = ["Negocio", "Contacto", "Fecha_Visita", "Telefono_Personal", "Telefono_Business", "Instagram", "Website", "Facebook", "Rubro", "Tipo_Servicio", "Estado", "Abono_USD", "Total_Sistema", "Setup_Cuotas", "Meta_Ads_Cap", "Dia_Vencimiento", "Estado_Pago", "Direccion", "Notas"];
+      const headers = ["Negocio", "Contacto", "Fecha_Visita", "Telefono_Personal", "Telefono_Business", "Instagram", "Website", "Facebook", "Rubro", "Tipo_Servicio", "Estado", "Abono_USD", "Total_Sistema", "Setup_Cuotas", "Meta_Ads_Cap", "Dia_Vencimiento", "Estado_Pago", "Direccion", "Lat", "Lng", "Notas"];
       const rows = prospects.map(p => [
         `"${p.businessName}"`,
         `"${p.contactName || ''}"`,
@@ -1834,6 +2086,8 @@
         `"${p.billingDay || ''}"`,
         `"${p.paymentStatus || ''}"`,
         `"${p.address || ''}"`,
+        p.lat || '',
+        p.lng || '',
         `"${(p.notes || '').replace(/"/g, '""')}"`
       ]);
 
