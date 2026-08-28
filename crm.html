@@ -603,6 +603,36 @@
 
     .btn-cobrar-wsp:hover { background: #10b981; color: #000; }
 
+    /* FILA DE REDES SOCIALES Y WEB */
+    .social-links-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 8px 0;
+      padding: 6px 0;
+      border-top: 1px dashed rgba(255, 255, 255, 0.08);
+    }
+
+    .social-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 4px 8px;
+      border-radius: 6px;
+      font-size: 0.73rem;
+      color: #e5e7eb;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+
+    .social-tag:hover { background: rgba(0, 242, 254, 0.15); border-color: var(--primary); color: var(--primary); }
+    .social-tag.ig:hover { background: rgba(225, 48, 108, 0.15); border-color: #e1306c; color: #f43f5e; }
+    .social-tag.fb:hover { background: rgba(24, 119, 242, 0.15); border-color: #1877f2; color: #60a5fa; }
+    .social-tag.web:hover { background: rgba(16, 185, 129, 0.15); border-color: #10b981; color: #34d399; }
+    .social-tag.biz:hover { background: rgba(37, 211, 102, 0.15); border-color: #25d366; color: #4ade80; }
+
     .meta-ads-box {
       background: rgba(0, 242, 254, 0.05);
       border: 1px dashed rgba(0, 242, 254, 0.3);
@@ -806,13 +836,13 @@
     <!-- BUSCADOR EN TIEMPO REAL -->
     <div class="search-box" id="search-container">
       <i class="fa-solid fa-magnifying-glass"></i>
-      <input type="text" id="search-input" placeholder="Buscar por negocio, dueño, teléfono o rubro..." oninput="handleSearch()">
+      <input type="text" id="search-input" placeholder="Buscar por negocio, dueño, teléfono, instagram o web..." oninput="handleSearch()">
     </div>
 
     <!-- MAIN CARD: FORMULARIO CON SELECTOR DE MODO Y EDICIÓN -->
     <div class="main-card" id="form-container">
       
-      <!-- BANNER DE MODO EDICIÓN (Oculto por defecto) -->
+      <!-- BANNER DE MODO EDICIÓN -->
       <div id="edit-banner" class="edit-banner-strip" style="display: none;">
         <span><i class="fa-solid fa-pen-to-square"></i> Editando registro: <strong id="edit-target-name">...</strong></span>
         <button type="button" onclick="cancelEditing()" style="background:none; border:none; color:#f87171; font-weight:700; cursor:pointer;"><i class="fa-solid fa-xmark"></i> Cancelar</button>
@@ -830,7 +860,6 @@
 
       <!-- FORMULARIO ROBUSTO -->
       <form id="crm-form" onsubmit="saveRecord(event)">
-        <!-- ID OCULTO PARA EDICIÓN -->
         <input type="hidden" id="editingRecordId" value="">
 
         <div class="form-grid">
@@ -843,17 +872,12 @@
 
           <div class="form-group">
             <label for="contactName">Dueño / Encargado / Vendedor</label>
-            <input type="text" id="contactName" placeholder="Ej: Matías (Dueño)">
+            <input type="text" id="contactName" placeholder="Ej: Brian Sakkal">
           </div>
 
           <div class="form-group">
             <label for="visitDate">Fecha de Visita / Registro</label>
             <input type="date" id="visitDate" required>
-          </div>
-
-          <div class="form-group">
-            <label for="phone">Teléfono / WhatsApp (Opcional)</label>
-            <input type="tel" id="phone" placeholder="Ej: 11 3456-7890">
           </div>
 
           <div class="form-group">
@@ -870,9 +894,40 @@
             </select>
           </div>
 
+          <!-- TELÉFONOS SEPARADOS -->
           <div class="form-group">
+            <label for="phone"><i class="fa-solid fa-user-tie" style="color:var(--primary);"></i> Teléfono / WhatsApp Personal (Dueño)</label>
+            <input type="tel" id="phone" placeholder="Ej: 11 5566-7788 (Dueño)">
+          </div>
+
+          <div class="form-group">
+            <label for="phoneBusiness"><i class="fa-brands fa-whatsapp" style="color:#10b981;"></i> WhatsApp Business (Local / Mostrador)</label>
+            <input type="tel" id="phoneBusiness" placeholder="Ej: 11 4455-6677 (Atención al cliente)">
+          </div>
+
+          <!-- REDES SOCIALES Y PÁGINA WEB -->
+          <div class="section-divider">
+            <i class="fa-solid fa-globe"></i> Redes Sociales & Presencia Online
+          </div>
+
+          <div class="form-group">
+            <label for="instagram"><i class="fa-brands fa-instagram" style="color:#e1306c;"></i> Instagram (Usuario o Link)</label>
+            <input type="text" id="instagram" placeholder="Ej: @sakkal_mayorista o link">
+          </div>
+
+          <div class="form-group">
+            <label for="website"><i class="fa-solid fa-link" style="color:var(--primary);"></i> Tienda Online / Página Web / ML</label>
+            <input type="text" id="website" placeholder="Ej: www.adarinsumos.com.ar o tiendanube">
+          </div>
+
+          <div class="form-group full-width">
+            <label for="facebook"><i class="fa-brands fa-facebook" style="color:#1877f2;"></i> Facebook / Fan Page (Opcional)</label>
+            <input type="text" id="facebook" placeholder="Ej: facebook.com/negocio">
+          </div>
+
+          <div class="form-group full-width">
             <label for="address">Dirección / Calle / Altura (Para Mapa GPS)</label>
-            <input type="text" id="address" placeholder="Ej: Av. Rivadavia 2850, Once, CABA">
+            <input type="text" id="address" placeholder="Ej: Av. Rivadavia 2715, Once, CABA">
           </div>
 
           <!-- SUBIDA DE FOTO DE TARJETA O LOCAL -->
@@ -969,7 +1024,7 @@
 
           <div class="form-group full-width">
             <label for="notes">Notas de la Visita / Requerimientos</label>
-            <textarea id="notes" rows="2" placeholder="Ej: Hablé con la vendedora, el dueño está por la mañana. Tienen mucho WhatsApp..."></textarea>
+            <textarea id="notes" rows="2" placeholder="Ej: Hablé con el dueño Brian, tienen mucho WhatsApp Business y tienda online..."></textarea>
           </div>
 
         </div>
@@ -1006,18 +1061,22 @@
   <div id="toast"><i class="fa-solid fa-circle-check" style="color: var(--primary);"></i> <span id="toast-msg">Guardado</span></div>
 
   <script>
-    const STORAGE_KEY = 'crocscale_crm_street_v9';
+    const STORAGE_KEY = 'crocscale_crm_street_v10';
     let currentMode = 'street';
     let currentPhotoBase64 = '';
     let isEditing = false;
     
-    // DATOS REALES CON FECHAS Y FOTOS
+    // DATOS REALES CON REDES SOCIALES, WEB Y WHATSAPP BUSINESS
     const DEFAULT_PROSPECTS = [
       {
         id: 'adar_01',
         businessName: 'ADAR Insumos',
         contactName: 'Isaak Lair Haboba',
         phone: '1130960114',
+        phoneBusiness: '1130960114',
+        instagram: '@adarinsumos',
+        website: 'https://adarinsumos.com.ar',
+        facebook: '',
         rubro: 'Bazar / Hogar / Termos',
         serviceType: 'hibrido',
         status: 'cerrado',
@@ -1040,6 +1099,10 @@
         businessName: 'Sakkal Mayorista',
         contactName: 'Brian Sakkal',
         phone: '1155667788',
+        phoneBusiness: '1155667788',
+        instagram: '@sakkal_mayorista',
+        website: 'https://sakkalmayorista.com',
+        facebook: '',
         rubro: 'Indumentaria / Ropa',
         serviceType: 'hibrido',
         status: 'propuesta',
@@ -1062,6 +1125,10 @@
         businessName: 'BrossUnderwear',
         contactName: 'Gabriel & Brian Treyan',
         phone: '1144332211',
+        phoneBusiness: '1144332211',
+        instagram: '@brossunderwear',
+        website: 'https://brossunderwear.com.ar',
+        facebook: 'facebook.com/brossunderwear',
         rubro: 'Indumentaria / Ropa',
         serviceType: 'sistema_medida',
         status: 'pausa',
@@ -1083,7 +1150,11 @@
         id: 'calle_04',
         businessName: 'Calzados El Sol',
         contactName: 'Encargada Silvina',
-        phone: '1122334455',
+        phone: '',
+        phoneBusiness: '1122334455',
+        instagram: '@calzadoselsol',
+        website: '',
+        facebook: '',
         rubro: 'Calzado / Marroquinería',
         serviceType: 'chatbot',
         status: 'no_interesa',
@@ -1145,7 +1216,6 @@
       }
     }
 
-    // MANEJO DE FOTO DE TARJETA CON REDUCCIÓN DE TAMAÑO
     function handlePhotoSelect(event) {
       const file = event.target.files[0];
       if (!file) return;
@@ -1190,7 +1260,29 @@
       document.getElementById('btnRemovePhoto').style.display = 'none';
     }
 
-    // EDITAR CLIENTE / REGISTRO EXISTENTE
+    // FORMATEAR URL DE REDES
+    function formatInstagramUrl(ig) {
+      if (!ig) return '';
+      let clean = ig.trim().replace('@', '');
+      if (clean.startsWith('http')) return clean;
+      return `https://instagram.com/${clean}`;
+    }
+
+    function formatWebUrl(web) {
+      if (!web) return '';
+      let clean = web.trim();
+      if (clean.startsWith('http')) return clean;
+      return `https://${clean}`;
+    }
+
+    function formatFacebookUrl(fb) {
+      if (!fb) return '';
+      let clean = fb.trim();
+      if (clean.startsWith('http')) return clean;
+      return `https://${clean}`;
+    }
+
+    // EDITAR CLIENTE
     function editProspect(id) {
       const p = prospects.find(item => item.id === id);
       if (!p) return;
@@ -1200,12 +1292,15 @@
       document.getElementById('businessName').value = p.businessName || '';
       document.getElementById('contactName').value = p.contactName || '';
       document.getElementById('phone').value = p.phone || '';
+      document.getElementById('phoneBusiness').value = p.phoneBusiness || '';
+      document.getElementById('instagram').value = p.instagram || '';
+      document.getElementById('website').value = p.website || '';
+      document.getElementById('facebook').value = p.facebook || '';
       document.getElementById('rubro').value = p.rubro || 'Indumentaria / Ropa';
       document.getElementById('address').value = p.address || '';
       document.getElementById('visitDate').value = p.visitDate || new Date().toISOString().slice(0, 10);
       document.getElementById('notes').value = p.notes || '';
 
-      // Foto
       if (p.photo) {
         currentPhotoBase64 = p.photo;
         const preview = document.getElementById('photoPreview');
@@ -1216,7 +1311,6 @@
         removePhoto();
       }
 
-      // Determinar si es modo calle o cliente
       const isClientMode = (p.status === 'cerrado' || p.monthlyPlan > 0 || (p.systemTotal && p.systemTotal !== '$0'));
       
       if (isClientMode) {
@@ -1234,7 +1328,6 @@
         document.getElementById('streetResult').value = p.status || 'visitado';
       }
 
-      // Estilo de banner y botones de edición
       const formCard = document.getElementById('form-container');
       formCard.classList.add('editing-mode');
       document.getElementById('edit-banner').style.display = 'flex';
@@ -1245,7 +1338,6 @@
       btnSubmit.classList.add('btn-update');
       document.getElementById('btn-cancel-edit').style.display = 'inline-flex';
 
-      // Scroll suave hacia el formulario
       formCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
       showToast('✏️ Editando: ' + p.businessName);
     }
@@ -1330,8 +1422,8 @@
         });
 
         const marker = L.marker([lat, lng], { icon: customIcon }).addTo(markersLayer);
-        const cleanPhone = (p.phone || '').replace(/[^0-9]/g, '');
-        const formattedPhone = cleanPhone.startsWith('54') ? cleanPhone : '549' + cleanPhone;
+        const bestPhone = (p.phone || p.phoneBusiness || '').replace(/[^0-9]/g, '');
+        const formattedPhone = bestPhone.startsWith('54') ? bestPhone : '549' + bestPhone;
         
         marker.bindPopup(`
           <div style="font-family:Inter,sans-serif; color:#000;">
@@ -1343,7 +1435,7 @@
               ${p.monthlyPlan > 0 ? `<strong>Plan:</strong> $${p.monthlyPlan} USD/m` : ''}
             </div>
             <div style="margin-top:8px; display:flex; gap:6px;">
-              ${cleanPhone ? `<a href="https://wa.me/${formattedPhone}" target="_blank" style="background:#10b981; color:#fff; padding:4px 8px; border-radius:4px; text-decoration:none; font-size:0.75rem; font-weight:700;">💬 WhatsApp</a>` : ''}
+              ${bestPhone ? `<a href="https://wa.me/${formattedPhone}" target="_blank" style="background:#10b981; color:#fff; padding:4px 8px; border-radius:4px; text-decoration:none; font-size:0.75rem; font-weight:700;">💬 WhatsApp</a>` : ''}
               <a href="https://maps.google.com/?q=${encodeURIComponent(p.address || p.businessName)}" target="_blank" style="background:#00a8b5; color:#fff; padding:4px 8px; border-radius:4px; text-decoration:none; font-size:0.75rem; font-weight:700;">📍 GPS</a>
             </div>
           </div>
@@ -1371,7 +1463,7 @@
 
         let matchSearch = true;
         if (searchQuery) {
-          const fullText = `${p.businessName} ${p.contactName} ${p.phone} ${p.rubro} ${p.notes} ${p.address}`.toLowerCase();
+          const fullText = `${p.businessName} ${p.contactName} ${p.phone} ${p.phoneBusiness} ${p.instagram} ${p.website} ${p.rubro} ${p.notes} ${p.address}`.toLowerCase();
           matchSearch = fullText.includes(searchQuery);
         }
 
@@ -1389,19 +1481,26 @@
       }
 
       filtered.forEach(p => {
-        const cleanPhone = (p.phone || '').replace(/[^0-9]/g, '');
-        const formattedPhone = cleanPhone.startsWith('54') ? cleanPhone : '549' + cleanPhone;
-        const wspUrl = cleanPhone ? `https://wa.me/${formattedPhone}?text=${encodeURIComponent('¡Hola ' + (p.contactName || p.businessName) + '! Te escribo de CrocScale IA sobre tu sistema/automatización.')}` : '#';
+        const cleanPersonal = (p.phone || '').replace(/[^0-9]/g, '');
+        const cleanBusiness = (p.phoneBusiness || '').replace(/[^0-9]/g, '');
+        const primaryPhone = cleanPersonal || cleanBusiness;
+        
+        const formattedPhone = primaryPhone.startsWith('54') ? primaryPhone : '549' + primaryPhone;
+        const wspUrl = primaryPhone ? `https://wa.me/${formattedPhone}?text=${encodeURIComponent('¡Hola ' + (p.contactName || p.businessName) + '! Te escribo de CrocScale IA sobre tu sistema/automatización.')}` : '#';
         
         const cobranzaText = encodeURIComponent(`¡Hola ${p.contactName || p.businessName}! ¿Cómo estás? Te paso el recordatorio de cobro de CrocScale ($${p.monthlyPlan || p.setupPrice}). Avisame si necesitás el Alias o CBU. ¡Abrazo!`);
-        const cobrarWspUrl = cleanPhone ? `https://wa.me/${formattedPhone}?text=${cobranzaText}` : '#';
+        const cobrarWspUrl = primaryPhone ? `https://wa.me/${formattedPhone}?text=${cobranzaText}` : '#';
 
-        const callUrl = cleanPhone ? `tel:${cleanPhone}` : '#';
+        const callUrl = primaryPhone ? `tel:${primaryPhone}` : '#';
         const mapUrl = `https://maps.google.com/?q=${encodeURIComponent(p.address || p.businessName)}`;
 
         const isClient = p.status === 'cerrado' || p.status === 'propuesta' || p.monthlyPlan > 0;
         const paymentClass = p.paymentStatus === 'al_dia' ? 'al-dia' : 'pendiente';
         const paymentLabel = p.paymentStatus === 'al_dia' ? '🟢 Al Día' : '🔴 Cobro Pendiente';
+
+        const igUrl = formatInstagramUrl(p.instagram);
+        const webUrl = formatWebUrl(p.website);
+        const fbUrl = formatFacebookUrl(p.facebook);
 
         const card = document.createElement('div');
         card.className = `prospect-card status-${p.status}`;
@@ -1430,7 +1529,7 @@
                 </span>
               </div>
               <div class="payment-bar-actions">
-                ${p.paymentStatus === 'pendiente' && cleanPhone ? `<a href="${cobrarWspUrl}" target="_blank" class="btn-cobrar-wsp" title="Enviar recordatorio"><i class="fa-brands fa-whatsapp"></i> Cobrar</a>` : ''}
+                ${p.paymentStatus === 'pendiente' && primaryPhone ? `<a href="${cobrarWspUrl}" target="_blank" class="btn-cobrar-wsp" title="Enviar recordatorio"><i class="fa-brands fa-whatsapp"></i> Cobrar</a>` : ''}
                 <button class="btn-toggle-payment" onclick="togglePaymentStatus('${p.id}')">
                   ${p.paymentStatus === 'al_dia' ? 'Pasar a Pendiente' : 'Marcar Pagado ✅'}
                 </button>
@@ -1440,10 +1539,21 @@
 
           <div class="card-details-grid">
             <div class="detail-item"><i class="fa-solid fa-location-dot"></i> <span>${p.address || 'Sin dirección'}</span></div>
-            <div class="detail-item"><i class="fa-solid fa-phone"></i> <span>${p.phone || 'Sin teléfono'}</span></div>
+            <div class="detail-item"><i class="fa-solid fa-user-tie"></i> <span>Dueño: <strong>${p.phone || 'Sin WhatsApp'}</strong></span></div>
+            ${p.phoneBusiness ? `<div class="detail-item"><i class="fa-brands fa-whatsapp" style="color:#10b981;"></i> <span>Business: <strong>${p.phoneBusiness}</strong></span></div>` : ''}
             ${p.monthlyPlan > 0 ? `<div class="detail-item"><i class="fa-solid fa-robot"></i> <span>Abono: <strong>$${p.monthlyPlan} USD/m</strong></span></div>` : ''}
             ${p.setupPrice ? `<div class="detail-item"><i class="fa-solid fa-receipt"></i> <span>Condición: <strong>${p.setupPrice}</strong></span></div>` : ''}
           </div>
+
+          <!-- REDES SOCIALES Y WEB TAGS -->
+          ${(p.instagram || p.website || p.facebook || p.phoneBusiness) ? `
+            <div class="social-links-row">
+              ${p.instagram ? `<a href="${igUrl}" target="_blank" class="social-tag ig"><i class="fa-brands fa-instagram"></i> ${p.instagram}</a>` : ''}
+              ${p.website ? `<a href="${webUrl}" target="_blank" class="social-tag web"><i class="fa-solid fa-globe"></i> Web / Tienda</a>` : ''}
+              ${p.facebook ? `<a href="${fbUrl}" target="_blank" class="social-tag fb"><i class="fa-brands fa-facebook"></i> Facebook</a>` : ''}
+              ${(p.phoneBusiness && p.phoneBusiness !== p.phone) ? `<a href="https://wa.me/549${cleanBusiness}" target="_blank" class="social-tag biz"><i class="fa-brands fa-whatsapp"></i> WSP Local</a>` : ''}
+            </div>
+          ` : ''}
 
           <!-- MODULO META ADS -->
           ${p.metaAdsCap && p.metaAdsCap !== 'Sin Ads' ? `
@@ -1460,14 +1570,14 @@
 
           <!-- BOTONES EN 1 TOQUE -->
           <div class="action-buttons-row">
-            ${cleanPhone ? `
+            ${primaryPhone ? `
               <a href="${wspUrl}" target="_blank" class="btn-action btn-wsp" title="Abrir WhatsApp">
                 <i class="fa-brands fa-whatsapp"></i> WhatsApp
               </a>
               <a href="${callUrl}" class="btn-action btn-call" title="Llamar directo">
                 <i class="fa-solid fa-phone"></i> Llamar
               </a>
-              <button onclick="downloadVCard('${p.contactName || p.businessName}', '${cleanPhone}', '${p.businessName}', '${p.address || ''}')" class="btn-action btn-vcard" title="Guardar en agenda">
+              <button onclick="downloadVCard('${p.contactName || p.businessName}', '${primaryPhone}', '${p.businessName}', '${p.address || ''}')" class="btn-action btn-vcard" title="Guardar en agenda">
                 <i class="fa-regular fa-address-card"></i> Agendar
               </button>
             ` : `
@@ -1511,7 +1621,6 @@
       showToast(p.paymentStatus === 'al_dia' ? '🟢 Marcado como Al Día (Pagado)' : '🔴 Marcado como Pendiente');
     }
 
-    // GUARDAR O ACTUALIZAR ROBUSTO (SIN ERRORES)
     function saveRecord(e) {
       e.preventDefault();
       
@@ -1521,6 +1630,10 @@
         const businessName = document.getElementById('businessName').value.trim();
         const contactName = document.getElementById('contactName').value.trim();
         const phone = document.getElementById('phone').value.trim();
+        const phoneBusiness = document.getElementById('phoneBusiness').value.trim();
+        const instagram = document.getElementById('instagram').value.trim();
+        const website = document.getElementById('website').value.trim();
+        const facebook = document.getElementById('facebook').value.trim();
         const rubro = document.getElementById('rubro').value;
         const address = document.getElementById('address').value.trim();
         const notes = document.getElementById('notes').value.trim();
@@ -1549,7 +1662,6 @@
         }
 
         if (editingId) {
-          // ACTUALIZAR REGISTRO EXISTENTE
           const index = prospects.findIndex(item => item.id === editingId);
           if (index !== -1) {
             prospects[index] = {
@@ -1557,6 +1669,10 @@
               businessName,
               contactName,
               phone,
+              phoneBusiness,
+              instagram,
+              website,
+              facebook,
               rubro,
               serviceType: serviceTypeValue,
               status: statusValue,
@@ -1575,12 +1691,15 @@
           }
           showToast('✏️ ¡Registro actualizado con éxito!');
         } else {
-          // CREAR NUEVO REGISTRO
           const newRecord = {
             id: 'rec_' + Date.now(),
             businessName,
             contactName,
             phone,
+            phoneBusiness,
+            instagram,
+            website,
+            facebook,
             rubro,
             serviceType: serviceTypeValue,
             status: statusValue,
@@ -1695,12 +1814,16 @@
         return;
       }
 
-      const headers = ["Negocio", "Contacto", "Fecha_Visita", "Telefono", "Rubro", "Tipo_Servicio", "Estado", "Abono_USD", "Total_Sistema", "Setup_Cuotas", "Meta_Ads_Cap", "Dia_Vencimiento", "Estado_Pago", "Direccion", "Notas"];
+      const headers = ["Negocio", "Contacto", "Fecha_Visita", "Telefono_Personal", "Telefono_Business", "Instagram", "Website", "Facebook", "Rubro", "Tipo_Servicio", "Estado", "Abono_USD", "Total_Sistema", "Setup_Cuotas", "Meta_Ads_Cap", "Dia_Vencimiento", "Estado_Pago", "Direccion", "Notas"];
       const rows = prospects.map(p => [
         `"${p.businessName}"`,
         `"${p.contactName || ''}"`,
         `"${p.visitDate || ''}"`,
         `"${p.phone || ''}"`,
+        `"${p.phoneBusiness || ''}"`,
+        `"${p.instagram || ''}"`,
+        `"${p.website || ''}"`,
+        `"${p.facebook || ''}"`,
         `"${p.rubro}"`,
         `"${p.serviceType}"`,
         `"${p.status}"`,
