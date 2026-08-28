@@ -13,7 +13,7 @@
   <!-- FontAwesome 6 -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-  <!-- Leaflet CSS & JS (Mapa Geográfico y Satelital) -->
+  <!-- Leaflet CSS & JS (Mapa Geográfico) -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
@@ -257,33 +257,8 @@
       width: 100%;
     }
 
-    .map-header-bar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 8px;
-      flex-wrap: wrap;
-      gap: 6px;
-    }
-
-    .map-layer-btn {
-      background: var(--input-bg);
-      border: 1px solid var(--primary);
-      color: var(--primary);
-      padding: 3px 8px;
-      border-radius: 6px;
-      font-size: 0.7rem;
-      font-weight: 700;
-      cursor: pointer;
-    }
-
-    .map-layer-btn.active {
-      background: var(--primary);
-      color: #000;
-    }
-
     #map-element {
-      height: 400px;
+      height: 380px;
       width: 100%;
       border-radius: 10px;
       z-index: 10;
@@ -446,40 +421,40 @@
       top: 100%;
       left: 0;
       right: 0;
-      background: #151828;
+      background: #13172c;
       border: 1px solid var(--primary);
       border-radius: 8px;
-      z-index: 500;
       max-height: 180px;
       overflow-y: auto;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+      z-index: 100;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.8);
       display: none;
       margin-top: 4px;
     }
 
-    .suggestion-item {
+    .address-suggestion-item {
       padding: 8px 12px;
       font-size: 0.78rem;
       color: #e5e7eb;
       cursor: pointer;
       border-bottom: 1px solid rgba(255, 255, 255, 0.05);
       display: flex;
-      align-items: center;
-      gap: 8px;
+      flex-direction: column;
+      gap: 2px;
     }
 
-    .suggestion-item:hover {
+    .address-suggestion-item:hover {
       background: rgba(0, 242, 254, 0.15);
       color: var(--primary);
     }
 
-    .address-coord-badge {
+    .address-suggestion-item strong {
+      color: #fff;
+    }
+
+    .address-suggestion-item span {
       font-size: 0.68rem;
-      color: var(--accent-green);
-      margin-top: 2px;
-      display: none;
-      align-items: center;
-      gap: 4px;
+      color: var(--text-muted);
     }
 
     /* FOTO UPLOAD BOX */
@@ -656,6 +631,7 @@
     .badge-status.ya_tiene_bot { background: rgba(245, 158, 11, 0.2); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.4); }
     .badge-status.pausa { background: rgba(239, 68, 68, 0.2); color: #fca5a5; border: 1px solid rgba(239, 68, 68, 0.4); }
 
+    /* CARD FOTO TARJETA */
     .card-photo-thumb {
       width: 100%;
       max-height: 130px;
@@ -666,6 +642,7 @@
       cursor: pointer;
     }
 
+    /* BARRA DE PAGO */
     .payment-status-bar {
       display: flex;
       flex-wrap: wrap;
@@ -723,6 +700,7 @@
       font-weight: 600;
     }
 
+    /* FILA DE REDES SOCIALES Y WEB */
     .social-links-row {
       display: flex;
       flex-wrap: wrap;
@@ -885,13 +863,16 @@
     #toast.show { transform: translateX(-50%) translateY(0); }
 
     @media (max-width: 600px) {
-      .header-inner { flex-direction: row; justify-content: space-between; }
+      .header-inner {
+        flex-direction: row;
+        justify-content: space-between;
+      }
       .brand-title h1 { font-size: 0.92rem; }
       .metrics-grid { grid-template-columns: repeat(2, 1fr); gap: 6px; }
       .form-grid { grid-template-columns: 1fr; gap: 8px; }
       .full-width, .section-divider { grid-column: span 1; }
       .card-details-grid { grid-template-columns: 1fr; }
-      #map-element { height: 350px; }
+      #map-element { height: 320px; }
     }
   </style>
 </head>
@@ -949,14 +930,11 @@
       </div>
     </div>
 
-    <!-- CONTENEDOR DE MAPA GEOGRÁFICO Y SATELITAL -->
+    <!-- CONTENEDOR DE MAPA GEOGRÁFICO -->
     <div id="map-view-container">
-      <div class="map-header-bar">
-        <h3 style="font-size: 0.88rem; color: var(--primary);"><i class="fa-solid fa-route"></i> Mapa Satelital de Clientes & Locales</h3>
-        <div style="display:flex; gap:4px;">
-          <button class="map-layer-btn active" id="btn-layer-dark" onclick="setMapLayer('dark')">Oscuro</button>
-          <button class="map-layer-btn" id="btn-layer-sat" onclick="setMapLayer('satellite')">🛰️ Satelital</button>
-        </div>
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+        <h3 style="font-size: 0.88rem; color: var(--primary);"><i class="fa-solid fa-route"></i> Mapa Satelital de Locales</h3>
+        <span style="font-size: 0.68rem; color: var(--text-muted);">🟢 Activo | 🔵 Visitado</span>
       </div>
       <div id="map-element"></div>
     </div>
@@ -964,10 +942,10 @@
     <!-- BUSCADOR EN TIEMPO REAL -->
     <div class="search-box" id="search-container">
       <i class="fa-solid fa-magnifying-glass"></i>
-      <input type="text" id="search-input" placeholder="Buscar negocio, dueño, teléfono, dirección o instagram..." oninput="handleSearch()">
+      <input type="text" id="search-input" placeholder="Buscar negocio, dueño, teléfono o instagram..." oninput="handleSearch()">
     </div>
 
-    <!-- MAIN CARD: FORMULARIO CON AUTOCOMPLETE Y EDICIÓN -->
+    <!-- MAIN CARD: FORMULARIO CON SELECTOR DE MODO Y EDICIÓN -->
     <div class="main-card" id="form-container">
       
       <!-- BANNER DE MODO EDICIÓN -->
@@ -994,7 +972,7 @@
 
         <div class="form-grid">
           
-          <!-- DATOS DE CONTACTO -->
+          <!-- DATOS DE CONTACTO (COMUNES) -->
           <div class="form-group">
             <label for="businessName">Nombre del Local / Negocio *</label>
             <input type="text" id="businessName" required placeholder="Ej: Calzados Rossi">
@@ -1035,18 +1013,17 @@
             <input type="tel" id="phoneBusiness" placeholder="Ej: 11 4455-6677">
           </div>
 
-          <!-- DIRECCIÓN CON AUTOCOMPLETE INTELIGENTE EN VIVO -->
+          <!-- DIRECCIÓN CON AUTOCOMPLETADO INTELIGENTE Y GPS -->
           <div class="form-group full-width">
-            <label for="address"><i class="fa-solid fa-map-pin" style="color:var(--primary);"></i> Dirección Exacta (Escribí para autocompletar altura exacta)</label>
+            <label for="address"><i class="fa-solid fa-map-pin" style="color:var(--primary);"></i> Dirección / Link de Google Maps / Coordenadas</label>
             <div class="input-with-gps">
-              <input type="text" id="address" placeholder="Ej: Rivadavia 2715 o Maipu 1500" autocomplete="off" oninput="handleAddressInput(event)" style="flex:1;">
+              <input type="text" id="address" placeholder="Escribí calle y altura (ej: Rivadavia 2715) o pegá link de Google Maps..." autocomplete="off" oninput="handleAddressInput(this.value)" style="flex:1;">
               <button type="button" class="btn-gps-here" onclick="getCurrentLocationGPS()" title="Detectar mi ubicación actual exacta">
                 <i class="fa-solid fa-crosshairs"></i> Mi GPS
               </button>
             </div>
-            <!-- Sugerencias de Autocomplete -->
+            <!-- AUTOCOMPLETE DROPDOWN EN VIVO -->
             <div id="address-suggestions" class="address-suggestions-box"></div>
-            <div id="address-coord-badge" class="address-coord-badge"><i class="fa-solid fa-circle-check"></i> <span id="address-coord-text">Coordenada exacta fijada</span></div>
           </div>
 
           <!-- REDES SOCIALES Y PÁGINA WEB -->
@@ -1237,7 +1214,7 @@
         metaAdsCap: '$200.000 ARS (Tope Fee)',
         billingDay: '16',
         paymentStatus: 'al_dia',
-        address: 'Gallo 823, Almagro, CABA',
+        address: 'Gallo 823, Balvanera, CABA',
         lat: -34.5999626,
         lng: -58.4121197,
         photo: '',
@@ -1263,7 +1240,7 @@
         metaAdsCap: '$300.000 ARS (20% Fee)',
         billingDay: '2',
         paymentStatus: 'pendiente',
-        address: 'Av. Rivadavia 2715, Balvanera, CABA',
+        address: 'Av. Rivadavia 2715, Once, CABA',
         lat: -34.6099213,
         lng: -58.4048591,
         photo: '',
@@ -1303,9 +1280,6 @@
     let currentFilter = 'todos';
     let searchQuery = '';
     let map = null;
-    let darkTileLayer = null;
-    let satTileLayer = null;
-    let currentTileLayer = 'dark';
     let markersLayer = null;
 
     document.addEventListener('DOMContentLoaded', async () => {
@@ -1315,13 +1289,6 @@
       checkBillingAlerts();
       await syncFromSupabase();
       setupRealtimeSync();
-
-      // Cerrar sugerencias al hacer clic afuera
-      document.addEventListener('click', (e) => {
-        if (!e.target.closest('#address') && !e.target.closest('#address-suggestions')) {
-          document.getElementById('address-suggestions').style.display = 'none';
-        }
-      });
     });
 
     async function syncFromSupabase() {
@@ -1408,107 +1375,127 @@
       }
     }
 
-    // AUTOCOMPLETE DE DIRECCIONES EN TIEMPO REAL CON PHOTON (EXACTITUD POR NÚMERO DE PUERTA)
-    function handleAddressInput(event) {
-      const query = event.target.value.trim();
-      const suggestionsBox = document.getElementById('address-suggestions');
-      
+    // AUTOCOMPLETADO INSTANTÁNEO CON PHOTON (KOMOOT) PARA ARGENTINA
+    function handleAddressInput(val) {
       clearTimeout(autocompleteTimeout);
-      if (query.length < 3) {
-        suggestionsBox.style.display = 'none';
+      const box = document.getElementById('address-suggestions');
+      
+      if (!val || val.trim().length < 3) {
+        box.style.display = 'none';
+        return;
+      }
+
+      // Si es un link de Google Maps o Coordenadas directas
+      if (val.includes('maps.google.com') || val.includes('goo.gl') || val.includes('@') || /^-?\d+\.\d+,\s*-?\d+\.\d+/.test(val)) {
+        parseGoogleMapsLinkOrCoords(val);
+        box.style.display = 'none';
         return;
       }
 
       autocompleteTimeout = setTimeout(async () => {
         try {
-          let searchQuery = query;
-          if (!searchQuery.toLowerCase().includes('argentina') && !searchQuery.toLowerCase().includes('buenos aires') && !searchQuery.toLowerCase().includes('caba')) {
-            searchQuery += ', Buenos Aires, Argentina';
-          }
-
-          const url = `https://photon.komoot.io/api/?q=${encodeURIComponent(searchQuery)}&limit=5&lang=es`;
+          let query = val.trim();
+          const url = `https://photon.komoot.io/api/?q=${encodeURIComponent(query)}&lat=-34.6037&lon=-58.3816&limit=4`;
           const resp = await fetch(url);
           const data = await resp.json();
 
           if (data && data.features && data.features.length > 0) {
-            suggestionsBox.innerHTML = '';
+            box.innerHTML = '';
             data.features.forEach(feat => {
-              const coords = feat.geometry.coordinates; // [lng, lat]
               const p = feat.properties;
-              
+              const coords = feat.geometry.coordinates; // [lng, lat]
               const street = p.street || p.name || '';
-              const num = p.housenumber ? (' ' + p.housenumber) : '';
-              const city = p.city || p.district || p.state || 'Buenos Aires';
-              const label = `${street}${num}, ${city}`;
+              const num = p.housenumber ? ` ${p.housenumber}` : '';
+              const locality = p.locality || p.district || p.city || p.county || '';
+              const state = p.state || 'Buenos Aires';
+              
+              const fullFormatted = `${street}${num}, ${locality}, ${state}`.replace(/,\s*,/g, ',').trim();
 
-              const item = document.createElement('div');
-              item.className = 'suggestion-item';
-              item.innerHTML = `<i class="fa-solid fa-location-dot" style="color:var(--primary);"></i> <span>${label}</span>`;
-              item.onclick = () => selectAddressSuggestion(label, coords[1], coords[0]);
-              suggestionsBox.appendChild(item);
+              const itemDiv = document.createElement('div');
+              itemDiv.className = 'address-suggestion-item';
+              itemDiv.innerHTML = `
+                <strong>${street}${num}</strong>
+                <span><i class="fa-solid fa-location-dot" style="color:var(--primary);"></i> ${locality ? locality + ', ' : ''}${state}</span>
+              `;
+              itemDiv.onclick = () => {
+                document.getElementById('address').value = fullFormatted;
+                document.getElementById('selectedLat').value = coords[1];
+                document.getElementById('selectedLng').value = coords[0];
+                box.style.display = 'none';
+                showToast('📍 Dirección exacta seleccionada');
+              };
+              box.appendChild(itemDiv);
             });
-            suggestionsBox.style.display = 'block';
+            box.style.display = 'block';
           } else {
-            suggestionsBox.style.display = 'none';
+            box.style.display = 'none';
           }
-        } catch (e) {
-          console.warn('Autocomplete error:', e);
+        } catch(e) {
+          box.style.display = 'none';
         }
       }, 250);
     }
 
-    function selectAddressSuggestion(addressStr, lat, lng) {
-      document.getElementById('address').value = addressStr;
-      document.getElementById('selectedLat').value = lat;
-      document.getElementById('selectedLng').value = lng;
-      document.getElementById('address-suggestions').style.display = 'none';
+    // PARSER DE ENLACES DE GOOGLE MAPS Y COORDENADAS DIRECTAS
+    function parseGoogleMapsLinkOrCoords(inputStr) {
+      try {
+        // Formato coordenadas crudas: -34.6099, -58.4048
+        const coordMatch = inputStr.match(/(-?\d+\.\d+)[,\s]+(-?\d+\.\d+)/);
+        if (coordMatch) {
+          const lat = parseFloat(coordMatch[1]);
+          const lng = parseFloat(coordMatch[2]);
+          document.getElementById('selectedLat').value = lat;
+          document.getElementById('selectedLng').value = lng;
+          showToast(`📍 Coordenadas detectadas: ${lat.toFixed(4)}, ${lng.toFixed(4)}`);
+          return;
+        }
 
-      const coordBadge = document.getElementById('address-coord-badge');
-      const coordText = document.getElementById('address-coord-text');
-      coordText.innerText = `Puerta exacta fijada (${lat.toFixed(5)}, ${lng.toFixed(5)})`;
-      coordBadge.style.display = 'inline-flex';
-
-      showToast('📍 Coordenada exacta fijada');
+        // Formato URL Google Maps: @-34.6099213,-58.4048591
+        const urlMatch = inputStr.match(/@(-?\d+\.\d+),(-?\d+\.\d+)/);
+        if (urlMatch) {
+          const lat = parseFloat(urlMatch[1]);
+          const lng = parseFloat(urlMatch[2]);
+          document.getElementById('selectedLat').value = lat;
+          document.getElementById('selectedLng').value = lng;
+          showToast(`📍 Coordenadas de Google Maps detectadas!`);
+          return;
+        }
+      } catch(e){}
     }
 
-    // GEOCODIFICACIÓN PRECISA
+    // GEOCODIFICADOR PRINCIPAL (PHOTON + NOMINATIM FALLBACK)
     async function geocodeAddress(addressStr) {
-      // Si ya tiene coordenada fijada por autocomplete, usarla directo
-      const curLat = parseFloat(document.getElementById('selectedLat').value);
-      const curLng = parseFloat(document.getElementById('selectedLng').value);
-      if (curLat && curLng) {
-        return { lat: curLat, lng: curLng };
+      // 1. Si ya se seleccionó del autocomplete o Google Maps link
+      const preLat = parseFloat(document.getElementById('selectedLat').value);
+      const preLng = parseFloat(document.getElementById('selectedLng').value);
+      if (preLat && preLng) {
+        return { lat: preLat, lng: preLng };
       }
 
       if (!addressStr || addressStr.trim().length < 3) return null;
 
+      // 2. Búsqueda con Photon
       try {
-        let clean = addressStr.trim();
-        if (!clean.toLowerCase().includes('argentina') && !clean.toLowerCase().includes('buenos aires') && !clean.toLowerCase().includes('caba')) {
-          clean += ', Buenos Aires, Argentina';
+        const url = `https://photon.komoot.io/api/?q=${encodeURIComponent(addressStr.trim())}&lat=-34.6037&lon=-58.3816&limit=1`;
+        const resp = await fetch(url);
+        const data = await resp.json();
+        if (data && data.features && data.features.length > 0) {
+          const c = data.features[0].geometry.coordinates;
+          return { lat: c[1], lng: c[0] };
         }
+      } catch(e){}
 
-        // 1. Intentar con Photon (Excelente para números de puerta exactos)
-        const photonUrl = `https://photon.komoot.io/api/?q=${encodeURIComponent(clean)}&limit=1`;
-        const pResp = await fetch(photonUrl);
-        const pData = await pResp.json();
-
-        if (pData && pData.features && pData.features.length > 0) {
-          const coords = pData.features[0].geometry.coordinates;
-          return { lat: coords[1], lng: coords[0] };
+      // 3. Fallback Nominatim
+      try {
+        let clean = addressStr.trim() + ', Argentina';
+        const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(clean)}&limit=1`;
+        const resp = await fetch(url, { headers: { 'Accept': 'application/json' } });
+        const data = await resp.json();
+        if (data && data.length > 0) {
+          return { lat: parseFloat(data[0].lat), lng: parseFloat(data[0].lon) };
         }
+      } catch(e){}
 
-        // 2. Fallback con Nominatim
-        const nomUrl = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(clean)}&limit=1`;
-        const nResp = await fetch(nomUrl);
-        const nData = await nResp.json();
-
-        if (nData && nData.length > 0) {
-          return { lat: parseFloat(nData[0].lat), lng: parseFloat(nData[0].lon) };
-        }
-      } catch (err) {
-        console.warn('Geocoding error:', err);
-      }
       return null;
     }
 
@@ -1522,7 +1509,6 @@
       navigator.geolocation.getCurrentPosition(async (pos) => {
         const lat = pos.coords.latitude;
         const lng = pos.coords.longitude;
-
         document.getElementById('selectedLat').value = lat;
         document.getElementById('selectedLng').value = lng;
 
@@ -1535,18 +1521,11 @@
             const road = data.address.road || '';
             const house = data.address.house_number || '';
             const city = data.address.city || data.address.town || data.address.suburb || 'Buenos Aires';
-            const shortAddr = `${road} ${house}, ${city}`.trim();
-            document.getElementById('address').value = shortAddr;
+            document.getElementById('address').value = `${road} ${house}, ${city}`.trim();
           } else {
-            document.getElementById('address').value = `Ubicación GPS (${lat.toFixed(5)}, ${lng.toFixed(5)})`;
+            document.getElementById('address').value = `Ubicación GPS: ${lat.toFixed(5)}, ${lng.toFixed(5)}`;
           }
-
-          const coordBadge = document.getElementById('address-coord-badge');
-          const coordText = document.getElementById('address-coord-text');
-          coordText.innerText = `GPS Actual (${lat.toFixed(5)}, ${lng.toFixed(5)})`;
-          coordBadge.style.display = 'inline-flex';
-
-          showToast('✅ Ubicación GPS fijada');
+          showToast('✅ Ubicación GPS detectada');
         } catch (e) {
           document.getElementById('address').value = `GPS: ${lat.toFixed(5)}, ${lng.toFixed(5)}`;
         }
@@ -1655,6 +1634,8 @@
 
       isEditing = true;
       document.getElementById('editingRecordId').value = p.id;
+      document.getElementById('selectedLat').value = p.lat || '';
+      document.getElementById('selectedLng').value = p.lng || '';
       document.getElementById('businessName').value = p.businessName || '';
       document.getElementById('contactName').value = p.contactName || '';
       document.getElementById('phone').value = p.phone || '';
@@ -1664,17 +1645,8 @@
       document.getElementById('facebook').value = p.facebook || '';
       document.getElementById('rubro').value = p.rubro || 'Indumentaria / Ropa';
       document.getElementById('address').value = p.address || '';
-      document.getElementById('selectedLat').value = p.lat || '';
-      document.getElementById('selectedLng').value = p.lng || '';
       document.getElementById('visitDate').value = p.visitDate || new Date().toISOString().slice(0, 10);
       document.getElementById('notes').value = p.notes || '';
-
-      if (p.lat && p.lng) {
-        document.getElementById('address-coord-badge').style.display = 'inline-flex';
-        document.getElementById('address-coord-text').innerText = `Coordenada guardada (${p.lat.toFixed(5)}, ${p.lng.toFixed(5)})`;
-      } else {
-        document.getElementById('address-coord-badge').style.display = 'none';
-      }
 
       if (p.photo) {
         currentPhotoBase64 = p.photo;
@@ -1722,8 +1694,6 @@
       document.getElementById('editingRecordId').value = '';
       document.getElementById('selectedLat').value = '';
       document.getElementById('selectedLng').value = '';
-      document.getElementById('address-coord-badge').style.display = 'none';
-      document.getElementById('address-suggestions').style.display = 'none';
       document.getElementById('crm-form').reset();
       removePhoto();
       setDefaultTodayDate();
@@ -1770,42 +1740,10 @@
       }
     }
 
-    function setMapLayer(type) {
-      if (!map) return;
-      currentTileLayer = type;
-
-      const btnDark = document.getElementById('btn-layer-dark');
-      const btnSat = document.getElementById('btn-layer-sat');
-
-      if (type === 'satellite') {
-        if (darkTileLayer) map.removeLayer(darkTileLayer);
-        if (!satTileLayer) {
-          satTileLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
-            attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community',
-            maxZoom: 19
-          });
-        }
-        satTileLayer.addTo(map);
-        btnSat.classList.add('active');
-        btnDark.classList.remove('active');
-      } else {
-        if (satTileLayer) map.removeLayer(satTileLayer);
-        if (!darkTileLayer) {
-          darkTileLayer = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-            attribution: '&copy; OpenStreetMap &copy; CARTO',
-            maxZoom: 19
-          });
-        }
-        darkTileLayer.addTo(map);
-        btnDark.classList.add('active');
-        btnSat.classList.remove('active');
-      }
-    }
-
     function initMap() {
       if (!map) {
-        map = L.map('map-element').setView([-34.6060, -58.4060], 13);
-        darkTileLayer = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+        map = L.map('map-element').setView([-34.6060, -58.4060], 12);
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
           attribution: '&copy; OpenStreetMap &copy; CARTO',
           maxZoom: 19
         }).addTo(map);
@@ -1836,7 +1774,6 @@
           iconSize: [16, 16]
         });
 
-        // Pin arrastrable para ajuste fino
         const marker = L.marker([lat, lng], { icon: customIcon, draggable: true }).addTo(markersLayer);
         validMarkers.push([lat, lng]);
 
@@ -1855,7 +1792,6 @@
 
         const bestPhone = (p.phone || p.phoneBusiness || '').replace(/[^0-9]/g, '');
         const formattedPhone = bestPhone.startsWith('54') ? bestPhone : '549' + bestPhone;
-        const navUrl = `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}`;
         
         marker.bindPopup(`
           <div style="font-family:Inter,sans-serif; color:#000; font-size:0.8rem;">
@@ -1868,9 +1804,8 @@
             </div>
             <div style="margin-top:6px; display:flex; gap:4px;">
               ${bestPhone ? `<a href="https://wa.me/${formattedPhone}" target="_blank" style="background:#10b981; color:#fff; padding:3px 6px; border-radius:4px; text-decoration:none; font-size:0.7rem; font-weight:700;">💬 WSP</a>` : ''}
-              <a href="${navUrl}" target="_blank" style="background:#00a8b5; color:#fff; padding:3px 6px; border-radius:4px; text-decoration:none; font-size:0.7rem; font-weight:700;">🧭 Navegar</a>
+              <a href="https://maps.google.com/?q=${encodeURIComponent(p.address || p.businessName)}" target="_blank" style="background:#00a8b5; color:#fff; padding:3px 6px; border-radius:4px; text-decoration:none; font-size:0.7rem; font-weight:700;">📍 GPS</a>
             </div>
-            <p style="font-size:0.65rem; color:#888; margin-top:4px;">💡 Tip: Podés arrastrar el punto a la puerta exacta.</p>
           </div>
         `);
       });
@@ -1878,7 +1813,7 @@
       if (validMarkers.length > 0 && map) {
         try {
           const bounds = L.latLngBounds(validMarkers);
-          map.fitBounds(bounds, { padding: [35, 35], maxZoom: 16 });
+          map.fitBounds(bounds, { padding: [35, 35], maxZoom: 15 });
         } catch(e){}
       }
 
@@ -1932,7 +1867,7 @@
         const cobrarWspUrl = primaryPhone ? `https://wa.me/${formattedPhone}?text=${cobranzaText}` : '#';
 
         const callUrl = primaryPhone ? `tel:${primaryPhone}` : '#';
-        const mapUrl = p.lat && p.lng ? `https://www.google.com/maps/dir/?api=1&destination=${p.lat},${p.lng}` : `https://maps.google.com/?q=${encodeURIComponent(p.address || p.businessName)}`;
+        const mapUrl = `https://maps.google.com/?q=${encodeURIComponent(p.address || p.businessName)}`;
 
         const isClient = p.status === 'cerrado' || p.status === 'propuesta' || p.monthlyPlan > 0;
         const paymentClass = p.paymentStatus === 'al_dia' ? 'al-dia' : 'pendiente';
@@ -2031,8 +1966,8 @@
                 <i class="fa-regular fa-address-card"></i> Agendar
               </button>
             `}
-            <a href="${mapUrl}" target="_blank" class="btn-action btn-map" title="Ver en Google Maps con navegación GPS">
-              <i class="fa-solid fa-location-dot"></i> GPS
+            <a href="${mapUrl}" target="_blank" class="btn-action btn-map" title="Ver en Google Maps">
+              <i class="fa-solid fa-location-dot"></i> Mapa
             </a>
           </div>
 
@@ -2108,7 +2043,7 @@
           paymentStatusValue = document.getElementById('paymentStatus') ? document.getElementById('paymentStatus').value : 'al_dia';
         }
 
-        showToast('📍 Fijando coordenada de puerta...');
+        showToast('📍 Geocodificando...');
         let coords = await geocodeAddress(address);
 
         const recordId = editingId || ('rec_' + Date.now());
@@ -2150,7 +2085,7 @@
             }
             prospects[index] = { ...prospects[index], ...newOrUpdatedRecord };
           }
-          showToast('✏️ Registro actualizado con éxito');
+          showToast('✏️ Registro actualizado');
         } else {
           newOrUpdatedRecord.createdAt = new Date().toISOString();
           prospects.unshift(newOrUpdatedRecord);
