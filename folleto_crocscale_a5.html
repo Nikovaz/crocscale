@@ -49,7 +49,7 @@
             width: 148mm;
             height: 210mm;
             background: var(--bg-dark);
-            padding: 5.5mm 7.5mm;
+            padding: 6.5mm 8mm;
             margin-bottom: 20px;
             position: relative;
             box-shadow: 0 12px 45px rgba(0,0,0,0.85);
@@ -97,11 +97,11 @@
                 padding: 16px 12px;
                 margin-bottom: 20px;
                 border-radius: 12px;
-                gap: 14px;
+                gap: 12px;
             }
-            .comp-grid, .plan-row-folleto {
+            .comp-grid, .plan-row-folleto, .stats-row {
                 grid-template-columns: 1fr !important;
-                gap: 12px !important;
+                gap: 10px !important;
             }
             .brand-title {
                 font-size: 19px !important;
@@ -150,7 +150,7 @@
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            gap: 4px;
+            gap: 7px;
         }
 
         /* Encabezado */
@@ -159,24 +159,24 @@
             justify-content: space-between;
             align-items: center;
             border-bottom: 1.5px solid var(--card-border);
-            padding-bottom: 4px;
+            padding-bottom: 5px;
         }
 
         .brand-logo {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 9px;
         }
 
         .brand-logo img {
-            width: 38px;
-            height: 38px;
+            width: 40px;
+            height: 40px;
             object-fit: contain;
             filter: drop-shadow(0 0 10px rgba(0, 242, 254, 0.7));
         }
 
         .brand-title {
-            font-size: 18.5px;
+            font-size: 19.5px;
             font-weight: 900;
             letter-spacing: 0.5px;
             background: linear-gradient(135deg, var(--primary-neon), var(--purple-neon));
@@ -186,7 +186,7 @@
         }
 
         .brand-tagline {
-            font-size: 8.2px;
+            font-size: 8.5px;
             color: #94a3b8;
             text-transform: uppercase;
             letter-spacing: 1.2px;
@@ -195,7 +195,7 @@
 
         .header-contact {
             text-align: right;
-            font-size: 9.2px;
+            font-size: 9.5px;
             font-weight: 700;
             color: var(--text-muted);
             line-height: 1.4;
@@ -210,24 +210,24 @@
             background: linear-gradient(135deg, rgba(18, 22, 36, 0.95), rgba(30, 38, 56, 0.8));
             border: 1.5px solid rgba(0, 242, 254, 0.45);
             border-left: 5px solid var(--primary-neon);
-            padding: 11px 13px;
+            padding: 12px 14px;
             border-radius: 10px;
             box-shadow: 0 4px 18px rgba(0, 242, 254, 0.15);
         }
 
         .hook-box h2 {
-            font-size: 12.5px;
+            font-size: 13px;
             color: #ffffff;
-            margin-bottom: 4px;
+            margin-bottom: 3px;
             font-weight: 900;
             line-height: 1.32;
         }
 
         .hook-box p {
-            font-size: 10px;
+            font-size: 10.2px;
             font-weight: 600;
             color: var(--text-muted);
-            line-height: 1.45;
+            line-height: 1.42;
         }
 
         .highlight-text {
@@ -235,14 +235,44 @@
             font-weight: 800;
         }
 
+        /* Fila de Métricas Clave (Frente) */
+        .stats-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 6px;
+        }
+
+        .stat-pill {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--card-border);
+            border-radius: 8px;
+            padding: 7px 9px;
+            text-align: center;
+        }
+
+        .stat-pill-num {
+            font-size: 17px;
+            font-weight: 900;
+            color: var(--primary-neon);
+            line-height: 1.1;
+        }
+
+        .stat-pill-lbl {
+            font-size: 8.5px;
+            font-weight: 700;
+            color: var(--text-muted);
+            margin-top: 1px;
+            line-height: 1.2;
+        }
+
         /* Comparativa Financiera Frente */
         .section-title {
-            font-size: 11.5px;
+            font-size: 12px;
             font-weight: 900;
             text-transform: uppercase;
             letter-spacing: 0.8px;
             color: var(--primary-neon);
-            margin-bottom: 4px;
+            margin-bottom: 2px;
             display: flex;
             align-items: center;
             gap: 6px;
@@ -251,14 +281,14 @@
         .comp-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 9px;
+            gap: 8px;
         }
 
         .comp-card {
             background: var(--card-bg);
             border: 1.5px solid var(--card-border);
             border-radius: 10px;
-            padding: 11px 12px;
+            padding: 13px 13px;
         }
 
         .comp-card.negative {
@@ -272,8 +302,8 @@
         }
 
         .comp-card h3 {
-            font-size: 11.8px;
-            margin-bottom: 6px;
+            font-size: 12.5px;
+            margin-bottom: 5px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -283,13 +313,13 @@
 
         .comp-list {
             list-style: none;
-            font-size: 9.8px;
+            font-size: 10.2px;
             font-weight: 600;
-            line-height: 1.48;
+            line-height: 1.52;
         }
 
         .comp-list li {
-            margin-bottom: 5px;
+            margin-bottom: 4px;
             display: flex;
             align-items: flex-start;
             gap: 6px;
@@ -300,7 +330,7 @@
         .comp-list li i.fa-check { color: var(--accent-green); margin-top: 2px; flex-shrink: 0; font-size: 10px; }
 
         .price-badge-small {
-            font-size: 11.5px;
+            font-size: 12px;
             font-weight: 900;
             color: var(--accent-green);
         }
@@ -310,7 +340,7 @@
             background: linear-gradient(135deg, rgba(0, 242, 254, 0.14), rgba(157, 78, 221, 0.14));
             border: 1.5px solid var(--primary-neon);
             border-radius: 10px;
-            padding: 12px 14px;
+            padding: 13px 15px;
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -318,17 +348,17 @@
         }
 
         .cta-text h3 {
-            font-size: 13.5px;
+            font-size: 14px;
             color: #ffffff;
             font-weight: 900;
-            margin-bottom: 3px;
+            margin-bottom: 2px;
         }
 
         .cta-text p {
-            font-size: 9.8px;
+            font-size: 10px;
             font-weight: 600;
             color: var(--text-muted);
-            line-height: 1.42;
+            line-height: 1.4;
         }
 
         .qr-box {
@@ -342,13 +372,13 @@
         }
 
         .qr-box img {
-            width: 60px;
-            height: 60px;
+            width: 66px;
+            height: 66px;
             display: block;
         }
 
         .qr-box span {
-            font-size: 7.5px;
+            font-size: 8px;
             color: #000000;
             font-weight: 900;
             display: block;
@@ -357,25 +387,25 @@
 
         .footer-bar {
             border-top: 1.5px solid var(--card-border);
-            padding-top: 5px;
+            padding-top: 4px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            font-size: 9px;
+            font-size: 9.2px;
             font-weight: 700;
             color: #94a3b8;
         }
 
         /* ===================================================
-           ESTILOS DORSO
+           ESTILOS DORSO - TARJETAS COMPACTAS Y SOLIDAS (0 HUECOS)
            =================================================== */
         .pricing-section-title {
             text-align: center;
-            margin-bottom: 4px;
+            margin-bottom: 2px;
         }
 
         .pricing-section-title h2 {
-            font-size: 17px;
+            font-size: 18px;
             font-weight: 900;
             background: linear-gradient(135deg, var(--primary-neon), var(--purple-neon));
             -webkit-background-clip: text;
@@ -383,7 +413,7 @@
         }
 
         .pricing-section-title p {
-            font-size: 9.5px;
+            font-size: 9.8px;
             font-weight: 700;
             color: var(--text-muted);
             margin-top: 1px;
@@ -392,19 +422,17 @@
         .plan-row-folleto {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 10px;
-            flex: 1;
-            margin-bottom: 4px;
+            gap: 8px;
         }
 
         .plan-box-folleto {
             background: var(--card-bg);
             border: 1.5px solid var(--card-border);
             border-radius: 10px;
-            padding: 12px 12px 10px 12px;
+            padding: 13px 13px 10px 13px;
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
+            gap: 4px;
         }
 
         .plan-box-folleto.featured {
@@ -417,18 +445,18 @@
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
-            margin-bottom: 6px;
+            margin-bottom: 2px;
         }
 
         .plan-name-folleto {
-            font-size: 14.5px;
+            font-size: 15px;
             font-weight: 900;
             color: #ffffff;
             line-height: 1.15;
         }
 
         .plan-price-folleto {
-            font-size: 20px;
+            font-size: 21.5px;
             font-weight: 900;
             color: var(--primary-neon);
             line-height: 1;
@@ -439,18 +467,19 @@
             font-weight: 700;
             color: #94a3b8;
             text-align: right;
-            margin-top: 2px;
+            margin-top: 1px;
         }
 
         .plan-volume-folleto {
             font-size: 9.5px;
             font-weight: 800;
             color: var(--accent-green);
-            margin-bottom: 8px;
+            margin-bottom: 4px;
             background: rgba(0,230,118,0.15);
-            padding: 2.5px 7px;
+            padding: 2.5px 8px;
             border-radius: 4px;
             display: inline-block;
+            align-self: flex-start;
         }
 
         .plan-features-folleto {
@@ -458,14 +487,17 @@
             font-size: 10.2px;
             font-weight: 600;
             color: var(--text-muted);
-            line-height: 1.5;
+            line-height: 1.46;
+            display: flex;
+            flex-direction: column;
+            gap: 5.5px;
+            margin-bottom: 4px;
         }
 
         .plan-features-folleto li {
-            margin-bottom: 6.5px;
             display: flex;
             align-items: flex-start;
-            gap: 6px;
+            gap: 5px;
         }
 
         .plan-features-folleto li i {
@@ -486,15 +518,15 @@
         }
 
         .plan-card-footer {
-            margin-top: 8px;
-            padding-top: 6px;
+            padding-top: 5px;
             border-top: 1.5px solid rgba(255, 255, 255, 0.1);
             display: flex;
             align-items: center;
             justify-content: space-between;
-            font-size: 8.5px;
+            font-size: 8.8px;
             font-weight: 800;
             color: #ffffff;
+            margin-top: auto;
         }
 
         .plan-card-footer span i {
@@ -502,12 +534,28 @@
             margin-right: 3px;
         }
 
+        /* Barra de Estructura de Pago Transparente */
+        .payment-guarantee-bar {
+            background: linear-gradient(135deg, rgba(0, 242, 254, 0.08), rgba(0, 230, 118, 0.08));
+            border: 1.2px solid rgba(0, 242, 254, 0.35);
+            border-radius: 8px;
+            padding: 8px 12px;
+            text-align: center;
+            font-size: 9.2px;
+            color: #cbd5e1;
+            line-height: 1.35;
+        }
+
+        .payment-guarantee-bar strong {
+            color: var(--primary-neon);
+        }
+
         /* Banner Resumen Enterprise & Ads */
         .enterprise-summary-bar {
             background: rgba(255, 255, 255, 0.04);
             border: 1.5px solid var(--card-border);
             border-radius: 8px;
-            padding: 8px 12px;
+            padding: 9px 12px;
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -515,7 +563,7 @@
         }
 
         .enterprise-summary-text {
-            font-size: 9px;
+            font-size: 9.2px;
             font-weight: 600;
             color: var(--text-muted);
             line-height: 1.35;
@@ -530,7 +578,7 @@
             background: linear-gradient(135deg, var(--primary-neon), var(--purple-neon));
             color: #000000;
             font-weight: 900;
-            font-size: 8px;
+            font-size: 8.2px;
             padding: 5px 10px;
             border-radius: 5px;
             white-space: nowrap;
@@ -568,6 +616,22 @@
                 <p>Las compras por impulso no tienen horario comercial. Mientras tu equipo descansa, los clientes preguntan en tu chat. <span class="highlight-text">Si no reciben respuesta en 5 minutos, le compran a tu competencia</span>.</p>
             </div>
 
+            <!-- 3 Métricas Destacadas de Impacto -->
+            <div class="stats-row">
+                <div class="stat-pill">
+                    <div class="stat-pill-num">+35%</div>
+                    <div class="stat-pill-lbl">Ventas Nocturnas</div>
+                </div>
+                <div class="stat-pill">
+                    <div class="stat-pill-num">&lt; 5 seg</div>
+                    <div class="stat-pill-lbl">Respuesta Inmediata</div>
+                </div>
+                <div class="stat-pill">
+                    <div class="stat-pill-num">24/7/365</div>
+                    <div class="stat-pill-lbl">Operación Continua</div>
+                </div>
+            </div>
+
             <!-- Comparativa Financiera -->
             <div>
                 <div class="section-title">
@@ -578,19 +642,19 @@
                         <h3>Humano 24/7 <span style="color:#ff4d4d; font-size:11px;">+$1.800 USD/m</span></h3>
                         <ul class="comp-list">
                             <li><i class="fas fa-xmark"></i> <span class="feat-text">Requiere contratar al menos 3 empleados.</span></li>
-                            <li><i class="fas fa-xmark"></i> <span class="feat-text">Cargas sociales, aguinaldos y vacaciones.</span></li>
-                            <li><i class="fas fa-xmark"></i> <span class="feat-text">Errores de tipeo y stock desactualizado.</span></li>
-                            <li><i class="fas fa-xmark"></i> <span class="feat-text">Demoras de respuesta de minutos u horas.</span></li>
+                            <li><i class="fas fa-xmark"></i> <span class="feat-text">Cargas sociales, aguinaldos y ausencias.</span></li>
+                            <li><i class="fas fa-xmark"></i> <span class="feat-text">Errores de stock y demoras en cotizar.</span></li>
+                            <li><i class="fas fa-xmark"></i> <span class="feat-text">Pérdida de clientes en horario no laboral.</span></li>
                         </ul>
                     </div>
 
                     <div class="comp-card positive">
                         <h3>CrocScale IA <span class="price-badge-small">Desde $249 USD/m</span></h3>
                         <ul class="comp-list">
-                            <li><i class="fas fa-check"></i> <span class="feat-text">Cobertura 24/7/365 sin licencias ni descansos.</span></li>
-                            <li><i class="fas fa-check"></i> <span class="feat-text">Respuesta inmediata en menos de 5 segundos.</span></li>
-                            <li><i class="fas fa-check"></i> <span class="feat-text">Entiende audios de voz, fotos y transferencias.</span></li>
-                            <li><i class="fas fa-check"></i> <span class="feat-text">Dashboard de métricas y tickets térmicos.</span></li>
+                            <li><i class="fas fa-check"></i> <span class="feat-text">Cobertura 24/7 sin licencias ni descansos.</span></li>
+                            <li><i class="fas fa-check"></i> <span class="feat-text">Atención simultánea en menos de 5 segundos.</span></li>
+                            <li><i class="fas fa-check"></i> <span class="feat-text">Entiende audios, fotos y transferencias OCR.</span></li>
+                            <li><i class="fas fa-check"></i> <span class="feat-text">Dashboard de métricas y tickets para empaque.</span></li>
                         </ul>
                     </div>
                 </div>
@@ -640,37 +704,35 @@
             <!-- Header Dorso -->
             <div class="pricing-section-title">
                 <h2>Planes Oficiales de Automatización</h2>
-                <p>100% Sin Burocracia Meta • Setup al iniciar • Plan en 2 partes (50% al encender)</p>
+                <p>100% Sin Burocracia Meta • Integración Inmediata • Atención 24/7</p>
             </div>
 
             <!-- 2 TARJETAS PROTAGONISTAS AMPLIAS Y ESPACIOSAS -->
             <div class="plan-row-folleto">
                 <!-- Plan WA Starter -->
                 <div class="plan-box-folleto">
-                    <div>
-                        <div class="plan-header-folleto">
-                            <div>
-                                <div class="plan-name-folleto">WA Starter</div>
-                                <div style="font-size: 9.5px; color: #94a3b8; font-weight: 700;">Solo WhatsApp 24/7</div>
-                            </div>
-                            <div style="text-align: right;">
-                                <div class="plan-price-folleto">$249 <span style="font-size:11px;">USD/m</span></div>
-                                <div class="plan-setup-folleto">+$150 Setup único</div>
-                            </div>
+                    <div class="plan-header-folleto">
+                        <div>
+                            <div class="plan-name-folleto">WA Starter</div>
+                            <div style="font-size: 9.5px; color: #94a3b8; font-weight: 700;">Solo WhatsApp 24/7</div>
                         </div>
-                        <div class="plan-volume-folleto">5.000 Conversaciones / mes</div>
-                        <ul class="plan-features-folleto">
-                            <li><i class="fas fa-check"></i> <span class="feat-text"><strong>Chatbot WhatsApp IA 24/7</strong> exclusivo</span></li>
-                            <li><i class="fas fa-check"></i> <span class="feat-text"><strong>Entiende audios de voz y fotos</strong> de catálogo</span></li>
-                            <li><i class="fas fa-check"></i> <span class="feat-text"><strong>Agente Contador OCR:</strong> Valida transferencias</span></li>
-                            <li><i class="fas fa-check"></i> <span class="feat-text"><strong>Dashboard app.crocscale.com:</strong> Métricas en vivo</span></li>
-                            <li><i class="fas fa-check"></i> <span class="feat-text"><strong>Impresión de Tickets Térmicos</strong> con 1 clic</span></li>
-                            <li><i class="fas fa-check"></i> <span class="feat-text"><strong>Stock y precios</strong> sincronizados en Sheets</span></li>
-                            <li><i class="fas fa-check"></i> <span class="feat-text"><strong>Handoff fluido a humano</strong> (Modo Admin)</span></li>
-                            <li><i class="fas fa-check"></i> <span class="feat-text"><strong>Reportes automáticos</strong> semanales de ventas</span></li>
-                            <li><i class="fas fa-check"></i> <span class="feat-text"><strong>Soporte y Mantenimiento</strong> continuo</span></li>
-                        </ul>
+                        <div style="text-align: right;">
+                            <div class="plan-price-folleto">$249 <span style="font-size:11.5px;">USD/m</span></div>
+                            <div class="plan-setup-folleto">+$150 Setup único</div>
+                        </div>
                     </div>
+                    <div class="plan-volume-folleto">5.000 Conversaciones / mes</div>
+                    <ul class="plan-features-folleto">
+                        <li><i class="fas fa-check"></i> <span class="feat-text"><strong>Chatbot WhatsApp IA 24/7</strong> exclusivo</span></li>
+                        <li><i class="fas fa-check"></i> <span class="feat-text"><strong>Entiende audios de voz y fotos</strong> de catálogo</span></li>
+                        <li><i class="fas fa-check"></i> <span class="feat-text"><strong>Agente Contador OCR:</strong> Valida transferencias</span></li>
+                        <li><i class="fas fa-check"></i> <span class="feat-text"><strong>Dashboard app.crocscale.com:</strong> Métricas en vivo</span></li>
+                        <li><i class="fas fa-check"></i> <span class="feat-text"><strong>Impresión de Tickets Térmicos</strong> con 1 clic</span></li>
+                        <li><i class="fas fa-check"></i> <span class="feat-text"><strong>Stock y precios</strong> sincronizados en Sheets</span></li>
+                        <li><i class="fas fa-check"></i> <span class="feat-text"><strong>Handoff fluido a humano</strong> (Modo Admin)</span></li>
+                        <li><i class="fas fa-check"></i> <span class="feat-text"><strong>Reportes automáticos</strong> semanales de ventas</span></li>
+                        <li><i class="fas fa-check"></i> <span class="feat-text"><strong>Soporte y Mantenimiento</strong> continuo</span></li>
+                    </ul>
                     <div class="plan-card-footer">
                         <span><i class="fas fa-bolt"></i> Integración Inmediata</span>
                         <span style="color:var(--primary-neon);">Monocanal</span>
@@ -679,35 +741,38 @@
 
                 <!-- Plan Omnicanal Direct -->
                 <div class="plan-box-folleto featured">
-                    <div>
-                        <div class="plan-header-folleto">
-                            <div>
-                                <div class="plan-name-folleto" style="color: var(--primary-neon);">Omnicanal Direct ⭐</div>
-                                <div style="font-size: 9.5px; color: var(--accent-green); font-weight: 800;">MÁS ELEGIDO</div>
-                            </div>
-                            <div style="text-align: right;">
-                                <div class="plan-price-folleto">$399 <span style="font-size:11px;">USD/m</span></div>
-                                <div class="plan-setup-folleto">+$250 Setup único</div>
-                            </div>
+                    <div class="plan-header-folleto">
+                        <div>
+                            <div class="plan-name-folleto" style="color: var(--primary-neon);">Omnicanal Direct ⭐</div>
+                            <div style="font-size: 9.5px; color: var(--accent-green); font-weight: 800;">MÁS ELEGIDO</div>
                         </div>
-                        <div class="plan-volume-folleto" style="background: rgba(0,242,254,0.18); color: var(--primary-neon);">7.000 Conversaciones / mes</div>
-                        <ul class="plan-features-folleto">
-                            <li><i class="fas fa-check" style="color:var(--accent-green);"></i> <span class="feat-text"><strong>WhatsApp + Instagram + Facebook DMs</strong></span></li>
-                            <li><i class="fas fa-check" style="color:var(--accent-green);"></i> <span class="feat-text"><strong>100% Sin Burocracia Meta</strong> (Sin esperas)</span></li>
-                            <li><i class="fas fa-check" style="color:var(--accent-green);"></i> <span class="feat-text"><strong>Dashboard app.crocscale.com + Tickets térmicos</strong></span></li>
-                            <li><i class="fas fa-check" style="color:var(--accent-green);"></i> <span class="feat-text"><strong>Un solo cerebro de IA</strong> en todas tus bandejas</span></li>
-                            <li><i class="fas fa-check" style="color:var(--accent-green);"></i> <span class="feat-text"><strong>Agente Contador OCR</strong> + Audios y fotos</span></li>
-                            <li><i class="fas fa-check" style="color:var(--accent-green);"></i> <span class="feat-text"><strong>Detección y cierre</strong> de intención de compra</span></li>
-                            <li><i class="fas fa-check" style="color:var(--accent-green);"></i> <span class="feat-text"><strong>Respuestas simultáneas</strong> en menos de 5 seg</span></li>
-                            <li><i class="fas fa-check" style="color:var(--accent-green);"></i> <span class="feat-text"><strong>Alertas prioritarias</strong> derivadas a tu equipo</span></li>
-                            <li><i class="fas fa-check" style="color:var(--accent-green);"></i> <span class="feat-text"><strong>Soporte prioritario</strong> y optimizaciones</span></li>
-                        </ul>
+                        <div style="text-align: right;">
+                            <div class="plan-price-folleto">$399 <span style="font-size:11.5px;">USD/m</span></div>
+                            <div class="plan-setup-folleto">+$250 Setup único</div>
+                        </div>
                     </div>
+                    <div class="plan-volume-folleto" style="background: rgba(0,242,254,0.18); color: var(--primary-neon);">7.000 Conversaciones / mes</div>
+                    <ul class="plan-features-folleto">
+                        <li><i class="fas fa-check" style="color:var(--accent-green);"></i> <span class="feat-text"><strong>WhatsApp + Instagram + Facebook DMs</strong></span></li>
+                        <li><i class="fas fa-check" style="color:var(--accent-green);"></i> <span class="feat-text"><strong>100% Sin Burocracia Meta</strong> (Sin esperas)</span></li>
+                        <li><i class="fas fa-check" style="color:var(--accent-green);"></i> <span class="feat-text"><strong>Dashboard app.crocscale.com + Tickets térmicos</strong></span></li>
+                        <li><i class="fas fa-check" style="color:var(--accent-green);"></i> <span class="feat-text"><strong>Un solo cerebro de IA</strong> en todas tus bandejas</span></li>
+                        <li><i class="fas fa-check" style="color:var(--accent-green);"></i> <span class="feat-text"><strong>Agente Contador OCR</strong> + Audios y fotos</span></li>
+                        <li><i class="fas fa-check" style="color:var(--accent-green);"></i> <span class="feat-text"><strong>Detección y cierre</strong> de intención de compra</span></li>
+                        <li><i class="fas fa-check" style="color:var(--accent-green);"></i> <span class="feat-text"><strong>Respuestas simultáneas</strong> en menos de 5 seg</span></li>
+                        <li><i class="fas fa-check" style="color:var(--accent-green);"></i> <span class="feat-text"><strong>Alertas prioritarias</strong> derivadas a tu equipo</span></li>
+                        <li><i class="fas fa-check" style="color:var(--accent-green);"></i> <span class="feat-text"><strong>Soporte prioritario</strong> y optimizaciones</span></li>
+                    </ul>
                     <div class="plan-card-footer" style="border-top-color: rgba(0,242,254,0.25);">
                         <span style="color:var(--accent-green);"><i class="fas fa-star"></i> Solución Recomendada</span>
                         <span style="color:var(--primary-neon);">Omnicanal Total</span>
                     </div>
                 </div>
+            </div>
+
+            <!-- Barra de Garantía y Facilidad de Cobro -->
+            <div class="payment-guarantee-bar">
+                <strong>💳 Estructura de Pago Sin Riesgo:</strong> Setup al iniciar el desarrollo técnico • <strong>Plan en 2 partes:</strong> 50% al encender el bot en vivo y 50% al mes siguiente.
             </div>
 
             <!-- FRANJA INFERIOR ULTRA LIMPIA: ENTERPRISE, ADS & ADD-ONS -->
