@@ -1,0 +1,1550 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>CrocScale Sales, Maps & Systems CRM | Nicolás Galarza</title>
+  
+  <!-- Google Fonts: Inter & Outfit -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- FontAwesome 6 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- Leaflet CSS & JS (Mapa Geográfico) -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  
+  <style>
+    :root {
+      --bg-dark: #070911;
+      --card-bg: #101322;
+      --card-border: rgba(0, 242, 254, 0.15);
+      --primary: #00f2fe;
+      --primary-dark: #00a8b5;
+      --accent-purple: #9d4edd;
+      --accent-green: #10b981;
+      --accent-gold: #f59e0b;
+      --accent-red: #ef4444;
+      --text-main: #f3f4f6;
+      --text-muted: #9ca3af;
+      --input-bg: #171b30;
+      --radius: 16px;
+      --shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      --glow: 0 0 20px rgba(0, 242, 254, 0.2);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      background-image: 
+        radial-gradient(circle at 10% 20%, rgba(0, 242, 254, 0.06) 0%, transparent 40%),
+        radial-gradient(circle at 90% 80%, rgba(157, 78, 221, 0.06) 0%, transparent 40%);
+      color: var(--text-main);
+      min-height: 100vh;
+      padding-bottom: 80px;
+    }
+
+    /* HEADER */
+    header {
+      background: rgba(16, 19, 34, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--card-border);
+      padding: 12px 20px;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .brand-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-logo img {
+      width: 36px;
+      height: 36px;
+      object-fit: contain;
+      filter: drop-shadow(0 0 8px rgba(0, 242, 254, 0.4));
+    }
+
+    .brand-title h1 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+      background: linear-gradient(90deg, #fff, var(--primary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .brand-title p {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+    }
+
+    .header-actions {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .btn-view-toggle {
+      background: var(--input-bg);
+      border: 1px solid var(--primary);
+      color: var(--primary);
+      padding: 7px 12px;
+      border-radius: 20px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+
+    .btn-view-toggle.active {
+      background: var(--primary);
+      color: #000;
+      box-shadow: var(--glow);
+    }
+
+    .btn-icon {
+      background: var(--input-bg);
+      border: 1px solid var(--card-border);
+      color: var(--primary);
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 0.9rem;
+      transition: all 0.2s;
+    }
+
+    .btn-icon:hover {
+      background: var(--primary);
+      color: var(--bg-dark);
+      box-shadow: var(--glow);
+    }
+
+    /* CONTAINER */
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 16px;
+    }
+
+    /* ALARM STRIP */
+    .alerts-strip {
+      background: linear-gradient(135deg, rgba(239, 68, 68, 0.2), rgba(245, 158, 11, 0.15));
+      border: 1px solid rgba(239, 68, 68, 0.5);
+      border-radius: 12px;
+      padding: 12px 16px;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.85rem;
+      box-shadow: 0 4px 15px rgba(239, 68, 68, 0.2);
+    }
+
+    .alerts-strip i {
+      color: var(--accent-red);
+      font-size: 1.2rem;
+      margin-right: 10px;
+    }
+
+    /* METRICS STRIP */
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    .metric-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius);
+      padding: 12px 8px;
+      text-align: center;
+      box-shadow: var(--shadow);
+    }
+
+    .metric-card span {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .metric-card strong {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    .metric-card.green strong { color: var(--accent-green); }
+    .metric-card.purple strong { color: #c084fc; }
+    .metric-card.gold strong { color: var(--accent-gold); }
+
+    /* MAP CONTAINER */
+    #map-view-container {
+      display: none;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius);
+      padding: 12px;
+      margin-bottom: 24px;
+      box-shadow: var(--shadow);
+    }
+
+    #map-element {
+      height: 420px;
+      width: 100%;
+      border-radius: 12px;
+      z-index: 10;
+    }
+
+    /* SEARCH BAR */
+    .search-box {
+      margin-bottom: 16px;
+      position: relative;
+    }
+
+    .search-box i {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--primary);
+      font-size: 0.9rem;
+    }
+
+    .search-box input {
+      width: 100%;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 25px;
+      padding: 12px 16px 12px 40px;
+      color: #fff;
+      font-size: 0.9rem;
+      outline: none;
+      transition: border 0.2s;
+    }
+
+    .search-box input:focus {
+      border-color: var(--primary);
+      box-shadow: var(--glow);
+    }
+
+    /* FORM CARD & TABS */
+    .main-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius);
+      padding: 20px;
+      margin-bottom: 24px;
+      box-shadow: var(--shadow);
+    }
+
+    .form-mode-tabs {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-bottom: 18px;
+      background: var(--input-bg);
+      padding: 4px;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .btn-mode-tab {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      padding: 10px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 0.85rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: all 0.2s;
+    }
+
+    .btn-mode-tab.active {
+      background: linear-gradient(135deg, rgba(0, 242, 254, 0.2), rgba(157, 78, 221, 0.2));
+      color: var(--primary);
+      border: 1px solid var(--primary);
+      box-shadow: 0 0 10px rgba(0, 242, 254, 0.2);
+    }
+
+    /* MANUAL FORM GRID */
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+
+    .full-width {
+      grid-column: span 2;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .form-group label {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      background: var(--input-bg);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      padding: 9px 12px;
+      color: #fff;
+      font-size: 0.88rem;
+      outline: none;
+      transition: border 0.2s;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 8px rgba(0, 242, 254, 0.2);
+    }
+
+    /* FOTO UPLOAD BOX */
+    .photo-upload-box {
+      border: 1px dashed var(--primary);
+      background: rgba(0, 242, 254, 0.04);
+      border-radius: 8px;
+      padding: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .photo-preview {
+      width: 48px;
+      height: 48px;
+      border-radius: 6px;
+      object-fit: cover;
+      border: 1px solid var(--primary);
+      display: none;
+    }
+
+    .section-divider {
+      grid-column: span 2;
+      border-top: 1px dashed rgba(255, 255, 255, 0.1);
+      padding-top: 10px;
+      margin-top: 6px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .btn-submit {
+      background: linear-gradient(135deg, var(--primary), var(--accent-purple));
+      border: none;
+      color: #000;
+      font-family: 'Outfit', sans-serif;
+      font-weight: 700;
+      font-size: 0.95rem;
+      padding: 13px;
+      border-radius: 10px;
+      cursor: pointer;
+      width: 100%;
+      margin-top: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      box-shadow: var(--glow);
+      transition: transform 0.15s;
+    }
+
+    .btn-submit:active {
+      transform: scale(0.98);
+    }
+
+    /* FILTER BAR */
+    .filter-bar {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding-bottom: 10px;
+      margin-bottom: 16px;
+    }
+
+    .filter-tab {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      color: var(--text-muted);
+      padding: 7px 14px;
+      border-radius: 20px;
+      font-size: 0.78rem;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.2s;
+    }
+
+    .filter-tab.active {
+      background: var(--primary);
+      color: #000;
+      font-weight: 600;
+      border-color: var(--primary);
+    }
+
+    /* PROSPECT CARDS LIST */
+    .cards-list {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .prospect-card {
+      background: var(--card-bg);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-left: 4px solid var(--primary);
+      border-radius: var(--radius);
+      padding: 16px;
+      box-shadow: var(--shadow);
+      position: relative;
+    }
+
+    .prospect-card.status-cerrado { border-left-color: var(--accent-green); }
+    .prospect-card.status-propuesta { border-left-color: var(--accent-gold); }
+    .prospect-card.status-visitado { border-left-color: #60a5fa; }
+    .prospect-card.status-no_interesa { border-left-color: #64748b; opacity: 0.85; }
+    .prospect-card.status-ya_tiene_bot { border-left-color: #f59e0b; }
+    .prospect-card.status-pausa { border-left-color: var(--accent-red); }
+
+    .card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 8px;
+    }
+
+    .client-name h3 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.15rem;
+      color: #fff;
+    }
+
+    .client-name p {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .badge-status {
+      font-size: 0.72rem;
+      padding: 3px 9px;
+      border-radius: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .badge-status.cerrado { background: rgba(16, 185, 129, 0.2); color: #6ee7b7; border: 1px solid rgba(16, 185, 129, 0.4); }
+    .badge-status.propuesta { background: rgba(245, 158, 11, 0.2); color: #fcd34d; border: 1px solid rgba(245, 158, 11, 0.4); }
+    .badge-status.visitado { background: rgba(59, 130, 246, 0.2); color: #93c5fd; border: 1px solid rgba(59, 130, 246, 0.4); }
+    .badge-status.no_interesa { background: rgba(100, 116, 139, 0.2); color: #cbd5e1; border: 1px solid rgba(100, 116, 139, 0.4); }
+    .badge-status.ya_tiene_bot { background: rgba(245, 158, 11, 0.2); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.4); }
+    .badge-status.pausa { background: rgba(239, 68, 68, 0.2); color: #fca5a5; border: 1px solid rgba(239, 68, 68, 0.4); }
+
+    /* CARD FOTO TARJETA */
+    .card-photo-thumb {
+      width: 100%;
+      max-height: 140px;
+      object-fit: cover;
+      border-radius: 8px;
+      margin: 8px 0;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      cursor: pointer;
+    }
+
+    /* BARRA DE PAGO */
+    .payment-status-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(0, 0, 0, 0.35);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 8px;
+      padding: 8px 12px;
+      margin: 10px 0;
+      font-size: 0.82rem;
+    }
+
+    .payment-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-weight: 600;
+      padding: 3px 8px;
+      border-radius: 6px;
+      font-size: 0.75rem;
+    }
+
+    .payment-badge.al-dia { background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.4); }
+    .payment-badge.pendiente { background: rgba(239, 68, 68, 0.2); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.4); }
+
+    .payment-bar-actions {
+      display: flex;
+      gap: 6px;
+    }
+
+    .btn-toggle-payment {
+      background: var(--input-bg);
+      border: 1px solid var(--primary);
+      color: var(--primary);
+      padding: 4px 8px;
+      border-radius: 6px;
+      font-size: 0.72rem;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    .btn-toggle-payment:hover { background: var(--primary); color: #000; }
+
+    .btn-cobrar-wsp {
+      background: rgba(16, 185, 129, 0.2);
+      border: 1px solid #10b981;
+      color: #34d399;
+      padding: 4px 8px;
+      border-radius: 6px;
+      font-size: 0.72rem;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-weight: 600;
+    }
+
+    .btn-cobrar-wsp:hover { background: #10b981; color: #000; }
+
+    .meta-ads-box {
+      background: rgba(0, 242, 254, 0.05);
+      border: 1px dashed rgba(0, 242, 254, 0.3);
+      border-radius: 8px;
+      padding: 8px 12px;
+      margin: 8px 0;
+      font-size: 0.78rem;
+    }
+
+    .meta-ads-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: var(--primary);
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .card-details-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+      margin: 8px 0;
+      font-size: 0.82rem;
+    }
+
+    .detail-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--text-muted);
+    }
+
+    .detail-item i { color: var(--primary); width: 14px; }
+    .detail-item strong { color: #fff; }
+
+    .card-notes {
+      background: rgba(0, 0, 0, 0.25);
+      border-radius: 8px;
+      padding: 8px 12px;
+      font-size: 0.8rem;
+      color: #d1d5db;
+      margin: 8px 0 10px 0;
+      border-left: 2px solid rgba(0, 242, 254, 0.4);
+    }
+
+    /* 1-TAP ACTION BUTTONS */
+    .action-buttons-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 6px;
+      padding-top: 10px;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .btn-action {
+      background: var(--input-bg);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: #fff;
+      padding: 8px 4px;
+      border-radius: 8px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.15s;
+    }
+
+    .btn-action i { font-size: 0.95rem; }
+    .btn-action.btn-wsp { background: rgba(16, 185, 129, 0.15); border-color: rgba(16, 185, 129, 0.4); color: #34d399; }
+    .btn-action.btn-wsp:hover { background: #10b981; color: #000; }
+    .btn-action.btn-call { background: rgba(59, 130, 246, 0.15); border-color: rgba(59, 130, 246, 0.4); color: #60a5fa; }
+    .btn-action.btn-call:hover { background: #3b82f6; color: #fff; }
+    .btn-action.btn-map { background: rgba(245, 158, 11, 0.15); border-color: rgba(245, 158, 11, 0.4); color: #fbbf24; }
+    .btn-action.btn-map:hover { background: #f59e0b; color: #000; }
+    .btn-action.btn-vcard { background: rgba(157, 78, 221, 0.15); border-color: rgba(157, 78, 221, 0.4); color: #c084fc; }
+    .btn-action.btn-vcard:hover { background: #9d4edd; color: #fff; }
+
+    .card-footer-manage {
+      display: flex;
+      justify-content: flex-end;
+      gap: 12px;
+      margin-top: 8px;
+      font-size: 0.75rem;
+    }
+
+    .btn-text-action {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .btn-text-action:hover { color: var(--primary); }
+    .btn-text-action.delete:hover { color: var(--accent-red); }
+
+    /* TOAST */
+    #toast {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      background: #101322;
+      border: 1px solid var(--primary);
+      color: #fff;
+      padding: 12px 24px;
+      border-radius: 30px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.8), var(--glow);
+      transition: transform 0.3s;
+      z-index: 10000;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    #toast.show { transform: translateX(-50%) translateY(0); }
+
+    @media (max-width: 600px) {
+      .form-grid { grid-template-columns: 1fr; }
+      .full-width, .section-divider { grid-column: span 1; }
+      .metrics-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <div class="brand-logo">
+      <img src="https://raw.githubusercontent.com/Nikovaz/crocscale/main/images/logo_crocscale.png" alt="CrocScale Logo">
+      <div class="brand-title">
+        <h1>CrocScale Sales & Maps CRM</h1>
+        <p>Agencia IA & Desarrollo de Software</p>
+      </div>
+    </div>
+    <div class="header-actions">
+      <button class="btn-view-toggle active" id="btn-list-view" onclick="switchView('list')"><i class="fa-solid fa-list-check"></i> Lista</button>
+      <button class="btn-view-toggle" id="btn-map-view" onclick="switchView('map')"><i class="fa-solid fa-map-location-dot"></i> Mapa</button>
+      <button class="btn-icon" onclick="exportToCSV()" title="Exportar a Excel / CSV"><i class="fa-solid fa-file-excel"></i></button>
+      <button class="btn-icon" onclick="exportData()" title="Descargar Backup JSON"><i class="fa-solid fa-cloud-arrow-down"></i></button>
+    </div>
+  </header>
+
+  <div class="container">
+
+    <!-- ALERTA DE COBROS Y VENCIMIENTOS -->
+    <div class="alerts-strip" id="alerts-banner" style="display: none;">
+      <div style="display: flex; align-items: center;">
+        <i class="fa-solid fa-bell"></i>
+        <span id="alerts-text">Cargando alertas de cobro...</span>
+      </div>
+      <button onclick="setFilter('deuda', document.querySelector('.filter-tab:last-child'))" style="background: rgba(239, 68, 68, 0.3); border: 1px solid var(--accent-red); color: #fff; padding: 4px 10px; border-radius: 6px; font-size: 0.75rem; cursor: pointer; font-weight: 700;">Ver Pendientes</button>
+    </div>
+
+    <!-- METRICS STRIP -->
+    <div class="metrics-grid">
+      <div class="metric-card">
+        <span>Total Registros</span>
+        <strong id="metric-total">0</strong>
+      </div>
+      <div class="metric-card green">
+        <span>MRR Abonos</span>
+        <strong id="metric-mrr">$0 USD</strong>
+      </div>
+      <div class="metric-card purple">
+        <span>Sistemas a Medida</span>
+        <strong id="metric-systems">$0 USD</strong>
+      </div>
+      <div class="metric-card gold">
+        <span>Visitas de Calle</span>
+        <strong id="metric-street">0 Locales</strong>
+      </div>
+    </div>
+
+    <!-- CONTENEDOR DE MAPA GEOGRÁFICO -->
+    <div id="map-view-container">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+        <h3 style="font-size: 0.95rem; color: var(--primary);"><i class="fa-solid fa-route"></i> Mapa de Visitas & Clientes en CABA / GBA</h3>
+        <span style="font-size: 0.72rem; color: var(--text-muted);">🟢 Activo | 🟡 En Propuesta | 🔵 Visitado | ⚪ No Interesa</span>
+      </div>
+      <div id="map-element"></div>
+    </div>
+
+    <!-- BUSCADOR EN TIEMPO REAL -->
+    <div class="search-box" id="search-container">
+      <i class="fa-solid fa-magnifying-glass"></i>
+      <input type="text" id="search-input" placeholder="Buscar por negocio, dueño, teléfono o rubro..." oninput="handleSearch()">
+    </div>
+
+    <!-- MAIN CARD: FORMULARIO CON SELECTOR DE MODO -->
+    <div class="main-card" id="form-container">
+      
+      <!-- SELECTOR DE MODO -->
+      <div class="form-mode-tabs">
+        <button type="button" class="btn-mode-tab active" id="tab-street-mode" onclick="setFormMode('street')">
+          <i class="fa-solid fa-person-walking"></i> 1. Visita Rápida de Calle
+        </button>
+        <button type="button" class="btn-mode-tab" id="tab-client-mode" onclick="setFormMode('client')">
+          <i class="fa-solid fa-briefcase"></i> 2. Cliente Confirmado / Sistema
+        </button>
+      </div>
+
+      <!-- FORMULARIO ROBUSTO -->
+      <form id="crm-form" onsubmit="saveRecord(event)">
+        <div class="form-grid">
+          
+          <!-- DATOS DE CONTACTO (COMUNES) -->
+          <div class="form-group">
+            <label for="businessName">Nombre del Local / Negocio *</label>
+            <input type="text" id="businessName" required placeholder="Ej: Calzados Rossi">
+          </div>
+
+          <div class="form-group">
+            <label for="contactName">Dueño / Encargado / Vendedor</label>
+            <input type="text" id="contactName" placeholder="Ej: Matías (Dueño)">
+          </div>
+
+          <div class="form-group">
+            <label for="visitDate">Fecha de Visita / Registro (Por defecto HOY)</label>
+            <input type="date" id="visitDate" required>
+          </div>
+
+          <div class="form-group">
+            <label for="phone">Teléfono / WhatsApp (Opcional)</label>
+            <input type="tel" id="phone" placeholder="Ej: 11 3456-7890">
+          </div>
+
+          <div class="form-group">
+            <label for="rubro">Rubro Comercial</label>
+            <select id="rubro">
+              <option value="Indumentaria / Ropa">Indumentaria / Ropa</option>
+              <option value="Calzado / Marroquinería">Calzado / Marroquinería</option>
+              <option value="Bazar / Hogar / Termos">Bazar / Hogar / Termos & Mates</option>
+              <option value="Ferretería / Mayorista">Ferretería / Mayorista</option>
+              <option value="Gastronomía / Bar">Gastronomía / Bar</option>
+              <option value="Estética / Salud">Estética / Salud</option>
+              <option value="Servicios / Software">Servicios / Software</option>
+              <option value="Otro">Otro Rubro</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="address">Dirección / Calle / Altura (Para Mapa GPS)</label>
+            <input type="text" id="address" placeholder="Ej: Av. Rivadavia 2850, Once, CABA">
+          </div>
+
+          <!-- SUBIDA DE FOTO DE TARJETA O LOCAL -->
+          <div class="form-group full-width">
+            <label><i class="fa-solid fa-camera"></i> Foto de Tarjeta Personal / Cartel (Opcional)</label>
+            <div class="photo-upload-box">
+              <input type="file" id="cardPhotoInput" accept="image/*" capture="environment" onchange="handlePhotoSelect(event)" style="font-size:0.8rem; background:none; border:none; padding:0;">
+              <img id="photoPreview" class="photo-preview" alt="Foto">
+              <button type="button" id="btnRemovePhoto" onclick="removePhoto()" style="display:none; background:rgba(239,68,68,0.2); border:1px solid #ef4444; color:#ef4444; padding:4px 8px; border-radius:4px; font-size:0.7rem; cursor:pointer;">Quitar</button>
+            </div>
+          </div>
+
+          <!-- CAMPOS EXCLUSIVOS MODO CALLE / VISITA -->
+          <div class="form-group full-width" id="group-street-status">
+            <label for="streetResult">Resultado de la Visita de Calle *</label>
+            <select id="streetResult">
+              <option value="visitado">🔵 Visitado / Dejé folleto / Volver a pasar</option>
+              <option value="propuesta">📱 Le gustó / Pidió Demo por WhatsApp</option>
+              <option value="ya_tiene_bot">🟡 Ya tiene Bot o Sistema (Anotar qué usa)</option>
+              <option value="no_interesa">⚪ No le interesa (Negocio tradicional / Cerrado)</option>
+            </select>
+          </div>
+
+          <!-- CAMPOS EXCLUSIVOS MODO CLIENTE CONFIRMADO -->
+          <div id="client-specific-fields" style="display: none; grid-column: span 2;" class="form-grid">
+            <div class="section-divider">
+              <i class="fa-solid fa-layer-group"></i> Configuración Financiera & Servicio
+            </div>
+
+            <div class="form-group">
+              <label for="serviceType">Tipo de Solución *</label>
+              <select id="serviceType">
+                <option value="chatbot">🤖 Chatbot WhatsApp IA (Abono Mensual)</option>
+                <option value="sistema_medida">💻 Sistema / Software a Medida (Proyecto)</option>
+                <option value="hibrido">🚀 Combo Híbrido (Chatbot + Meta Ads + Sistema)</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="clientStatus">Estado del Proyecto</label>
+              <select id="clientStatus">
+                <option value="cerrado">✅ Activo / En Producción</option>
+                <option value="propuesta">🚀 En Onboarding / Desarrollo</option>
+                <option value="pausa">⚠️ En Pausa</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="monthlyPlan">Abono Mensual ($ USD)</label>
+              <select id="monthlyPlan">
+                <option value="200">Tarifa Acordada ($200 USD/m)</option>
+                <option value="180">Tarifa Clásica ($180 USD/m)</option>
+                <option value="249">Plan WA Starter ($249 USD/m)</option>
+                <option value="399">Omnicanal Direct ($399 USD/m)</option>
+                <option value="555">Omnicanal Pro ($555 USD/m)</option>
+                <option value="0">Sin abono / Venta única</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="systemTotal">Precio Total Venta / Sistema</label>
+              <input type="text" id="systemTotal" placeholder="Ej: $800.000 ARS o $850 USD">
+            </div>
+
+            <div class="form-group">
+              <label for="setupPrice">Setup / Plan de Cuotas</label>
+              <input type="text" id="setupPrice" placeholder="Ej: $150 USD Setup (50% anticipo)">
+            </div>
+
+            <div class="form-group">
+              <label for="metaAdsCap">Tope de Fee Meta Ads (ARS)</label>
+              <input type="text" id="metaAdsCap" placeholder="Ej: $200.000 ARS / $300.000 ARS">
+            </div>
+
+            <div class="form-group">
+              <label for="billingDay">Día de Cobro / Vencimiento</label>
+              <select id="billingDay">
+                <option value="2">Día 2 de cada mes (ej: Sakkal)</option>
+                <option value="16">Día 16 de cada mes (ej: ADAR)</option>
+                <option value="1">Día 1 de cada mes</option>
+                <option value="10">Día 10 de cada mes</option>
+                <option value="20">Día 20 de cada mes</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="paymentStatus">Estado del Pago</label>
+              <select id="paymentStatus">
+                <option value="al_dia">🟢 Al Día (Pagado)</option>
+                <option value="pendiente">🔴 Cobro Pendiente</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group full-width">
+            <label for="notes">Notas de la Visita / Requerimientos</label>
+            <textarea id="notes" rows="2" placeholder="Ej: Hablé con la vendedora, el dueño está por la mañana. Tienen mucho WhatsApp..."></textarea>
+          </div>
+
+        </div>
+
+        <button type="submit" class="btn-submit" id="btn-submit-label">
+          <i class="fa-solid fa-location-dot"></i> Guardar Visita de Calle en CRM
+        </button>
+      </form>
+    </div>
+
+    <!-- FILTER BAR -->
+    <div class="filter-bar" id="filters-container">
+      <button class="filter-tab active" onclick="setFilter('todos', this)">Todos (<span id="count-todos">0</span>)</button>
+      <button class="filter-tab" onclick="setFilter('cerrado', this)">✅ Activos / Clientes</button>
+      <button class="filter-tab" onclick="setFilter('propuesta', this)">🚀 Interesados / En Propuesta</button>
+      <button class="filter-tab" onclick="setFilter('calle', this)">🚶‍♂️ Visitas de Calle</button>
+      <button class="filter-tab" onclick="setFilter('deuda', this)">🔴 Cobros Pendientes</button>
+      <button class="filter-tab" onclick="setFilter('no_interesa', this)">⚪ No Interesa / Descartados</button>
+    </div>
+
+    <!-- PROSPECTS LIST -->
+    <div class="cards-list" id="prospects-container">
+      <!-- Tarjetas renderizadas con JS -->
+    </div>
+
+  </div>
+
+  <!-- TOAST -->
+  <div id="toast"><i class="fa-solid fa-circle-check" style="color: var(--primary);"></i> <span id="toast-msg">Guardado</span></div>
+
+  <script>
+    const STORAGE_KEY = 'crocscale_crm_street_v8';
+    let currentMode = 'street';
+    let currentPhotoBase64 = '';
+    
+    // DATOS REALES CON FECHAS Y FOTOS
+    const DEFAULT_PROSPECTS = [
+      {
+        id: 'adar_01',
+        businessName: 'ADAR Insumos',
+        contactName: 'Isaak Lair Haboba',
+        phone: '1130960114',
+        rubro: 'Bazar / Hogar / Termos',
+        serviceType: 'hibrido',
+        status: 'cerrado',
+        monthlyPlan: 180,
+        systemTotal: '$0',
+        setupPrice: '$150 USD (Pagado)',
+        metaAdsCap: '$200.000 ARS (Tope Fee)',
+        billingDay: '16',
+        paymentStatus: 'al_dia',
+        address: 'Gallo 823, CABA',
+        lat: -34.6015,
+        lng: -58.4116,
+        photo: '',
+        visitDate: '2026-08-16',
+        notes: 'Ecommerce bazar. Vence todos los 16. Meta Ads tope $200k ARS.',
+        createdAt: new Date().toISOString()
+      },
+      {
+        id: 'sakkal_02',
+        businessName: 'Sakkal Mayorista',
+        contactName: 'Brian Sakkal',
+        phone: '1155667788',
+        rubro: 'Indumentaria / Ropa',
+        serviceType: 'hibrido',
+        status: 'propuesta',
+        monthlyPlan: 200,
+        systemTotal: '$0',
+        setupPrice: '$150 USD Setup + 50% Bot',
+        metaAdsCap: '$300.000 ARS (20% Fee)',
+        billingDay: '2',
+        paymentStatus: 'pendiente',
+        address: 'Av. Rivadavia 2715, CABA',
+        lat: -34.6098,
+        lng: -58.4042,
+        photo: '',
+        visitDate: '2026-08-25',
+        notes: 'Nuevo cliente. 2 Sept paga $250 ($150 Setup + $100 [50% Bot]). 2 Oct paga $200. Meta Ads tope $300k.',
+        createdAt: new Date().toISOString()
+      },
+      {
+        id: 'bross_03',
+        businessName: 'BrossUnderwear',
+        contactName: 'Gabriel & Brian Treyan',
+        phone: '1144332211',
+        rubro: 'Indumentaria / Ropa',
+        serviceType: 'sistema_medida',
+        status: 'pausa',
+        monthlyPlan: 0,
+        systemTotal: '$800.000 ARS',
+        setupPrice: 'Pagado Sep 2025',
+        metaAdsCap: 'Sin Ads',
+        billingDay: '10',
+        paymentStatus: 'al_dia',
+        address: 'Av. Corrientes 3023, CABA',
+        lat: -34.6042,
+        lng: -58.4098,
+        photo: '',
+        visitDate: '2025-09-10',
+        notes: 'Ecommerce MercadoLibre. Sistema vendido Sep 2025. En pausa por falta de créditos IA.',
+        createdAt: new Date().toISOString()
+      },
+      {
+        id: 'calle_04',
+        businessName: 'Calzados El Sol',
+        contactName: 'Encargada Silvina',
+        phone: '1122334455',
+        rubro: 'Calzado / Marroquinería',
+        serviceType: 'chatbot',
+        status: 'no_interesa',
+        monthlyPlan: 0,
+        systemTotal: '$0',
+        setupPrice: '',
+        metaAdsCap: '',
+        billingDay: '1',
+        paymentStatus: 'al_dia',
+        address: 'Av. Rivadavia 2850, Once, CABA',
+        lat: -34.6105,
+        lng: -58.4055,
+        photo: '',
+        visitDate: '2026-08-27',
+        notes: 'Visita de calle: Negocio muy tradicional. Solo atienden mostrador y no les interesa vender por WhatsApp.',
+        createdAt: new Date().toISOString()
+      }
+    ];
+
+    let prospects = JSON.parse(localStorage.getItem(STORAGE_KEY)) || DEFAULT_PROSPECTS;
+    let currentFilter = 'todos';
+    let searchQuery = '';
+    let map = null;
+    let markersLayer = null;
+
+    document.addEventListener('DOMContentLoaded', () => {
+      setDefaultTodayDate();
+      renderCards();
+      updateMetrics();
+      checkBillingAlerts();
+    });
+
+    function setDefaultTodayDate() {
+      const todayStr = new Date().toISOString().slice(0, 10);
+      const dateInput = document.getElementById('visitDate');
+      if (dateInput) dateInput.value = todayStr;
+    }
+
+    function setFormMode(mode) {
+      currentMode = mode;
+      const tabStreet = document.getElementById('tab-street-mode');
+      const tabClient = document.getElementById('tab-client-mode');
+      const streetGroup = document.getElementById('group-street-status');
+      const clientFields = document.getElementById('client-specific-fields');
+      const btnSubmit = document.getElementById('btn-submit-label');
+
+      if (mode === 'street') {
+        tabStreet.classList.add('active');
+        tabClient.classList.remove('active');
+        streetGroup.style.display = 'block';
+        clientFields.style.display = 'none';
+        btnSubmit.innerHTML = '<i class="fa-solid fa-location-dot"></i> Guardar Visita de Calle en CRM';
+      } else {
+        tabClient.classList.add('active');
+        tabStreet.classList.remove('active');
+        streetGroup.style.display = 'none';
+        clientFields.style.display = 'grid';
+        btnSubmit.innerHTML = '<i class="fa-solid fa-briefcase"></i> Guardar Cliente Confirmado / Sistema';
+      }
+    }
+
+    // MANEJO DE FOTO DE TARJETA CON REDUCCIÓN DE TAMAÑO
+    function handlePhotoSelect(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const img = new Image();
+        img.onload = function() {
+          const canvas = document.createElement('canvas');
+          const maxDim = 800;
+          let width = img.width;
+          let height = img.height;
+
+          if (width > height && width > maxDim) {
+            height *= maxDim / width;
+            width = maxDim;
+          } else if (height > maxDim) {
+            width *= maxDim / height;
+            height = maxDim;
+          }
+
+          canvas.width = width;
+          canvas.height = height;
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0, width, height);
+
+          currentPhotoBase64 = canvas.toDataURL('image/jpeg', 0.7);
+          const preview = document.getElementById('photoPreview');
+          preview.src = currentPhotoBase64;
+          preview.style.display = 'block';
+          document.getElementById('btnRemovePhoto').style.display = 'inline-block';
+        };
+        img.src = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function removePhoto() {
+      currentPhotoBase64 = '';
+      document.getElementById('cardPhotoInput').value = '';
+      document.getElementById('photoPreview').style.display = 'none';
+      document.getElementById('btnRemovePhoto').style.display = 'none';
+    }
+
+    function checkBillingAlerts() {
+      const pending = prospects.filter(p => p.paymentStatus === 'pendiente');
+      const banner = document.getElementById('alerts-banner');
+      const text = document.getElementById('alerts-text');
+
+      if (pending.length > 0) {
+        text.innerHTML = `<strong>¡Atención!</strong> Tenés <strong>${pending.length} cobro(s) pendiente(s)</strong> (${pending.map(p => p.businessName).join(', ')}).`;
+        banner.style.display = 'flex';
+      } else {
+        banner.style.display = 'none';
+      }
+    }
+
+    function switchView(mode) {
+      const btnList = document.getElementById('btn-list-view');
+      const btnMap = document.getElementById('btn-map-view');
+      const mapContainer = document.getElementById('map-view-container');
+
+      if (mode === 'map') {
+        btnMap.classList.add('active');
+        btnList.classList.remove('active');
+        mapContainer.style.display = 'block';
+        initMap();
+      } else {
+        btnList.classList.add('active');
+        btnMap.classList.remove('active');
+        mapContainer.style.display = 'none';
+      }
+    }
+
+    function initMap() {
+      if (!map) {
+        map = L.map('map-element').setView([-34.6060, -58.4060], 13);
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+          attribution: '&copy; OpenStreetMap &copy; CARTO',
+          maxZoom: 19
+        }).addTo(map);
+        markersLayer = L.layerGroup().addTo(map);
+      }
+
+      markersLayer.clearLayers();
+
+      prospects.forEach(p => {
+        const lat = p.lat || (-34.609 + (Math.random() - 0.5) * 0.01);
+        const lng = p.lng || (-58.405 + (Math.random() - 0.5) * 0.01);
+
+        let color = '#00f2fe';
+        if (p.status === 'cerrado') color = '#10b981';
+        else if (p.status === 'propuesta') color = '#f59e0b';
+        else if (p.status === 'no_interesa') color = '#64748b';
+        else if (p.status === 'ya_tiene_bot') color = '#eab308';
+        else if (p.status === 'pausa') color = '#ef4444';
+        else if (p.status === 'visitado') color = '#3b82f6';
+        
+        const customIcon = L.divIcon({
+          className: 'custom-pin',
+          html: `<div style="background:${color}; width:16px; height:16px; border-radius:50%; border:2px solid #fff; box-shadow:0 0 10px ${color};"></div>`,
+          iconSize: [16, 16]
+        });
+
+        const marker = L.marker([lat, lng], { icon: customIcon }).addTo(markersLayer);
+        const cleanPhone = (p.phone || '').replace(/[^0-9]/g, '');
+        const formattedPhone = cleanPhone.startsWith('54') ? cleanPhone : '549' + cleanPhone;
+        
+        marker.bindPopup(`
+          <div style="font-family:Inter,sans-serif; color:#000;">
+            <strong style="font-size:1rem; color:#0b1120;">${p.businessName}</strong><br>
+            <span style="font-size:0.8rem; color:#555;">${p.contactName || ''} • ${p.rubro}</span><br>
+            <div style="margin:6px 0; font-size:0.8rem;">
+              <strong>Fecha:</strong> ${p.visitDate || 'Hoy'}<br>
+              <strong>Estado:</strong> ${getStatusLabel(p.status)}<br>
+              ${p.monthlyPlan > 0 ? `<strong>Plan:</strong> $${p.monthlyPlan} USD/m` : ''}
+            </div>
+            <div style="margin-top:8px; display:flex; gap:6px;">
+              ${cleanPhone ? `<a href="https://wa.me/${formattedPhone}" target="_blank" style="background:#10b981; color:#fff; padding:4px 8px; border-radius:4px; text-decoration:none; font-size:0.75rem; font-weight:700;">💬 WhatsApp</a>` : ''}
+              <a href="https://maps.google.com/?q=${encodeURIComponent(p.address || p.businessName)}" target="_blank" style="background:#00a8b5; color:#fff; padding:4px 8px; border-radius:4px; text-decoration:none; font-size:0.75rem; font-weight:700;">📍 GPS</a>
+            </div>
+          </div>
+        `);
+      });
+
+      setTimeout(() => map.invalidateSize(), 200);
+    }
+
+    function handleSearch() {
+      searchQuery = document.getElementById('search-input').value.toLowerCase().trim();
+      renderCards();
+    }
+
+    function renderCards() {
+      const container = document.getElementById('prospects-container');
+      container.innerHTML = '';
+
+      const filtered = prospects.filter(p => {
+        let matchTab = true;
+        if (currentFilter === 'calle') matchTab = p.status === 'visitado' || p.status === 'ya_tiene_bot';
+        else if (currentFilter === 'no_interesa') matchTab = p.status === 'no_interesa';
+        else if (currentFilter === 'deuda') matchTab = p.paymentStatus === 'pendiente';
+        else if (currentFilter !== 'todos') matchTab = p.status === currentFilter;
+
+        let matchSearch = true;
+        if (searchQuery) {
+          const fullText = `${p.businessName} ${p.contactName} ${p.phone} ${p.rubro} ${p.notes} ${p.address}`.toLowerCase();
+          matchSearch = fullText.includes(searchQuery);
+        }
+
+        return matchTab && matchSearch;
+      });
+
+      if (filtered.length === 0) {
+        container.innerHTML = `
+          <div style="text-align:center; padding: 40px 20px; color: var(--text-muted);">
+            <i class="fa-regular fa-folder-open" style="font-size: 2.5rem; margin-bottom: 12px; color: var(--card-border);"></i>
+            <p>No se encontraron registros en esta categoría.</p>
+          </div>
+        `;
+        return;
+      }
+
+      filtered.forEach(p => {
+        const cleanPhone = (p.phone || '').replace(/[^0-9]/g, '');
+        const formattedPhone = cleanPhone.startsWith('54') ? cleanPhone : '549' + cleanPhone;
+        const wspUrl = cleanPhone ? `https://wa.me/${formattedPhone}?text=${encodeURIComponent('¡Hola ' + (p.contactName || p.businessName) + '! Te escribo de CrocScale IA sobre tu sistema/automatización.')}` : '#';
+        
+        const cobranzaText = encodeURIComponent(`¡Hola ${p.contactName || p.businessName}! ¿Cómo estás? Te paso el recordatorio de cobro de CrocScale ($${p.monthlyPlan || p.setupPrice}). Avisame si necesitás el Alias o CBU. ¡Abrazo!`);
+        const cobrarWspUrl = cleanPhone ? `https://wa.me/${formattedPhone}?text=${cobranzaText}` : '#';
+
+        const callUrl = cleanPhone ? `tel:${cleanPhone}` : '#';
+        const mapUrl = `https://maps.google.com/?q=${encodeURIComponent(p.address || p.businessName)}`;
+
+        const isClient = p.status === 'cerrado' || p.status === 'propuesta' || p.monthlyPlan > 0;
+        const paymentClass = p.paymentStatus === 'al_dia' ? 'al-dia' : 'pendiente';
+        const paymentLabel = p.paymentStatus === 'al_dia' ? '🟢 Al Día' : '🔴 Cobro Pendiente';
+
+        const card = document.createElement('div');
+        card.className = `prospect-card status-${p.status}`;
+        card.innerHTML = `
+          <div class="card-top">
+            <div class="client-name">
+              <h3>${p.businessName}</h3>
+              <p>
+                <i class="fa-regular fa-calendar" style="color:var(--primary);"></i> ${p.visitDate || 'Fecha no registrada'} • 
+                ${p.contactName ? '<i class="fa-regular fa-user"></i> ' + p.contactName + ' • ' : ''}
+                <span style="color: var(--primary);">${p.rubro}</span>
+              </p>
+            </div>
+            <span class="badge-status ${p.status}">${getStatusLabel(p.status)}</span>
+          </div>
+
+          ${p.photo ? `<img src="${p.photo}" class="card-photo-thumb" onclick="window.open('${p.photo}')" alt="Tarjeta / Local" title="Clic para ver foto completa">` : ''}
+
+          <!-- BARRA DE PAGO SOLO SI ES CLIENTE O TIENE ABONO -->
+          ${isClient ? `
+            <div class="payment-status-bar">
+              <div>
+                <span class="payment-badge ${paymentClass}">${paymentLabel}</span>
+                <span style="color: var(--text-muted); margin-left: 6px; font-size: 0.75rem;">
+                  <i class="fa-regular fa-calendar"></i> Vence: <strong>Día ${p.billingDay || '16'}</strong>
+                </span>
+              </div>
+              <div class="payment-bar-actions">
+                ${p.paymentStatus === 'pendiente' && cleanPhone ? `<a href="${cobrarWspUrl}" target="_blank" class="btn-cobrar-wsp" title="Enviar recordatorio"><i class="fa-brands fa-whatsapp"></i> Cobrar</a>` : ''}
+                <button class="btn-toggle-payment" onclick="togglePaymentStatus('${p.id}')">
+                  ${p.paymentStatus === 'al_dia' ? 'Pasar a Pendiente' : 'Marcar Pagado ✅'}
+                </button>
+              </div>
+            </div>
+          ` : ''}
+
+          <div class="card-details-grid">
+            <div class="detail-item"><i class="fa-solid fa-location-dot"></i> <span>${p.address || 'Sin dirección'}</span></div>
+            <div class="detail-item"><i class="fa-solid fa-phone"></i> <span>${p.phone || 'Sin teléfono'}</span></div>
+            ${p.monthlyPlan > 0 ? `<div class="detail-item"><i class="fa-solid fa-robot"></i> <span>Abono: <strong>$${p.monthlyPlan} USD/m</strong></span></div>` : ''}
+            ${p.setupPrice ? `<div class="detail-item"><i class="fa-solid fa-receipt"></i> <span>Condición: <strong>${p.setupPrice}</strong></span></div>` : ''}
+          </div>
+
+          <!-- MODULO META ADS -->
+          ${p.metaAdsCap && p.metaAdsCap !== 'Sin Ads' ? `
+            <div class="meta-ads-box">
+              <div class="meta-ads-header">
+                <span><i class="fa-solid fa-bullhorn"></i> Gestión Meta Ads</span>
+                <span>${p.metaAdsCap}</span>
+              </div>
+              <p style="color: #9ca3af; font-size: 0.73rem;">Campañas Click-to-WhatsApp + Ventana 72hs.</p>
+            </div>
+          ` : ''}
+
+          ${p.notes ? `<div class="card-notes"><i class="fa-regular fa-comment-dots"></i> ${p.notes}</div>` : ''}
+
+          <!-- BOTONES EN 1 TOQUE -->
+          <div class="action-buttons-row">
+            ${cleanPhone ? `
+              <a href="${wspUrl}" target="_blank" class="btn-action btn-wsp" title="Abrir WhatsApp">
+                <i class="fa-brands fa-whatsapp"></i> WhatsApp
+              </a>
+              <a href="${callUrl}" class="btn-action btn-call" title="Llamar directo">
+                <i class="fa-solid fa-phone"></i> Llamar
+              </a>
+              <button onclick="downloadVCard('${p.contactName || p.businessName}', '${cleanPhone}', '${p.businessName}', '${p.address || ''}')" class="btn-action btn-vcard" title="Guardar en agenda">
+                <i class="fa-regular fa-address-card"></i> Agendar
+              </button>
+            ` : `
+              <button class="btn-action" style="opacity:0.4; cursor:not-allowed;" title="Sin teléfono">
+                <i class="fa-brands fa-whatsapp"></i> WhatsApp
+              </button>
+              <button class="btn-action" style="opacity:0.4; cursor:not-allowed;" title="Sin teléfono">
+                <i class="fa-solid fa-phone"></i> Llamar
+              </button>
+              <button class="btn-action" style="opacity:0.4; cursor:not-allowed;" title="Sin teléfono">
+                <i class="fa-regular fa-address-card"></i> Agendar
+              </button>
+            `}
+            <a href="${mapUrl}" target="_blank" class="btn-action btn-map" title="Ver en Google Maps">
+              <i class="fa-solid fa-location-dot"></i> Mapa
+            </a>
+          </div>
+
+          <div class="card-footer-manage">
+            <button class="btn-text-action delete" onclick="deleteProspect('${p.id}')"><i class="fa-regular fa-trash-can"></i> Borrar</button>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    function togglePaymentStatus(id) {
+      const p = prospects.find(item => item.id === id);
+      if (!p) return;
+
+      p.paymentStatus = (p.paymentStatus === 'al_dia') ? 'pendiente' : 'al_dia';
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(prospects));
+      renderCards();
+      updateMetrics();
+      checkBillingAlerts();
+      showToast(p.paymentStatus === 'al_dia' ? '🟢 Marcado como Al Día (Pagado)' : '🔴 Marcado como Pendiente');
+    }
+
+    // GUARDAR ROBUSTO (SIN ERRORES)
+    function saveRecord(e) {
+      e.preventDefault();
+      
+      try {
+        const isStreet = (currentMode === 'street');
+        const businessName = document.getElementById('businessName').value.trim();
+        const contactName = document.getElementById('contactName').value.trim();
+        const phone = document.getElementById('phone').value.trim();
+        const rubro = document.getElementById('rubro').value;
+        const address = document.getElementById('address').value.trim();
+        const notes = document.getElementById('notes').value.trim();
+        const visitDate = document.getElementById('visitDate').value || new Date().toISOString().slice(0, 10);
+
+        let statusValue = 'visitado';
+        let serviceTypeValue = 'chatbot';
+        let monthlyValue = 0;
+        let systemTotalValue = '$0';
+        let setupPriceValue = '';
+        let metaAdsCapValue = '';
+        let billingDayValue = '1';
+        let paymentStatusValue = 'al_dia';
+
+        if (isStreet) {
+          statusValue = document.getElementById('streetResult').value;
+        } else {
+          statusValue = document.getElementById('clientStatus') ? document.getElementById('clientStatus').value : 'cerrado';
+          serviceTypeValue = document.getElementById('serviceType') ? document.getElementById('serviceType').value : 'chatbot';
+          monthlyValue = document.getElementById('monthlyPlan') ? (parseInt(document.getElementById('monthlyPlan').value) || 0) : 0;
+          systemTotalValue = document.getElementById('systemTotal') ? (document.getElementById('systemTotal').value.trim() || '$0') : '$0';
+          setupPriceValue = document.getElementById('setupPrice') ? document.getElementById('setupPrice').value.trim() : '';
+          metaAdsCapValue = document.getElementById('metaAdsCap') ? document.getElementById('metaAdsCap').value.trim() : '';
+          billingDayValue = document.getElementById('billingDay') ? document.getElementById('billingDay').value : '16';
+          paymentStatusValue = document.getElementById('paymentStatus') ? document.getElementById('paymentStatus').value : 'al_dia';
+        }
+
+        const newRecord = {
+          id: 'rec_' + Date.now(),
+          businessName,
+          contactName,
+          phone,
+          rubro,
+          serviceType: serviceTypeValue,
+          status: statusValue,
+          monthlyPlan: monthlyValue,
+          systemTotal: systemTotalValue,
+          setupPrice: setupPriceValue,
+          metaAdsCap: metaAdsCapValue,
+          billingDay: billingDayValue,
+          paymentStatus: paymentStatusValue,
+          address,
+          notes,
+          visitDate,
+          photo: currentPhotoBase64,
+          createdAt: new Date().toISOString()
+        };
+
+        prospects.unshift(newRecord);
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(prospects));
+        
+        document.getElementById('crm-form').reset();
+        removePhoto();
+        setDefaultTodayDate();
+        
+        renderCards();
+        updateMetrics();
+        checkBillingAlerts();
+        if (map) initMap();
+        showToast(isStreet ? '🚶‍♂️ ¡Visita de calle guardada con éxito!' : '💼 ¡Cliente guardado con éxito!');
+      } catch (err) {
+        console.error('Error al guardar:', err);
+        alert('Hubo un problema al guardar. Revisá los campos.');
+      }
+    }
+
+    function deleteProspect(id) {
+      if (confirm('¿Eliminar este registro?')) {
+        prospects = prospects.filter(p => p.id !== id);
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(prospects));
+        renderCards();
+        updateMetrics();
+        checkBillingAlerts();
+        if (map) initMap();
+        showToast('Registro eliminado');
+      }
+    }
+
+    function downloadVCard(name, phone, company, address) {
+      const vcardContent = `BEGIN:VCARD\nVERSION:3.0\nFN:${name} (${company})\nORG:${company}\nTEL;TYPE=CELL:${phone}\nADR;TYPE=WORK:;;${address};;;;\nNOTE:Contacto CrocScale IA\nEND:VCARD`;
+      const blob = new Blob([vcardContent], { type: 'text/vcard;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.setAttribute('download', `${name.replace(/\s+/g, '_')}.vcf`);
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      showToast('Descargando contacto para agendar...');
+    }
+
+    function setFilter(filter, el) {
+      currentFilter = filter;
+      document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+      if (el) el.classList.add('active');
+      renderCards();
+    }
+
+    function updateMetrics() {
+      document.getElementById('metric-total').innerText = prospects.length;
+      document.getElementById('count-todos').innerText = prospects.length;
+      
+      const totalMRR = prospects.reduce((acc, p) => acc + (p.monthlyPlan || 0), 0);
+      document.getElementById('metric-mrr').innerText = `$${totalMRR.toLocaleString()} USD`;
+
+      const totalSystems = prospects.filter(p => p.serviceType === 'sistema_medida' || p.serviceType === 'hibrido').length;
+      document.getElementById('metric-systems').innerText = `${totalSystems} Proyectos`;
+
+      const streetCount = prospects.filter(p => p.status === 'visitado' || p.status === 'no_interesa' || p.status === 'ya_tiene_bot').length;
+      document.getElementById('metric-street').innerText = `${streetCount} Locales`;
+    }
+
+    function getStatusLabel(s) {
+      switch(s) {
+        case 'cerrado': return '✅ Activo';
+        case 'propuesta': return '🚀 En Propuesta';
+        case 'visitado': return '🔵 Visitado';
+        case 'no_interesa': return '⚪ No le Interesa';
+        case 'ya_tiene_bot': return '🟡 Ya tiene Bot';
+        case 'pausa': return '⚠️ En Pausa';
+        default: return s;
+      }
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      document.getElementById('toast-msg').innerText = msg;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 3000);
+    }
+
+    function exportData() {
+      const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(prospects, null, 2));
+      const a = document.createElement('a');
+      a.setAttribute("href", dataStr);
+      a.setAttribute("download", `crocscale_crm_backup_${new Date().toISOString().slice(0,10)}.json`);
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      showToast('Backup JSON descargado');
+    }
+
+    function exportToCSV() {
+      if (prospects.length === 0) {
+        showToast('No hay datos para exportar');
+        return;
+      }
+
+      const headers = ["Negocio", "Contacto", "Fecha_Visita", "Telefono", "Rubro", "Tipo_Servicio", "Estado", "Abono_USD", "Total_Sistema", "Setup_Cuotas", "Meta_Ads_Cap", "Dia_Vencimiento", "Estado_Pago", "Direccion", "Notas"];
+      const rows = prospects.map(p => [
+        `"${p.businessName}"`,
+        `"${p.contactName || ''}"`,
+        `"${p.visitDate || ''}"`,
+        `"${p.phone || ''}"`,
+        `"${p.rubro}"`,
+        `"${p.serviceType}"`,
+        `"${p.status}"`,
+        p.monthlyPlan || 0,
+        `"${p.systemTotal || ''}"`,
+        `"${p.setupPrice || ''}"`,
+        `"${p.metaAdsCap || ''}"`,
+        `"${p.billingDay || ''}"`,
+        `"${p.paymentStatus || ''}"`,
+        `"${p.address || ''}"`,
+        `"${(p.notes || '').replace(/"/g, '""')}"`
+      ]);
+
+      const csvContent = "data:text/csv;charset=utf-8," + [headers.join(","), ...rows.map(r => r.join(","))].join("\n");
+      const a = document.createElement("a");
+      a.setAttribute("href", encodeURI(csvContent));
+      a.setAttribute("download", `crocscale_clientes_${new Date().toISOString().slice(0,10)}.csv`);
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      showToast('Descargando archivo Excel / CSV...');
+    }
+  </script>
+</body>
+</html>
