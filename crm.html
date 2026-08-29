@@ -245,23 +245,61 @@
     .metric-card.purple strong { color: #c084fc; }
     .metric-card.gold strong { color: var(--accent-gold); }
 
-    /* MAP CONTAINER */
+    /* MAP CONTAINER CON SWITCH DE CAPAS REAL SIN WATERMARK */
     #map-view-container {
       display: none;
       background: var(--card-bg);
       border: 1px solid var(--card-border);
       border-radius: var(--radius);
-      padding: 10px;
+      padding: 12px;
       margin-bottom: 18px;
       box-shadow: var(--shadow);
       width: 100%;
     }
 
+    .map-header-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .map-layer-toggles {
+      display: flex;
+      gap: 4px;
+      background: var(--input-bg);
+      padding: 2px;
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .btn-map-layer {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      padding: 4px 8px;
+      border-radius: 6px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .btn-map-layer.active {
+      background: var(--primary);
+      color: #000;
+    }
+
     #map-element {
-      height: 380px;
+      height: 420px;
       width: 100%;
       border-radius: 10px;
       z-index: 10;
+      border: 1px solid rgba(255, 255, 255, 0.08);
     }
 
     /* SEARCH BAR */
@@ -424,10 +462,10 @@
       background: #13172c;
       border: 1px solid var(--primary);
       border-radius: 8px;
-      max-height: 180px;
+      max-height: 190px;
       overflow-y: auto;
-      z-index: 100;
-      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.8);
+      z-index: 1000;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.85);
       display: none;
       margin-top: 4px;
     }
@@ -631,7 +669,6 @@
     .badge-status.ya_tiene_bot { background: rgba(245, 158, 11, 0.2); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.4); }
     .badge-status.pausa { background: rgba(239, 68, 68, 0.2); color: #fca5a5; border: 1px solid rgba(239, 68, 68, 0.4); }
 
-    /* CARD FOTO TARJETA */
     .card-photo-thumb {
       width: 100%;
       max-height: 130px;
@@ -642,7 +679,6 @@
       cursor: pointer;
     }
 
-    /* BARRA DE PAGO */
     .payment-status-bar {
       display: flex;
       flex-wrap: wrap;
@@ -700,7 +736,6 @@
       font-weight: 600;
     }
 
-    /* FILA DE REDES SOCIALES Y WEB */
     .social-links-row {
       display: flex;
       flex-wrap: wrap;
@@ -872,7 +907,7 @@
       .form-grid { grid-template-columns: 1fr; gap: 8px; }
       .full-width, .section-divider { grid-column: span 1; }
       .card-details-grid { grid-template-columns: 1fr; }
-      #map-element { height: 320px; }
+      #map-element { height: 350px; }
     }
   </style>
 </head>
@@ -930,11 +965,24 @@
       </div>
     </div>
 
-    <!-- CONTENEDOR DE MAPA GEOGRÁFICO -->
+    <!-- CONTENEDOR DE MAPA GEOGRÁFICO CON SELECTOR DE CAPAS OFICIALES SIN WATERMARK -->
     <div id="map-view-container">
-      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-        <h3 style="font-size: 0.88rem; color: var(--primary);"><i class="fa-solid fa-route"></i> Mapa Satelital de Locales</h3>
-        <span style="font-size: 0.68rem; color: var(--text-muted);">🟢 Activo | 🔵 Visitado</span>
+      <div class="map-header-bar">
+        <div style="display: flex; align-items: center; gap: 6px;">
+          <h3 style="font-size: 0.92rem; color: var(--primary);"><i class="fa-solid fa-map-location-dot"></i> Mapa de Clientes & Locales</h3>
+          <span style="font-size: 0.7rem; color: var(--text-muted);">(<span id="map-markers-count">0</span> ubicaciones)</span>
+        </div>
+        <div class="map-layer-toggles">
+          <button type="button" class="btn-map-layer active" id="btn-layer-dark" onclick="setMapLayer('dark')">
+            <i class="fa-solid fa-moon"></i> Oscuro
+          </button>
+          <button type="button" class="btn-map-layer" id="btn-layer-streets" onclick="setMapLayer('streets')">
+            <i class="fa-solid fa-signs-post"></i> Calles GPS
+          </button>
+          <button type="button" class="btn-map-layer" id="btn-layer-sat" onclick="setMapLayer('sat')">
+            <i class="fa-solid fa-satellite"></i> Satelital HD
+          </button>
+        </div>
       </div>
       <div id="map-element"></div>
     </div>
@@ -942,7 +990,7 @@
     <!-- BUSCADOR EN TIEMPO REAL -->
     <div class="search-box" id="search-container">
       <i class="fa-solid fa-magnifying-glass"></i>
-      <input type="text" id="search-input" placeholder="Buscar negocio, dueño, teléfono o instagram..." oninput="handleSearch()">
+      <input type="text" id="search-input" placeholder="Buscar negocio, dueño, teléfono, dirección o instagram..." oninput="handleSearch()">
     </div>
 
     <!-- MAIN CARD: FORMULARIO CON SELECTOR DE MODO Y EDICIÓN -->
@@ -1015,9 +1063,9 @@
 
           <!-- DIRECCIÓN CON AUTOCOMPLETADO INTELIGENTE Y GPS -->
           <div class="form-group full-width">
-            <label for="address"><i class="fa-solid fa-map-pin" style="color:var(--primary);"></i> Dirección / Link de Google Maps / Coordenadas</label>
+            <label for="address"><i class="fa-solid fa-map-pin" style="color:var(--primary);"></i> Dirección (Calle y Altura / Link de Google Maps)</label>
             <div class="input-with-gps">
-              <input type="text" id="address" placeholder="Escribí calle y altura (ej: Rivadavia 2715) o pegá link de Google Maps..." autocomplete="off" oninput="handleAddressInput(this.value)" style="flex:1;">
+              <input type="text" id="address" placeholder="Escribí calle y altura (ej: Rivadavia 2715, Scalabrini Ortiz 2410)..." autocomplete="off" oninput="handleAddressInput(this.value)" style="flex:1;">
               <button type="button" class="btn-gps-here" onclick="getCurrentLocationGPS()" title="Detectar mi ubicación actual exacta">
                 <i class="fa-solid fa-crosshairs"></i> Mi GPS
               </button>
@@ -1189,11 +1237,13 @@
       console.warn('Supabase load notice:', e);
     }
 
-    const STORAGE_KEY = 'crocscale_crm_street_v14';
+    const STORAGE_KEY = 'crocscale_crm_street_v15';
     let currentMode = 'street';
     let currentPhotoBase64 = '';
     let isEditing = false;
     let autocompleteTimeout = null;
+    let currentMapLayerType = 'dark';
+    let currentTileLayer = null;
     
     const DEFAULT_PROSPECTS = [
       {
@@ -1273,6 +1323,32 @@
         visitDate: '2025-09-10',
         notes: 'Ecommerce MercadoLibre. Sistema vendido Sep 2025. En pausa por falta de créditos IA.',
         createdAt: new Date().toISOString()
+      },
+      {
+        id: 'rec_1787923185024',
+        businessName: 'Dexvida Deportes',
+        contactName: '',
+        phone: '',
+        phoneBusiness: '',
+        instagram: '',
+        website: '',
+        facebook: '',
+        rubro: 'Indumentaria / Ropa',
+        serviceType: 'chatbot',
+        status: 'visitado',
+        monthlyPlan: 0,
+        systemTotal: '$0',
+        setupPrice: '',
+        metaAdsCap: '',
+        billingDay: '1',
+        paymentStatus: 'al_dia',
+        address: 'Av. Raúl Scalabrini Ortiz 2410, Palermo, CABA',
+        lat: -34.5858612,
+        lng: -58.4173313,
+        photo: '',
+        visitDate: '2026-08-28',
+        notes: 'Local deportivo en Palermo.',
+        createdAt: new Date().toISOString()
       }
     ];
 
@@ -1343,11 +1419,28 @@
             createdAt: dbItem.created_at || new Date().toISOString()
           }));
 
+          // AUTO-REPARACIÓN DE COORDENADAS: Si alguno no tiene lat/lng, geocodificar en background
+          for (let p of prospects) {
+            if ((!p.lat || !p.lng) && p.address) {
+              geocodeAddressDirect(p.address).then(coords => {
+                if (coords) {
+                  p.lat = coords.lat;
+                  p.lng = coords.lng;
+                  localStorage.setItem(STORAGE_KEY, JSON.stringify(prospects));
+                  if (supabaseClient) {
+                    supabaseClient.from('crm_prospects').update({ lat: coords.lat, lng: coords.lng }).eq('id', p.id);
+                  }
+                  if (map) renderMapMarkers();
+                }
+              });
+            }
+          }
+
           localStorage.setItem(STORAGE_KEY, JSON.stringify(prospects));
           renderCards();
           updateMetrics();
           checkBillingAlerts();
-          if (map) initMap();
+          if (map) renderMapMarkers();
         }
 
         if (syncEl) {
@@ -1375,7 +1468,7 @@
       }
     }
 
-    // AUTOCOMPLETADO INSTANTÁNEO CON PHOTON (KOMOOT) PARA ARGENTINA
+    // AUTOCOMPLETADO INTELIGENTE DE DIRECCIONES
     function handleAddressInput(val) {
       clearTimeout(autocompleteTimeout);
       const box = document.getElementById('address-suggestions');
@@ -1394,8 +1487,8 @@
 
       autocompleteTimeout = setTimeout(async () => {
         try {
-          let query = val.trim();
-          const url = `https://photon.komoot.io/api/?q=${encodeURIComponent(query)}&lat=-34.6037&lon=-58.3816&limit=4`;
+          const cleanQuery = val.trim();
+          const url = `https://photon.komoot.io/api/?q=${encodeURIComponent(cleanQuery)}&lat=-34.6037&lon=-58.3816&limit=5`;
           const resp = await fetch(url);
           const data = await resp.json();
 
@@ -1409,7 +1502,7 @@
               const locality = p.locality || p.district || p.city || p.county || '';
               const state = p.state || 'Buenos Aires';
               
-              const fullFormatted = `${street}${num}, ${locality}, ${state}`.replace(/,\s*,/g, ',').trim();
+              const fullFormatted = `${street}${num}, ${locality ? locality + ', ' : ''}${state}`.replace(/,\s*,/g, ',').trim();
 
               const itemDiv = document.createElement('div');
               itemDiv.className = 'address-suggestion-item';
@@ -1422,7 +1515,7 @@
                 document.getElementById('selectedLat').value = coords[1];
                 document.getElementById('selectedLng').value = coords[0];
                 box.style.display = 'none';
-                showToast('📍 Dirección exacta seleccionada');
+                showToast(`📍 Ubicación seleccionada: ${street}${num}`);
               };
               box.appendChild(itemDiv);
             });
@@ -1439,7 +1532,6 @@
     // PARSER DE ENLACES DE GOOGLE MAPS Y COORDENADAS DIRECTAS
     function parseGoogleMapsLinkOrCoords(inputStr) {
       try {
-        // Formato coordenadas crudas: -34.6099, -58.4048
         const coordMatch = inputStr.match(/(-?\d+\.\d+)[,\s]+(-?\d+\.\d+)/);
         if (coordMatch) {
           const lat = parseFloat(coordMatch[1]);
@@ -1450,7 +1542,6 @@
           return;
         }
 
-        // Formato URL Google Maps: @-34.6099213,-58.4048591
         const urlMatch = inputStr.match(/@(-?\d+\.\d+),(-?\d+\.\d+)/);
         if (urlMatch) {
           const lat = parseFloat(urlMatch[1]);
@@ -1463,20 +1554,16 @@
       } catch(e){}
     }
 
-    // GEOCODIFICADOR PRINCIPAL (PHOTON + NOMINATIM FALLBACK)
-    async function geocodeAddress(addressStr) {
-      // 1. Si ya se seleccionó del autocomplete o Google Maps link
-      const preLat = parseFloat(document.getElementById('selectedLat').value);
-      const preLng = parseFloat(document.getElementById('selectedLng').value);
-      if (preLat && preLng) {
-        return { lat: preLat, lng: preLng };
-      }
-
+    // GEOCODIFICACIÓN PRECISA
+    async function geocodeAddressDirect(addressStr) {
       if (!addressStr || addressStr.trim().length < 3) return null;
-
-      // 2. Búsqueda con Photon
+      
+      // Limpiar texto superfluo como códigos postales largos
+      let clean = addressStr.replace(/\bC\d{4}[A-Z]{0,3}\b/gi, '').replace(/Cdad\. Autónoma de Buenos Aires/gi, 'Buenos Aires').trim();
+      
+      // 1. Photon (Komoot)
       try {
-        const url = `https://photon.komoot.io/api/?q=${encodeURIComponent(addressStr.trim())}&lat=-34.6037&lon=-58.3816&limit=1`;
+        const url = `https://photon.komoot.io/api/?q=${encodeURIComponent(clean)}&lat=-34.6037&lon=-58.3816&limit=1`;
         const resp = await fetch(url);
         const data = await resp.json();
         if (data && data.features && data.features.length > 0) {
@@ -1485,10 +1572,11 @@
         }
       } catch(e){}
 
-      // 3. Fallback Nominatim
+      // 2. Nominatim OpenStreetMap
       try {
-        let clean = addressStr.trim() + ', Argentina';
-        const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(clean)}&limit=1`;
+        let q = clean;
+        if (!q.toLowerCase().includes('argentina')) q += ', Argentina';
+        const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(q)}&limit=1`;
         const resp = await fetch(url, { headers: { 'Accept': 'application/json' } });
         const data = await resp.json();
         if (data && data.length > 0) {
@@ -1497,6 +1585,15 @@
       } catch(e){}
 
       return null;
+    }
+
+    async function geocodeAddress(addressStr) {
+      const preLat = parseFloat(document.getElementById('selectedLat').value);
+      const preLng = parseFloat(document.getElementById('selectedLng').value);
+      if (preLat && preLng) {
+        return { lat: preLat, lng: preLng };
+      }
+      return await geocodeAddressDirect(addressStr);
     }
 
     function getCurrentLocationGPS() {
@@ -1740,25 +1837,71 @@
       }
     }
 
-    function initMap() {
-      if (!map) {
-        map = L.map('map-element').setView([-34.6060, -58.4060], 12);
-        L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+    // CAPAS OFICIALES 100% LIBRES SIN WATERMARK
+    function setMapLayer(type) {
+      currentMapLayerType = type;
+      document.querySelectorAll('.btn-map-layer').forEach(b => b.classList.remove('active'));
+      
+      const activeBtn = document.getElementById(`btn-layer-${type}`);
+      if (activeBtn) activeBtn.classList.add('active');
+
+      if (!map) return;
+
+      if (currentTileLayer) {
+        map.removeLayer(currentTileLayer);
+      }
+
+      const mapContainer = document.getElementById('map-element');
+
+      if (type === 'sat') {
+        // Satelital HD de ArcGIS (100% libre, sin marcas de agua)
+        mapContainer.style.filter = 'none';
+        currentTileLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+          attribution: '&copy; Esri &copy; DigitalGlobe, GeoEye, Earthstar',
+          maxZoom: 19
+        }).addTo(map);
+      } else if (type === 'streets') {
+        // Calles Clásico OpenStreetMap (Nombres de calles y alturas 100% claros)
+        mapContainer.style.filter = 'none';
+        currentTileLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+          attribution: '&copy; OpenStreetMap contributors',
+          maxZoom: 19
+        }).addTo(map);
+      } else {
+        // Modo Oscuro Pro de Alta Definición (Sin 'API KEY REQUIRED')
+        mapContainer.style.filter = 'none';
+        currentTileLayer = L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
           attribution: '&copy; OpenStreetMap &copy; CARTO',
           maxZoom: 19
         }).addTo(map);
+      }
+    }
+
+    function initMap() {
+      if (!map) {
+        map = L.map('map-element').setView([-34.6037, -58.3816], 13);
+        setMapLayer('dark');
         markersLayer = L.layerGroup().addTo(map);
       }
 
-      markersLayer.clearLayers();
+      renderMapMarkers();
+      setTimeout(() => map.invalidateSize(), 250);
+    }
 
+    function renderMapMarkers() {
+      if (!map || !markersLayer) return;
+
+      markersLayer.clearLayers();
       const validMarkers = [];
 
       prospects.forEach((p) => {
-        if (!p.lat || !p.lng) return;
+        if (p.lat === null || p.lat === undefined || isNaN(p.lat) ||
+            p.lng === null || p.lng === undefined || isNaN(p.lng)) {
+          return;
+        }
 
-        const lat = p.lat;
-        const lng = p.lng;
+        const lat = parseFloat(p.lat);
+        const lng = parseFloat(p.lng);
 
         let color = '#00f2fe';
         if (p.status === 'cerrado') color = '#10b981';
@@ -1768,10 +1911,12 @@
         else if (p.status === 'pausa') color = '#ef4444';
         else if (p.status === 'visitado') color = '#3b82f6';
         
+        // Pin con efecto de pulso y color del estado
         const customIcon = L.divIcon({
           className: 'custom-pin',
-          html: `<div style="background:${color}; width:16px; height:16px; border-radius:50%; border:2px solid #fff; box-shadow:0 0 10px ${color};"></div>`,
-          iconSize: [16, 16]
+          html: `<div style="background:${color}; width:18px; height:18px; border-radius:50%; border:2px solid #ffffff; box-shadow:0 0 12px ${color}, 0 0 4px #000; cursor:pointer;"></div>`,
+          iconSize: [18, 18],
+          iconAnchor: [9, 9]
         });
 
         const marker = L.marker([lat, lng], { icon: customIcon, draggable: true }).addTo(markersLayer);
@@ -1787,37 +1932,38 @@
               await supabaseClient.from('crm_prospects').update({ lat: newPos.lat, lng: newPos.lng }).eq('id', p.id);
             } catch(e){}
           }
-          showToast(`📍 Ubicación de ${p.businessName} ajustada`);
+          showToast(`📍 Ubicación de ${p.businessName} actualizada`);
         });
 
         const bestPhone = (p.phone || p.phoneBusiness || '').replace(/[^0-9]/g, '');
         const formattedPhone = bestPhone.startsWith('54') ? bestPhone : '549' + bestPhone;
         
         marker.bindPopup(`
-          <div style="font-family:Inter,sans-serif; color:#000; font-size:0.8rem;">
-            <strong style="font-size:0.95rem; color:#0b1120;">${p.businessName}</strong><br>
-            <span style="color:#555;">${p.contactName || ''} • ${p.rubro}</span><br>
-            <div style="margin:4px 0; color:#333;">
-              <i class="fa-solid fa-location-dot"></i> ${p.address || 'Sin dirección'}<br>
+          <div style="font-family:Inter,sans-serif; color:#000; font-size:0.82rem; min-width:180px;">
+            <strong style="font-size:1rem; color:#0b1120;">${p.businessName}</strong><br>
+            <span style="color:#555;">${p.contactName ? p.contactName + ' • ' : ''}${p.rubro}</span><br>
+            <div style="margin:6px 0; color:#333; line-height:1.3;">
+              <i class="fa-solid fa-location-dot" style="color:#ef4444;"></i> <strong>${p.address || 'Sin dirección'}</strong><br>
               <strong>Estado:</strong> ${getStatusLabel(p.status)}<br>
               ${p.monthlyPlan > 0 ? `<strong>Abono:</strong> $${p.monthlyPlan} USD/m` : ''}
             </div>
-            <div style="margin-top:6px; display:flex; gap:4px;">
-              ${bestPhone ? `<a href="https://wa.me/${formattedPhone}" target="_blank" style="background:#10b981; color:#fff; padding:3px 6px; border-radius:4px; text-decoration:none; font-size:0.7rem; font-weight:700;">💬 WSP</a>` : ''}
-              <a href="https://maps.google.com/?q=${encodeURIComponent(p.address || p.businessName)}" target="_blank" style="background:#00a8b5; color:#fff; padding:3px 6px; border-radius:4px; text-decoration:none; font-size:0.7rem; font-weight:700;">📍 GPS</a>
+            <div style="margin-top:8px; display:flex; gap:6px;">
+              ${bestPhone ? `<a href="https://wa.me/${formattedPhone}" target="_blank" style="background:#10b981; color:#fff; padding:4px 8px; border-radius:5px; text-decoration:none; font-size:0.75rem; font-weight:700;">💬 WSP</a>` : ''}
+              <a href="https://maps.google.com/?q=${lat},${lng}" target="_blank" style="background:#00a8b5; color:#fff; padding:4px 8px; border-radius:5px; text-decoration:none; font-size:0.75rem; font-weight:700;">📍 Google Maps</a>
             </div>
           </div>
         `);
       });
 
+      const countEl = document.getElementById('map-markers-count');
+      if (countEl) countEl.innerText = validMarkers.length;
+
       if (validMarkers.length > 0 && map) {
         try {
           const bounds = L.latLngBounds(validMarkers);
-          map.fitBounds(bounds, { padding: [35, 35], maxZoom: 15 });
+          map.fitBounds(bounds, { padding: [40, 40], maxZoom: 15 });
         } catch(e){}
       }
-
-      setTimeout(() => map.invalidateSize(), 200);
     }
 
     function handleSearch() {
@@ -1867,7 +2013,7 @@
         const cobrarWspUrl = primaryPhone ? `https://wa.me/${formattedPhone}?text=${cobranzaText}` : '#';
 
         const callUrl = primaryPhone ? `tel:${primaryPhone}` : '#';
-        const mapUrl = `https://maps.google.com/?q=${encodeURIComponent(p.address || p.businessName)}`;
+        const mapUrl = p.lat && p.lng ? `https://maps.google.com/?q=${p.lat},${p.lng}` : `https://maps.google.com/?q=${encodeURIComponent(p.address || p.businessName)}`;
 
         const isClient = p.status === 'cerrado' || p.status === 'propuesta' || p.monthlyPlan > 0;
         const paymentClass = p.paymentStatus === 'al_dia' ? 'al-dia' : 'pendiente';
@@ -2043,7 +2189,7 @@
           paymentStatusValue = document.getElementById('paymentStatus') ? document.getElementById('paymentStatus').value : 'al_dia';
         }
 
-        showToast('📍 Geocodificando...');
+        showToast('📍 Geocodificando dirección...');
         let coords = await geocodeAddress(address);
 
         const recordId = editingId || ('rec_' + Date.now());
@@ -2130,7 +2276,7 @@
         renderCards();
         updateMetrics();
         checkBillingAlerts();
-        if (map) initMap();
+        if (map) renderMapMarkers();
       } catch (err) {
         console.error('Error al guardar:', err);
         alert('Hubo un problema al guardar. Revisá los campos.');
@@ -2144,7 +2290,7 @@
         renderCards();
         updateMetrics();
         checkBillingAlerts();
-        if (map) initMap();
+        if (map) renderMapMarkers();
 
         if (supabaseClient) {
           try {
