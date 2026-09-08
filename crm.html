@@ -909,6 +909,251 @@
       .card-details-grid { grid-template-columns: 1fr; }
       #map-element { height: 350px; }
     }
+  
+    /* TOP NAVIGATION TABS */
+    .top-nav-tabs {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 6px;
+      margin-bottom: 14px;
+      width: 100%;
+    }
+
+    .nav-tab-btn {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      color: var(--text-muted);
+      padding: 10px 4px;
+      border-radius: 12px;
+      font-family: 'Outfit', sans-serif;
+      font-weight: 700;
+      font-size: 0.82rem;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      transition: all 0.25s ease;
+      text-align: center;
+    }
+
+    .nav-tab-btn i { font-size: 1rem; }
+
+    .nav-tab-btn.active {
+      background: linear-gradient(135deg, rgba(0, 242, 254, 0.2), rgba(157, 78, 221, 0.2));
+      border-color: var(--primary);
+      color: #fff;
+      box-shadow: var(--glow);
+    }
+
+    .nav-tab-btn.active#tab-radar {
+      background: linear-gradient(135deg, rgba(157, 78, 221, 0.25), rgba(0, 242, 254, 0.25));
+      border-color: #c084fc;
+      color: #fff;
+      box-shadow: 0 0 16px rgba(157, 78, 221, 0.3);
+    }
+
+    .nav-tab-badge {
+      font-size: 0.65rem;
+      background: rgba(0, 242, 254, 0.2);
+      color: var(--primary);
+      padding: 1px 6px;
+      border-radius: 10px;
+      border: 1px solid rgba(0, 242, 254, 0.3);
+    }
+
+    .nav-tab-btn.active .nav-tab-badge {
+      background: var(--primary);
+      color: #000;
+      font-weight: 800;
+    }
+
+    /* RADAR STYLES */
+    .radar-header {
+      background: linear-gradient(135deg, rgba(157, 78, 221, 0.15), rgba(0, 242, 254, 0.1));
+      border: 1px solid rgba(157, 78, 221, 0.3);
+      border-radius: var(--radius);
+      padding: 12px 14px;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .radar-title h2 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1rem;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .radar-title p {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .radar-zone-tabs {
+      display: flex;
+      gap: 6px;
+      overflow-x: auto;
+      margin-bottom: 12px;
+      width: 100%;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .radar-zone-btn {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      color: var(--text-muted);
+      padding: 6px 12px;
+      border-radius: 14px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      cursor: pointer;
+      white-space: nowrap;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .radar-zone-btn.active {
+      background: var(--accent-purple);
+      color: #fff;
+      border-color: #c084fc;
+      box-shadow: 0 0 12px rgba(157, 78, 221, 0.4);
+    }
+
+    .radar-card {
+      background: var(--card-bg);
+      border: 1px solid rgba(157, 78, 221, 0.25);
+      border-left: 4px solid var(--accent-purple);
+      border-radius: var(--radius);
+      padding: 14px;
+      margin-bottom: 10px;
+      box-shadow: var(--shadow);
+      transition: all 0.2s ease;
+      position: relative;
+    }
+
+    .radar-card:hover {
+      border-color: var(--primary);
+      transform: translateY(-2px);
+    }
+
+    .radar-card.zone-once { border-left-color: var(--primary); }
+    .radar-card.zone-flores { border-left-color: #c084fc; }
+
+    .radar-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 6px;
+      margin-bottom: 8px;
+    }
+
+    .radar-card-title h3 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.05rem;
+      color: #fff;
+      line-height: 1.2;
+    }
+
+    .radar-card-title p {
+      font-size: 0.74rem;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      margin-top: 3px;
+    }
+
+    .radar-badges-row {
+      display: flex;
+      gap: 4px;
+      flex-wrap: wrap;
+    }
+
+    .radar-badge {
+      font-size: 0.65rem;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: 6px;
+      background: rgba(255, 255, 255, 0.08);
+      color: #e5e7eb;
+    }
+
+    .radar-badge.zone { background: rgba(0, 242, 254, 0.15); color: var(--primary); border: 1px solid rgba(0, 242, 254, 0.3); }
+    .radar-badge.rubro { background: rgba(157, 78, 221, 0.15); color: #c084fc; border: 1px solid rgba(157, 78, 221, 0.3); }
+
+    .radar-hook {
+      background: rgba(0, 0, 0, 0.3);
+      border-radius: 8px;
+      padding: 8px 10px;
+      font-size: 0.78rem;
+      color: #e2e8f0;
+      margin: 8px 0;
+      border-left: 2px solid var(--accent-gold);
+    }
+
+    .radar-hook strong { color: var(--accent-gold); }
+
+    .radar-actions-row {
+      display: flex;
+      gap: 6px;
+      margin-top: 10px;
+      padding-top: 8px;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .btn-radar-visit {
+      background: linear-gradient(135deg, var(--accent-green), #059669);
+      border: none;
+      color: #fff;
+      font-family: 'Outfit', sans-serif;
+      font-weight: 700;
+      font-size: 0.8rem;
+      padding: 8px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      flex: 1;
+      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+      transition: all 0.2s;
+    }
+
+    .btn-radar-visit:hover {
+      filter: brightness(1.15);
+      transform: scale(1.02);
+    }
+
+    .btn-radar-link {
+      background: var(--input-bg);
+      border: 1px solid var(--card-border);
+      color: #fff;
+      padding: 8px 10px;
+      border-radius: 8px;
+      font-size: 0.75rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      text-decoration: none;
+    }
+
+    .btn-radar-link:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+
   </style>
 </head>
 <body>
@@ -936,7 +1181,28 @@
 
   <div class="container">
 
-    <!-- ALERTA DE COBROS Y VENCIMIENTOS -->
+    <!-- TOP NAVIGATION TABS -->
+    <div class="top-nav-tabs">
+      <button type="button" class="nav-tab-btn active" id="btn-tab-clientes" onclick="switchNavTab('clientes')">
+        <i class="fa-solid fa-briefcase"></i>
+        <span>Mis Clientes</span>
+        <span class="nav-tab-badge" id="count-clientes">0</span>
+      </button>
+      <button type="button" class="nav-tab-btn" id="btn-tab-radar" onclick="switchNavTab('radar')">
+        <i class="fa-solid fa-crosshairs"></i>
+        <span>Radar Por Visitar</span>
+        <span class="nav-tab-badge" id="count-radar">57</span>
+      </button>
+      <button type="button" class="nav-tab-btn" id="btn-tab-mapa" onclick="switchNavTab('mapa')">
+        <i class="fa-solid fa-map-location-dot"></i>
+        <span>Mapa GPS</span>
+        <span class="nav-tab-badge" id="count-mapa-total">0</span>
+      </button>
+    </div>
+
+
+    <div id="view-clientes-container">
+<!-- ALERTA DE COBROS Y VENCIMIENTOS -->
     <div class="alerts-strip" id="alerts-banner" style="display: none;">
       <div style="display: flex; align-items: center; gap: 6px; overflow: hidden;">
         <i class="fa-solid fa-bell"></i>
@@ -1246,1569 +1512,1809 @@
     let currentTileLayer = null;
     
     const DEFAULT_PROSPECTS = [
-      {
-            "id": "adar_01",
-            "businessName": "ADAR Insumos",
-            "contactName": "Isaak Lair Haboba",
-            "phone": "1130960114",
-            "phoneBusiness": "1130960114",
-            "instagram": "@adarinsumos",
-            "website": "https://adarinsumos.com.ar",
-            "facebook": "",
-            "rubro": "Bazar / Hogar / Termos",
-            "serviceType": "hibrido",
-            "status": "cerrado",
-            "monthlyPlan": 180,
-            "systemTotal": "$0",
-            "setupPrice": "$150 USD (Pagado)",
-            "metaAdsCap": "$200.000 ARS (Tope Fee)",
-            "billingDay": "16",
-            "paymentStatus": "al_dia",
-            "address": "Gallo 823, Balvanera, CABA",
-            "lat": -34.5999626,
-            "lng": -58.4121197,
-            "photo": "",
-            "visitDate": "2026-08-16",
-            "notes": "Ecommerce bazar. Vence todos los 16. Meta Ads tope $200k ARS.",
-            "createdAt": "2026-08-16T12:00:00.000Z"
-      },
-      {
-            "id": "sakkal_02",
-            "businessName": "Sakkal Mayorista",
-            "contactName": "Brian Sakkal",
-            "phone": "1155667788",
-            "phoneBusiness": "1155667788",
-            "instagram": "@sakkal_mayorista",
-            "website": "https://sakkalmayorista.com",
-            "facebook": "",
-            "rubro": "Indumentaria / Ropa",
-            "serviceType": "hibrido",
-            "status": "propuesta",
-            "monthlyPlan": 200,
-            "systemTotal": "$0",
-            "setupPrice": "$150 USD Setup + 50% Bot",
-            "metaAdsCap": "$300.000 ARS (20% Fee)",
-            "billingDay": "2",
-            "paymentStatus": "pendiente",
-            "address": "Av. Rivadavia 2715, Once, CABA",
-            "lat": -34.6099213,
-            "lng": -58.4048591,
-            "photo": "",
-            "visitDate": "2026-08-25",
-            "notes": "Nuevo cliente. 2 Sept paga $250 ($150 Setup + $100 [50% Bot]). 2 Oct paga $200. Meta Ads tope $300k.",
-            "createdAt": "2026-08-25T12:00:00.000Z"
-      },
-      {
-            "id": "bross_03",
-            "businessName": "BrossUnderwear",
-            "contactName": "Gabriel & Brian Treyan",
-            "phone": "1144332211",
-            "phoneBusiness": "1144332211",
-            "instagram": "@brossunderwear",
-            "website": "https://brossunderwear.com.ar",
-            "facebook": "facebook.com/brossunderwear",
-            "rubro": "Indumentaria / Ropa",
-            "serviceType": "sistema_medida",
-            "status": "pausa",
-            "monthlyPlan": 0,
-            "systemTotal": "$800.000 ARS",
-            "setupPrice": "Pagado Sep 2025",
-            "metaAdsCap": "Sin Ads",
-            "billingDay": "10",
-            "paymentStatus": "al_dia",
-            "address": "Av. Corrientes 3023, Balvanera, CABA",
-            "lat": -34.6040946,
-            "lng": -58.4080818,
-            "photo": "",
-            "visitDate": "2025-09-10",
-            "notes": "Ecommerce MercadoLibre. Sistema vendido Sep 2025. En pausa por falta de creditos IA.",
-            "createdAt": "2025-09-10T12:00:00.000Z"
-      },
-      {
-            "id": "once_bazar_01",
-            "businessName": "Deonce Mayorista",
-            "contactName": "",
-            "phone": "",
-            "phoneBusiness": "",
-            "instagram": "@deoncemayorista",
-            "website": "https://deonce.com.ar",
-            "facebook": "",
-            "rubro": "Bazar / Hogar / Termos",
-            "serviceType": "hibrido",
-            "status": "nuevo",
-            "monthlyPlan": 0,
-            "systemTotal": "$0",
-            "setupPrice": "",
-            "metaAdsCap": "",
-            "billingDay": "1",
-            "paymentStatus": "al_dia",
-            "address": "Pasteur 240, Balvanera, CABA",
-            "lat": -34.6062,
-            "lng": -58.3989,
-            "photo": "",
-            "visitDate": "",
-            "notes": "Importador directo de bazar, termos y organizadores. Alto volumen de mensajes de revendedores.",
-            "createdAt": "2026-09-08T10:00:00.000Z"
-      },
-      {
-            "id": "once_bazar_02",
-            "businessName": "Bazar Once Importaciones",
-            "contactName": "",
-            "phone": "",
-            "phoneBusiness": "",
-            "instagram": "@bazaroncemayorista",
-            "website": "https://bazar-once-mayorista.mitiendanube.com",
-            "facebook": "",
-            "rubro": "Bazar / Hogar / Termos",
-            "serviceType": "hibrido",
-            "status": "nuevo",
-            "monthlyPlan": 0,
-            "systemTotal": "$0",
-            "setupPrice": "",
-            "metaAdsCap": "",
-            "billingDay": "1",
-            "paymentStatus": "al_dia",
-            "address": "Pasteur 315, Balvanera, CABA",
-            "lat": -34.6058,
-            "lng": -58.4001,
-            "photo": "",
-            "visitDate": "",
-            "notes": "Termos tipo Stanley, vasos quenchers, botellas deportivas. Validación de seña 10% con OCR.",
-            "createdAt": "2026-09-08T10:00:00.000Z"
-      },
-      {
-            "id": "once_bazar_03",
-            "businessName": "Mundo Termo & Mate Mayorista",
-            "contactName": "",
-            "phone": "",
-            "phoneBusiness": "",
-            "instagram": "@mundotermomayorista",
-            "website": "",
-            "facebook": "",
-            "rubro": "Bazar / Hogar / Termos",
-            "serviceType": "chatbot",
-            "status": "nuevo",
-            "monthlyPlan": 0,
-            "systemTotal": "$0",
-            "setupPrice": "",
-            "metaAdsCap": "",
-            "billingDay": "1",
-            "paymentStatus": "al_dia",
-            "address": "Pasteur 420, Balvanera, CABA",
-            "lat": -34.6053,
-            "lng": -58.4022,
-            "photo": "",
-            "visitDate": "",
-            "notes": "Sets materos, termos grabados y bombillas por mayor.",
-            "createdAt": "2026-09-08T10:00:00.000Z"
-      },
-      {
-            "id": "once_bazar_04",
-            "businessName": "Pasteur Import & Novedades",
-            "contactName": "",
-            "phone": "",
-            "phoneBusiness": "",
-            "instagram": "@pasteurimport",
-            "website": "",
-            "facebook": "",
-            "rubro": "Bazar / Hogar / Termos",
-            "serviceType": "chatbot",
-            "status": "nuevo",
-            "monthlyPlan": 0,
-            "systemTotal": "$0",
-            "setupPrice": "",
-            "metaAdsCap": "",
-            "billingDay": "1",
-            "paymentStatus": "al_dia",
-            "address": "Pasteur 180, Balvanera, CABA",
-            "lat": -34.6065,
-            "lng": -58.3975,
-            "photo": "",
-            "visitDate": "",
-            "notes": "Novedades de cocina, gadgets y bazar gastronómico.",
-            "createdAt": "2026-09-08T10:00:00.000Z"
-      },
-      {
-            "id": "once_bazar_05",
-            "businessName": "Mega Bazar Pasteur",
-            "contactName": "",
-            "phone": "",
-            "phoneBusiness": "",
-            "instagram": "@megabazarpasteur",
-            "website": "",
-            "facebook": "",
-            "rubro": "Bazar / Hogar / Termos",
-            "serviceType": "chatbot",
-            "status": "nuevo",
-            "monthlyPlan": 0,
-            "systemTotal": "$0",
-            "setupPrice": "",
-            "metaAdsCap": "",
-            "billingDay": "1",
-            "paymentStatus": "al_dia",
-            "address": "Pasteur 130, Balvanera, CABA",
-            "lat": -34.6068,
-            "lng": -58.3965,
-            "photo": "",
-            "visitDate": "",
-            "notes": "Herméticos plásticos, organizadores y artículos de limpieza.",
-            "createdAt": "2026-09-08T10:00:00.000Z"
-      },
-      {
-            "id": "once_bazar_06",
-            "businessName": "Distribuidora Perón Mayorista",
-            "contactName": "",
-            "phone": "",
-            "phoneBusiness": "",
-            "instagram": "@peronmayorista",
-            "website": "",
-            "facebook": "",
-            "rubro": "Bazar / Hogar / Termos",
-            "serviceType": "hibrido",
-            "status": "nuevo",
-            "monthlyPlan": 0,
-            "systemTotal": "$0",
-            "setupPrice": "",
-            "metaAdsCap": "",
-            "billingDay": "1",
-            "paymentStatus": "al_dia",
-            "address": "Tte. Gral. Juan Domingo Perón 2420, Balvanera, CABA",
-            "lat": -34.6061,
-            "lng": -58.4018,
-            "photo": "",
-            "visitDate": "",
-            "notes": "Bazar importado por bulto cerrado y pallets.",
-            "createdAt": "2026-09-08T10:00:00.000Z"
-      },
-      {
-            "id": "once_bazar_07",
-            "businessName": "Sarmiento Import Bazar",
-            "contactName": "",
-            "phone": "",
-            "phoneBusiness": "",
-            "instagram": "@sarmientoimport",
-            "website": "",
-            "facebook": "",
-            "rubro": "Bazar / Hogar / Termos",
-            "serviceType": "chatbot",
-            "status": "nuevo",
-            "monthlyPlan": 0,
-            "systemTotal": "$0",
-            "setupPrice": "",
-            "metaAdsCap": "",
-            "billingDay": "1",
-            "paymentStatus": "al_dia",
-            "address": "Sarmiento 2350, Balvanera, CABA",
-            "lat": -34.6057,
-            "lng": -58.4005,
-            "photo": "",
-            "visitDate": "",
-            "notes": "Gadgets térmicos y regalería funcional.",
-            "createdAt": "2026-09-08T10:00:00.000Z"
-      },
-      {
-            "id": "once_bazar_08",
-            "businessName": "Corrientes Bazar & Regalería",
-            "contactName": "",
-            "phone": "",
-            "phoneBusiness": "",
-            "instagram": "@corrientesbazar",
-            "website": "",
-            "facebook": "",
-            "rubro": "Bazar / Hogar / Termos",
-            "serviceType": "chatbot",
-            "status": "nuevo",
-            "monthlyPlan": 0,
-            "systemTotal": "$0",
-            "setupPrice": "",
-            "metaAdsCap": "",
-            "billingDay": "1",
-            "paymentStatus": "al_dia",
-            "address": "Av. Corrientes 2650, Balvanera, CABA",
-            "lat": -34.6048,
-            "lng": -58.4042,
-            "photo": "",
-            "visitDate": "",
-            "notes": "Tazas térmicas y botellas motivacionales por mayor.",
-            "createdAt": "2026-09-08T10:00:00.000Z"
-      },
-      {
-            "id": "once_bazar_09",
-            "businessName": "Pueyrredón Bazar & Hogar",
-            "contactName": "",
-            "phone": "",
-            "phoneBusiness": "",
-            "instagram": "@pueyrredonbazar",
-            "website": "",
-            "facebook": "",
-            "rubro": "Bazar / Hogar / Termos",
-            "serviceType": "chatbot",
-            "status": "nuevo",
-            "monthlyPlan": 0,
-            "systemTotal": "$0",
-            "setupPrice": "",
-            "metaAdsCap": "",
-            "billingDay": "1",
-            "paymentStatus": "al_dia",
-            "address": "Av. Pueyrredón 320, Balvanera, CABA",
-            "lat": -34.6069,
-            "lng": -58.4055,
-            "photo": "",
-            "visitDate": "",
-            "notes": "Electro chicos, batidoras, picadoras manuales y eléctricas.",
-            "createdAt": "2026-09-08T10:00:00.000Z"
-      },
-      {
-            "id": "once_lenceria_01",
-            "businessName": "Lencería Dulce Pasión",
-            "contactName": "",
-            "phone": "",
-            "phoneBusiness": "",
-            "instagram": "@dulcepasionlenceria",
-            "website": "",
-            "facebook": "",
-            "rubro": "Indumentaria / Ropa",
-            "serviceType": "hibrido",
-            "status": "nuevo",
-            "monthlyPlan": 0,
-            "systemTotal": "$0",
-            "setupPrice": "",
-            "metaAdsCap": "",
-            "billingDay": "1",
-            "paymentStatus": "al_dia",
-            "address": "Paso 235, Balvanera, CABA",
-            "lat": -34.6081,
-            "lng": -58.4008,
-            "photo": "",
-            "visitDate": "",
-            "notes": "Lencería femenina por docena, batas y corsetería.",
-            "createdAt": "2026-09-08T10:00:00.000Z"
-      },
-      {
-            "id": "once_lenceria_02",
-            "businessName": "Mundo Lencería Once",
-            "contactName": "",
-            "phone": "",
-            "phoneBusiness": "",
-            "instagram": "@mundolenceriaonce",
-            "website": "",
-            "facebook": "",
-            "rubro": "Indumentaria / Ropa",
-            "serviceType": "chatbot",
-            "status": "nuevo",
-            "monthlyPlan": 0,
-            "systemTotal": "$0",
-            "setupPrice": "",
-            "metaAdsCap": "",
-            "billingDay": "1",
-            "paymentStatus": "al_dia",
-            "address": "Paso 280, Balvanera, CABA",
-            "lat": -34.6079,
-            "lng": -58.4019,
-            "photo": "",
-            "visitDate": "",
-            "notes": "Mayorista multimarca de corsetería y ropa interior.",
-            "createdAt": "2026-09-08T10:00:00.000Z"
-      },
-      {
-            "id": "once_lenceria_03",
-            "businessName": "Sweet Lencería Larrea",
-            "contactName": "",
-            "phone": "",
-            "phoneBusiness": "",
-            "instagram": "@sweetlenceria",
-            "website": "",
-            "facebook": "",
-            "rubro": "Indumentaria / Ropa",
-            "serviceType": "chatbot",
-            "status": "nuevo",
-            "monthlyPlan": 0,
-            "systemTotal": "$0",
-            "setupPrice": "",
-            "metaAdsCap": "",
-            "billingDay": "1",
-            "paymentStatus": "al_dia",
-            "address": "Larrea 180, Balvanera, CABA",
-            "lat": -34.6045,
-            "lng": -58.3982,
-            "photo": "",
-            "visitDate": "",
-            "notes": "Conjuntos de encaje, algodón y bodies.",
-            "createdAt": "2026-09-08T10:00:00.000Z"
-      },
-      {
-            "id": "once_lenceria_04",
-            "businessName": "Textil Azcuénaga Medias & Bóxers",
-            "contactName": "",
-            "phone": "",
-            "phoneBusiness": "",
-            "instagram": "@textilazcuenaga",
-            "website": "",
-            "facebook": "",
-            "rubro": "Indumentaria / Ropa",
-            "serviceType": "chatbot",
-            "status": "nuevo",
-            "monthlyPlan": 0,
-            "systemTotal": "$0",
-            "setupPrice": "",
-            "metaAdsCap": "",
-            "billingDay": "1",
-            "paymentStatus": "al_dia",
-            "address": "Azcuénaga 320, Balvanera, CABA",
-            "lat": -34.6038,
-            "lng": -58.4025,
-            "photo": "",
-            "visitDate": "",
-            "notes": "Medias por docena, soquetes y slips masculinos.",
-            "createdAt": "2026-09-08T10:00:00.000Z"
-      },
-      {
-            "id": "once_lenceria_05",
-            "businessName": "Larrea Pijamas & Homewear",
-            "contactName": "",
-            "phone": "",
-            "phoneBusiness": "",
-            "instagram": "@larreapijamas",
-            "website": "",
-            "facebook": "",
-            "rubro": "Indumentaria / Ropa",
-            "serviceType": "chatbot",
-            "status": "nuevo",
-            "monthlyPlan": 0,
-            "systemTotal": "$0",
-            "setupPrice": "",
-            "metaAdsCap": "",
-            "billingDay": "1",
-            "paymentStatus": "al_dia",
-            "address": "Larrea 220, Balvanera, CABA",
-            "lat": -34.6043,
-            "lng": -58.3991,
-            "photo": "",
-            "visitDate": "",
-            "notes": "Pijamas térmicos y de satén por curva.",
-            "createdAt": "2026-09-08T10:00:00.000Z"
-      },
-      {
-            "id": "once_lenceria_06",
-            "businessName": "Distribuidora Bross Paso",
-            "contactName": "",
-            "phone": "",
-            "phoneBusiness": "",
-            "instagram": "@distribuidorabross",
-            "website": "",
-            "facebook": "",
-            "rubro": "Indumentaria / Ropa",
-            "serviceType": "chatbot",
-            "status": "nuevo",
-            "monthlyPlan": 0,
-            "systemTotal": "$0",
-            "setupPrice": "",
-            "metaAdsCap": "",
-            "billingDay": "1",
-            "paymentStatus": "al_dia",
-            "address": "Paso 415, Balvanera, CABA",
-            "lat": -34.6073,
-            "lng": -58.4045,
-            "photo": "",
-            "visitDate": "",
-            "notes": "Bóxers Bross London, remeras y básicos por mayor.",
-            "createdAt": "2026-09-08T10:00:00.000Z"
-      },
-      {
-            "id": "once_lenceria_07",
-            "businessName": "Paso Jeans Mayorista",
-            "contactName": "",
-            "phone": "",
-            "phoneBusiness": "",
-            "instagram": "@pasojeans",
-            "website": "",
-            "facebook": "",
-            "rubro": "Indumentaria / Ropa",
-            "serviceType": "chatbot",
-            "status": "nuevo",
-            "monthlyPlan": 0,
-            "systemTotal": "$0",
-            "setupPrice": "",
-            "metaAdsCap": "",
-            "billingDay": "1",
-            "paymentStatus": "al_dia",
-            "address": "Paso 185, Balvanera, CABA",
-            "lat": -34.6083,
-            "lng": -58.4001,
-            "photo": "",
-            "visitDate": "",
-            "notes": "Jeans, bermudas y denim por mayor.",
-            "createdAt": "2026-09-08T10:00:00.000Z"
-      },
-      {
-            "id": "once_lenceria_08",
-            "businessName": "Kiddos Mayorista Infantil",
-            "contactName": "",
-            "phone": "",
-            "phoneBusiness": "",
-            "instagram": "@kiddosmayorista",
-            "website": "",
-            "facebook": "",
-            "rubro": "Indumentaria / Ropa",
-            "serviceType": "chatbot",
-            "status": "nuevo",
-            "monthlyPlan": 0,
-            "systemTotal": "$0",
-            "setupPrice": "",
-            "metaAdsCap": "",
-            "billingDay": "1",
-            "paymentStatus": "al_dia",
-            "address": "Paso 360, Balvanera, CABA",
-            "lat": -34.6076,
-            "lng": -58.4034,
-            "photo": "",
-            "visitDate": "",
-            "notes": "Ropa de niños y bebés por mayor.",
-            "createdAt": "2026-09-08T10:00:00.000Z"
-      },
-      {
-            "id": "once_blanco_01",
-            "businessName": "Blanquería Once Hogar",
-            "contactName": "",
-            "phone": "",
-            "phoneBusiness": "",
-            "instagram": "@blanqueriaonce",
-            "website": "",
-            "facebook": "",
-            "rubro": "Blanquería / Hogar",
-            "serviceType": "hibrido",
-            "status": "nuevo",
-            "monthlyPlan": 0,
-            "systemTotal": "$0",
-            "setupPrice": "",
-            "metaAdsCap": "",
-            "billingDay": "1",
-            "paymentStatus": "al_dia",
-            "address": "Paso 142, Balvanera, CABA",
-            "lat": -34.6085,
-            "lng": -58.3992,
-            "photo": "",
-            "visitDate": "",
-            "notes": "Sábanas 144 a 600 hilos, acolchados y toallones.",
-            "createdAt": "2026-09-08T10:00:00.000Z"
-      },
-      {
-            "id": "once_blanco_02",
-            "businessName": "Blanquería Larrea",
-            "contactName": "",
-            "phone": "",
-            "phoneBusiness": "",
-            "instagram": "@blanquerialarrea",
-            "website": "",
-            "facebook": "",
-            "rubro": "Blanquería / Hogar",
-            "serviceType": "chatbot",
-            "status": "nuevo",
-            "monthlyPlan": 0,
-            "systemTotal": "$0",
-            "setupPrice": "",
-            "metaAdsCap": "",
-            "billingDay": "1",
-            "paymentStatus": "al_dia",
-            "address": "Larrea 150, Balvanera, CABA",
-            "lat": -34.6047,
-            "lng": -58.3975,
-            "photo": "",
-            "visitDate": "",
-            "notes": "Toallas hoteleras, cortinas y cubrecolchones.",
-            "createdAt": "2026-09-08T10:00:00.000Z"
-      },
-      {
-            "id": "once_blanco_03",
-            "businessName": "Perón Textil Hogar",
-            "contactName": "",
-            "phone": "",
-            "phoneBusiness": "",
-            "instagram": "@perontextil",
-            "website": "",
-            "facebook": "",
-            "rubro": "Blanquería / Hogar",
-            "serviceType": "chatbot",
-            "status": "nuevo",
-            "monthlyPlan": 0,
-            "systemTotal": "$0",
-            "setupPrice": "",
-            "metaAdsCap": "",
-            "billingDay": "1",
-            "paymentStatus": "al_dia",
-            "address": "Tte. Gral. Juan Domingo Perón 2550, Balvanera, CABA",
-            "lat": -34.6056,
-            "lng": -58.4032,
-            "photo": "",
-            "visitDate": "",
-            "notes": "Manteles antimancha, fundas de sillón y acolchados.",
-            "createdAt": "2026-09-08T10:00:00.000Z"
-      },
-      {
-            "id": "once_blanco_04",
-            "businessName": "Rivadavia Blanquería Express",
-            "contactName": "",
-            "phone": "",
-            "phoneBusiness": "",
-            "instagram": "@rivadaviablanqueria",
-            "website": "",
-            "facebook": "",
-            "rubro": "Blanquería / Hogar",
-            "serviceType": "chatbot",
-            "status": "nuevo",
-            "monthlyPlan": 0,
-            "systemTotal": "$0",
-            "setupPrice": "",
-            "metaAdsCap": "",
-            "billingDay": "1",
-            "paymentStatus": "al_dia",
-            "address": "Av. Rivadavia 2830, Balvanera, CABA",
-            "lat": -34.6105,
-            "lng": -58.4062,
-            "photo": "",
-            "visitDate": "",
-            "notes": "Sábanas Danubio, Cannon y alternativas hoteleras.",
-            "createdAt": "2026-09-08T10:00:00.000Z"
-      },
-      {
-            "id": "once_blanco_05",
-            "businessName": "Cortinas & Almohadones Once",
-            "contactName": "",
-            "phone": "",
-            "phoneBusiness": "",
-            "instagram": "@cortinasonce",
-            "website": "",
-            "facebook": "",
-            "rubro": "Blanquería / Hogar",
-            "serviceType": "chatbot",
-            "status": "nuevo",
-            "monthlyPlan": 0,
-            "systemTotal": "$0",
-            "setupPrice": "",
-            "metaAdsCap": "",
-            "billingDay": "1",
-            "paymentStatus": "al_dia",
-            "address": "Azcuénaga 280, Balvanera, CABA",
-            "lat": -34.6039,
-            "lng": -58.4015,
-            "photo": "",
-            "visitDate": "",
-            "notes": "Cortinas blackout, gasa pañalera y rellenos de vellón.",
-            "createdAt": "2026-09-08T10:00:00.000Z"
-      },
-      {
-            "id": "once_marroqui_01",
-            "businessName": "Quemoda Marroquinería",
-            "contactName": "",
-            "phone": "",
-            "phoneBusiness": "",
-            "instagram": "@quemodamayorista",
-            "website": "https://quemoda.com.ar",
-            "facebook": "",
-            "rubro": "Marroquinería / Valijas",
-            "serviceType": "hibrido",
-            "status": "nuevo",
-            "monthlyPlan": 0,
-            "systemTotal": "$0",
-            "setupPrice": "",
-            "metaAdsCap": "",
-            "billingDay": "1",
-            "paymentStatus": "al_dia",
-            "address": "Moreno 3160, Balvanera, CABA",
-            "lat": -34.6135,
-            "lng": -58.4098,
-            "photo": "",
-            "visitDate": "",
-            "notes": "Importadores de valijas carry-on, bolsos de viaje y mochilas.",
-            "createdAt": "2026-09-08T10:00:00.000Z"
-      },
-      {
-            "id": "once_marroqui_02",
-            "businessName": "Azcuénaga Valijas & Mochilas",
-            "contactName": "",
-            "phone": "",
-            "phoneBusiness": "",
-            "instagram": "@azcuenagavalijas",
-            "website": "",
-            "facebook": "",
-            "rubro": "Marroquinería / Valijas",
-            "serviceType": "chatbot",
-            "status": "nuevo",
-            "monthlyPlan": 0,
-            "systemTotal": "$0",
-            "setupPrice": "",
-            "metaAdsCap": "",
-            "billingDay": "1",
-            "paymentStatus": "al_dia",
-            "address": "Azcuénaga 240, Balvanera, CABA",
-            "lat": -34.6041,
-            "lng": -58.4005,
-            "photo": "",
-            "visitDate": "",
-            "notes": "Valijas rígidas ABS y mochilas urbanas por mayor.",
-            "createdAt": "2026-09-08T10:00:00.000Z"
-      },
-      {
-            "id": "once_marroqui_03",
-            "businessName": "Mochilas & Valijas Once B2B",
-            "contactName": "",
-            "phone": "",
-            "phoneBusiness": "",
-            "instagram": "@mochilas_once",
-            "website": "",
-            "facebook": "",
-            "rubro": "Marroquinería / Valijas",
-            "serviceType": "chatbot",
-            "status": "nuevo",
-            "monthlyPlan": 0,
-            "systemTotal": "$0",
-            "setupPrice": "",
-            "metaAdsCap": "",
-            "billingDay": "1",
-            "paymentStatus": "al_dia",
-            "address": "Castelli 190, Balvanera, CABA",
-            "lat": -34.6072,
-            "lng": -58.3995,
-            "photo": "",
-            "visitDate": "",
-            "notes": "Mochilas escolares con carrito y bolsos deportivos.",
-            "createdAt": "2026-09-08T10:00:00.000Z"
-      },
-      {
-            "id": "once_marroqui_04",
-            "businessName": "Bolsos & Carteras Trendy",
-            "contactName": "",
-            "phone": "",
-            "phoneBusiness": "",
-            "instagram": "@trendycarteras",
-            "website": "",
-            "facebook": "",
-            "rubro": "Marroquinería / Valijas",
-            "serviceType": "chatbot",
-            "status": "nuevo",
-            "monthlyPlan": 0,
-            "systemTotal": "$0",
-            "setupPrice": "",
-            "metaAdsCap": "",
-            "billingDay": "1",
-            "paymentStatus": "al_dia",
-            "address": "Castelli 115, Balvanera, CABA",
-            "lat": -34.6075,
-            "lng": -58.398,
-            "photo": "",
-            "visitDate": "",
-            "notes": "Riñoneras, bolsos maternales y billeteras ecocuero.",
-            "createdAt": "2026-09-08T10:00:00.000Z"
-      },
-      {
-            "id": "once_marroqui_05",
-            "businessName": "Sarmiento Mochilas B2B",
-            "contactName": "",
-            "phone": "",
-            "phoneBusiness": "",
-            "instagram": "@sarmientomochilas",
-            "website": "",
-            "facebook": "",
-            "rubro": "Marroquinería / Valijas",
-            "serviceType": "chatbot",
-            "status": "nuevo",
-            "monthlyPlan": 0,
-            "systemTotal": "$0",
-            "setupPrice": "",
-            "metaAdsCap": "",
-            "billingDay": "1",
-            "paymentStatus": "al_dia",
-            "address": "Sarmiento 2280, Balvanera, CABA",
-            "lat": -34.6059,
-            "lng": -58.3995,
-            "photo": "",
-            "visitDate": "",
-            "notes": "Mochilas porta notebook y bolsos térmicos.",
-            "createdAt": "2026-09-08T10:00:00.000Z"
-      },
-      {
-            "id": "once_cosmetica_01",
-            "businessName": "Glow Cosmética Mayorista",
-            "contactName": "",
-            "phone": "",
-            "phoneBusiness": "",
-            "instagram": "@glowcosmeticaonce",
-            "website": "",
-            "facebook": "",
-            "rubro": "Cosmética / Belleza",
-            "serviceType": "hibrido",
-            "status": "nuevo",
-            "monthlyPlan": 0,
-            "systemTotal": "$0",
-            "setupPrice": "",
-            "metaAdsCap": "",
-            "billingDay": "1",
-            "paymentStatus": "al_dia",
-            "address": "Castelli 245, Balvanera, CABA",
-            "lat": -34.607,
-            "lng": -58.4008,
-            "photo": "",
-            "visitDate": "",
-            "notes": "Maquillaje por mayor, labiales, bases y correctores.",
-            "createdAt": "2026-09-08T10:00:00.000Z"
-      },
-      {
-            "id": "once_cosmetica_02",
-            "businessName": "Novedades Cosmética Castelli",
-            "contactName": "",
-            "phone": "",
-            "phoneBusiness": "",
-            "instagram": "@novedadescastelli",
-            "website": "",
-            "facebook": "",
-            "rubro": "Cosmética / Belleza",
-            "serviceType": "chatbot",
-            "status": "nuevo",
-            "monthlyPlan": 0,
-            "systemTotal": "$0",
-            "setupPrice": "",
-            "metaAdsCap": "",
-            "billingDay": "1",
-            "paymentStatus": "al_dia",
-            "address": "Castelli 380, Balvanera, CABA",
-            "lat": -34.6065,
-            "lng": -58.4032,
-            "photo": "",
-            "visitDate": "",
-            "notes": "Skincare coreano, serums y mascarillas faciales virales.",
-            "createdAt": "2026-09-08T10:00:00.000Z"
-      },
-      {
-            "id": "once_cosmetica_03",
-            "businessName": "Lavalle Makeup & Nails",
-            "contactName": "",
-            "phone": "",
-            "phoneBusiness": "",
-            "instagram": "@lavallenails",
-            "website": "",
-            "facebook": "",
-            "rubro": "Cosmética / Belleza",
-            "serviceType": "chatbot",
-            "status": "nuevo",
-            "monthlyPlan": 0,
-            "systemTotal": "$0",
-            "setupPrice": "",
-            "metaAdsCap": "",
-            "billingDay": "1",
-            "paymentStatus": "al_dia",
-            "address": "Lavalle 2480, Balvanera, CABA",
-            "lat": -34.605,
-            "lng": -58.4005,
-            "photo": "",
-            "visitDate": "",
-            "notes": "Esmaltes semipermanentes, cabinas UV y tornos de manicuría.",
-            "createdAt": "2026-09-08T10:00:00.000Z"
-      },
-      {
-            "id": "once_electro_01",
-            "businessName": "Castelli Accesorios Celulares",
-            "contactName": "",
-            "phone": "",
-            "phoneBusiness": "",
-            "instagram": "@castelliaccesorios",
-            "website": "",
-            "facebook": "",
-            "rubro": "Electrónica / Audio",
-            "serviceType": "hibrido",
-            "status": "nuevo",
-            "monthlyPlan": 0,
-            "systemTotal": "$0",
-            "setupPrice": "",
-            "metaAdsCap": "",
-            "billingDay": "1",
-            "paymentStatus": "al_dia",
-            "address": "Castelli 160, Balvanera, CABA",
-            "lat": -34.6073,
-            "lng": -58.3988,
-            "photo": "",
-            "visitDate": "",
-            "notes": "Fundas para iPhone/Samsung, templados 9D y cargadores rápidos.",
-            "createdAt": "2026-09-08T10:00:00.000Z"
-      },
-      {
-            "id": "once_electro_02",
-            "businessName": "Castelli Tech Mayorista",
-            "contactName": "",
-            "phone": "",
-            "phoneBusiness": "",
-            "instagram": "@castellitech",
-            "website": "",
-            "facebook": "",
-            "rubro": "Electrónica / Audio",
-            "serviceType": "chatbot",
-            "status": "nuevo",
-            "monthlyPlan": 0,
-            "systemTotal": "$0",
-            "setupPrice": "",
-            "metaAdsCap": "",
-            "billingDay": "1",
-            "paymentStatus": "al_dia",
-            "address": "Castelli 420, Balvanera, CABA",
-            "lat": -34.6063,
-            "lng": -58.404,
-            "photo": "",
-            "visitDate": "",
-            "notes": "Parlantes bluetooth, aros de luz y soportes para celular.",
-            "createdAt": "2026-09-08T10:00:00.000Z"
-      },
-      {
-            "id": "once_electro_03",
-            "businessName": "Pueyrredón Tech Express",
-            "contactName": "",
-            "phone": "",
-            "phoneBusiness": "",
-            "instagram": "@pueyrredontech",
-            "website": "",
-            "facebook": "",
-            "rubro": "Electrónica / Audio",
-            "serviceType": "chatbot",
-            "status": "nuevo",
-            "monthlyPlan": 0,
-            "systemTotal": "$0",
-            "setupPrice": "",
-            "metaAdsCap": "",
-            "billingDay": "1",
-            "paymentStatus": "al_dia",
-            "address": "Av. Pueyrredón 450, Balvanera, CABA",
-            "lat": -34.6072,
-            "lng": -58.4078,
-            "photo": "",
-            "visitDate": "",
-            "notes": "Smartwatches, auriculares inalámbricos TWS y cables reforzados.",
-            "createdAt": "2026-09-08T10:00:00.000Z"
-      },
-      {
-            "id": "once_electro_04",
-            "businessName": "Sarmiento Tech Audio",
-            "contactName": "",
-            "phone": "",
-            "phoneBusiness": "",
-            "instagram": "@sarmientotech",
-            "website": "",
-            "facebook": "",
-            "rubro": "Electrónica / Audio",
-            "serviceType": "chatbot",
-            "status": "nuevo",
-            "monthlyPlan": 0,
-            "systemTotal": "$0",
-            "setupPrice": "",
-            "metaAdsCap": "",
-            "billingDay": "1",
-            "paymentStatus": "al_dia",
-            "address": "Sarmiento 2520, Balvanera, CABA",
-            "lat": -34.6052,
-            "lng": -58.4025,
-            "photo": "",
-            "visitDate": "",
-            "notes": "Torres de sonido, micrófonos y accesorios de streaming.",
-            "createdAt": "2026-09-08T10:00:00.000Z"
-      },
-      {
-            "id": "flores_moda_01",
-            "businessName": "Cocoliche Mayorista",
-            "contactName": "",
-            "phone": "",
-            "phoneBusiness": "",
-            "instagram": "@cocolichemayorista",
-            "website": "https://cocolichemayorista.mitiendanube.com",
-            "facebook": "",
-            "rubro": "Indumentaria / Ropa",
-            "serviceType": "hibrido",
-            "status": "nuevo",
-            "monthlyPlan": 0,
-            "systemTotal": "$0",
-            "setupPrice": "",
-            "metaAdsCap": "",
-            "billingDay": "1",
-            "paymentStatus": "al_dia",
-            "address": "Av. Avellaneda 2850, Flores, CABA",
-            "lat": -34.6285,
-            "lng": -58.4695,
-            "photo": "",
-            "visitDate": "",
-            "notes": "Fabricante remeras oversize, buzos de friza y chalecos. Venta por curva.",
-            "createdAt": "2026-09-08T10:00:00.000Z"
-      },
-      {
-            "id": "flores_moda_02",
-            "businessName": "Avellaneda Urban Chic",
-            "contactName": "",
-            "phone": "",
-            "phoneBusiness": "",
-            "instagram": "@avellanedaurban",
-            "website": "",
-            "facebook": "",
-            "rubro": "Indumentaria / Ropa",
-            "serviceType": "chatbot",
-            "status": "nuevo",
-            "monthlyPlan": 0,
-            "systemTotal": "$0",
-            "setupPrice": "",
-            "metaAdsCap": "",
-            "billingDay": "1",
-            "paymentStatus": "al_dia",
-            "address": "Av. Avellaneda 2940, Flores, CABA",
-            "lat": -34.6288,
-            "lng": -58.471,
-            "photo": "",
-            "visitDate": "",
-            "notes": "Pantalones sastreros, blazers y tops por mayor.",
-            "createdAt": "2026-09-08T10:00:00.000Z"
-      },
-      {
-            "id": "flores_moda_03",
-            "businessName": "Look Femenino Mayorista",
-            "contactName": "",
-            "phone": "",
-            "phoneBusiness": "",
-            "instagram": "@lookfemeninomayorista",
-            "website": "",
-            "facebook": "",
-            "rubro": "Indumentaria / Ropa",
-            "serviceType": "chatbot",
-            "status": "nuevo",
-            "monthlyPlan": 0,
-            "systemTotal": "$0",
-            "setupPrice": "",
-            "metaAdsCap": "",
-            "billingDay": "1",
-            "paymentStatus": "al_dia",
-            "address": "Bogotá 2830, Flores, CABA",
-            "lat": -34.6272,
-            "lng": -58.4691,
-            "photo": "",
-            "visitDate": "",
-            "notes": "Vestidos de fiesta, satén y prendas de noche.",
-            "createdAt": "2026-09-08T10:00:00.000Z"
-      },
-      {
-            "id": "flores_moda_04",
-            "businessName": "Mona Moda Flores",
-            "contactName": "",
-            "phone": "",
-            "phoneBusiness": "",
-            "instagram": "@monamodaflores",
-            "website": "",
-            "facebook": "",
-            "rubro": "Indumentaria / Ropa",
-            "serviceType": "chatbot",
-            "status": "nuevo",
-            "monthlyPlan": 0,
-            "systemTotal": "$0",
-            "setupPrice": "",
-            "metaAdsCap": "",
-            "billingDay": "1",
-            "paymentStatus": "al_dia",
-            "address": "Helguera 340, Flores, CABA",
-            "lat": -34.6292,
-            "lng": -58.4705,
-            "photo": "",
-            "visitDate": "",
-            "notes": "Sweaters de hilo, poleras y cárdigans por docena.",
-            "createdAt": "2026-09-08T10:00:00.000Z"
-      },
-      {
-            "id": "flores_moda_05",
-            "businessName": "Flores Trendy B2B",
-            "contactName": "",
-            "phone": "",
-            "phoneBusiness": "",
-            "instagram": "@florestrendy",
-            "website": "",
-            "facebook": "",
-            "rubro": "Indumentaria / Ropa",
-            "serviceType": "chatbot",
-            "status": "nuevo",
-            "monthlyPlan": 0,
-            "systemTotal": "$0",
-            "setupPrice": "",
-            "metaAdsCap": "",
-            "billingDay": "1",
-            "paymentStatus": "al_dia",
-            "address": "Av. Avellaneda 3120, Flores, CABA",
-            "lat": -34.6295,
-            "lng": -58.4735,
-            "photo": "",
-            "visitDate": "",
-            "notes": "Conjuntos rústicos, joggings y camperas deportivas.",
-            "createdAt": "2026-09-08T10:00:00.000Z"
-      },
-      {
-            "id": "flores_moda_06",
-            "businessName": "Bella Ragazza Mayorista",
-            "contactName": "",
-            "phone": "",
-            "phoneBusiness": "",
-            "instagram": "@bellaragazzamayorista",
-            "website": "",
-            "facebook": "",
-            "rubro": "Indumentaria / Ropa",
-            "serviceType": "chatbot",
-            "status": "nuevo",
-            "monthlyPlan": 0,
-            "systemTotal": "$0",
-            "setupPrice": "",
-            "metaAdsCap": "",
-            "billingDay": "1",
-            "paymentStatus": "al_dia",
-            "address": "Cuenca 350, Flores, CABA",
-            "lat": -34.6281,
-            "lng": -58.4682,
-            "photo": "",
-            "visitDate": "",
-            "notes": "Blusas, camisas fibrana y palazzos por mayor.",
-            "createdAt": "2026-09-08T10:00:00.000Z"
-      },
-      {
-            "id": "flores_moda_07",
-            "businessName": "Indumentaria Roma",
-            "contactName": "",
-            "phone": "",
-            "phoneBusiness": "",
-            "instagram": "@indumentariaroma",
-            "website": "",
-            "facebook": "",
-            "rubro": "Indumentaria / Ropa",
-            "serviceType": "chatbot",
-            "status": "nuevo",
-            "monthlyPlan": 0,
-            "systemTotal": "$0",
-            "setupPrice": "",
-            "metaAdsCap": "",
-            "billingDay": "1",
-            "paymentStatus": "al_dia",
-            "address": "Av. Avellaneda 3250, Flores, CABA",
-            "lat": -34.6299,
-            "lng": -58.4752,
-            "photo": "",
-            "visitDate": "",
-            "notes": "Ropa deportiva mujer, calzas seamless y tops.",
-            "createdAt": "2026-09-08T10:00:00.000Z"
-      },
-      {
-            "id": "flores_moda_08",
-            "businessName": "Amelie Mayorista",
-            "contactName": "",
-            "phone": "",
-            "phoneBusiness": "",
-            "instagram": "@ameliemayorista",
-            "website": "",
-            "facebook": "",
-            "rubro": "Indumentaria / Ropa",
-            "serviceType": "chatbot",
-            "status": "nuevo",
-            "monthlyPlan": 0,
-            "systemTotal": "$0",
-            "setupPrice": "",
-            "metaAdsCap": "",
-            "billingDay": "1",
-            "paymentStatus": "al_dia",
-            "address": "Argerich 380, Flores, CABA",
-            "lat": -34.6289,
-            "lng": -58.4718,
-            "photo": "",
-            "visitDate": "",
-            "notes": "Buzos hoodie estampados DTF y remeras gráficas.",
-            "createdAt": "2026-09-08T10:00:00.000Z"
-      },
-      {
-            "id": "flores_moda_09",
-            "businessName": "Diva Showroom Flores",
-            "contactName": "",
-            "phone": "",
-            "phoneBusiness": "",
-            "instagram": "@divafloresmayorista",
-            "website": "",
-            "facebook": "",
-            "rubro": "Indumentaria / Ropa",
-            "serviceType": "chatbot",
-            "status": "nuevo",
-            "monthlyPlan": 0,
-            "systemTotal": "$0",
-            "setupPrice": "",
-            "metaAdsCap": "",
-            "billingDay": "1",
-            "paymentStatus": "al_dia",
-            "address": "Av. Avellaneda 3410, Flores, CABA",
-            "lat": -34.6304,
-            "lng": -58.4775,
-            "photo": "",
-            "visitDate": "",
-            "notes": "Camperas puffer, ecocuero y chalecos de abrigo.",
-            "createdAt": "2026-09-08T10:00:00.000Z"
-      },
-      {
-            "id": "flores_denim_01",
-            "businessName": "Blue Jeans Mayorista",
-            "contactName": "",
-            "phone": "",
-            "phoneBusiness": "",
-            "instagram": "@bluejeansmayorista",
-            "website": "",
-            "facebook": "",
-            "rubro": "Indumentaria / Ropa",
-            "serviceType": "hibrido",
-            "status": "nuevo",
-            "monthlyPlan": 0,
-            "systemTotal": "$0",
-            "setupPrice": "",
-            "metaAdsCap": "",
-            "billingDay": "1",
-            "paymentStatus": "al_dia",
-            "address": "Av. Avellaneda 2980, Flores, CABA",
-            "lat": -34.6289,
-            "lng": -58.4715,
-            "photo": "",
-            "visitDate": "",
-            "notes": "Jeans wide leg, mom y cargo por curva para revendedores.",
-            "createdAt": "2026-09-08T10:00:00.000Z"
-      },
-      {
-            "id": "flores_denim_02",
-            "businessName": "Denim Factory Flores",
-            "contactName": "",
-            "phone": "",
-            "phoneBusiness": "",
-            "instagram": "@denimfactoryflores",
-            "website": "",
-            "facebook": "",
-            "rubro": "Indumentaria / Ropa",
-            "serviceType": "chatbot",
-            "status": "nuevo",
-            "monthlyPlan": 0,
-            "systemTotal": "$0",
-            "setupPrice": "",
-            "metaAdsCap": "",
-            "billingDay": "1",
-            "paymentStatus": "al_dia",
-            "address": "Helguera 280, Flores, CABA",
-            "lat": -34.629,
-            "lng": -58.4701,
-            "photo": "",
-            "visitDate": "",
-            "notes": "Jeans rígidos y elastizados tiro alto por mayor.",
-            "createdAt": "2026-09-08T10:00:00.000Z"
-      },
-      {
-            "id": "flores_denim_03",
-            "businessName": "Texas Jeans Mayorista",
-            "contactName": "",
-            "phone": "",
-            "phoneBusiness": "",
-            "instagram": "@texasjeansmayorista",
-            "website": "",
-            "facebook": "",
-            "rubro": "Indumentaria / Ropa",
-            "serviceType": "chatbot",
-            "status": "nuevo",
-            "monthlyPlan": 0,
-            "systemTotal": "$0",
-            "setupPrice": "",
-            "metaAdsCap": "",
-            "billingDay": "1",
-            "paymentStatus": "al_dia",
-            "address": "Bogotá 2920, Flores, CABA",
-            "lat": -34.6275,
-            "lng": -58.4705,
-            "photo": "",
-            "visitDate": "",
-            "notes": "Pantalones cargo de gabardina y bermudas denim.",
-            "createdAt": "2026-09-08T10:00:00.000Z"
-      },
-      {
-            "id": "flores_denim_04",
-            "businessName": "Distrito Denim",
-            "contactName": "",
-            "phone": "",
-            "phoneBusiness": "",
-            "instagram": "@distritodenim",
-            "website": "",
-            "facebook": "",
-            "rubro": "Indumentaria / Ropa",
-            "serviceType": "chatbot",
-            "status": "nuevo",
-            "monthlyPlan": 0,
-            "systemTotal": "$0",
-            "setupPrice": "",
-            "metaAdsCap": "",
-            "billingDay": "1",
-            "paymentStatus": "al_dia",
-            "address": "Av. Avellaneda 3340, Flores, CABA",
-            "lat": -34.6301,
-            "lng": -58.4765,
-            "photo": "",
-            "visitDate": "",
-            "notes": "Shorts de jean rotos, chupines y polleras denim.",
-            "createdAt": "2026-09-08T10:00:00.000Z"
-      },
-      {
-            "id": "flores_hombre_01",
-            "businessName": "Hombre Urbano Flores",
-            "contactName": "",
-            "phone": "",
-            "phoneBusiness": "",
-            "instagram": "@hombreurbanoflores",
-            "website": "",
-            "facebook": "",
-            "rubro": "Indumentaria / Ropa",
-            "serviceType": "hibrido",
-            "status": "nuevo",
-            "monthlyPlan": 0,
-            "systemTotal": "$0",
-            "setupPrice": "",
-            "metaAdsCap": "",
-            "billingDay": "1",
-            "paymentStatus": "al_dia",
-            "address": "Av. Avellaneda 3050, Flores, CABA",
-            "lat": -34.6291,
-            "lng": -58.4725,
-            "photo": "",
-            "visitDate": "",
-            "notes": "Remeras jersey 24/1 lisas y estampadas por curva.",
-            "createdAt": "2026-09-08T10:00:00.000Z"
-      },
-      {
-            "id": "flores_hombre_02",
-            "businessName": "Brotherhood Indumentaria",
-            "contactName": "",
-            "phone": "",
-            "phoneBusiness": "",
-            "instagram": "@brotherhoodmayorista",
-            "website": "",
-            "facebook": "",
-            "rubro": "Indumentaria / Ropa",
-            "serviceType": "chatbot",
-            "status": "nuevo",
-            "monthlyPlan": 0,
-            "systemTotal": "$0",
-            "setupPrice": "",
-            "metaAdsCap": "",
-            "billingDay": "1",
-            "paymentStatus": "al_dia",
-            "address": "Bogotá 3150, Flores, CABA",
-            "lat": -34.628,
-            "lng": -58.474,
-            "photo": "",
-            "visitDate": "",
-            "notes": "Buzos oversize, jogger rústico y musculosas.",
-            "createdAt": "2026-09-08T10:00:00.000Z"
-      },
-      {
-            "id": "flores_hombre_03",
-            "businessName": "King Street B2B",
-            "contactName": "",
-            "phone": "",
-            "phoneBusiness": "",
-            "instagram": "@kingstreetmayorista",
-            "website": "",
-            "facebook": "",
-            "rubro": "Indumentaria / Ropa",
-            "serviceType": "chatbot",
-            "status": "nuevo",
-            "monthlyPlan": 0,
-            "systemTotal": "$0",
-            "setupPrice": "",
-            "metaAdsCap": "",
-            "billingDay": "1",
-            "paymentStatus": "al_dia",
-            "address": "Helguera 410, Flores, CABA",
-            "lat": -34.6296,
-            "lng": -58.471,
-            "photo": "",
-            "visitDate": "",
-            "notes": "Remeras algodón pima y camperas deportivas.",
-            "createdAt": "2026-09-08T10:00:00.000Z"
-      },
-      {
-            "id": "flores_hombre_04",
-            "businessName": "Vikingos Indumentaria Masculina",
-            "contactName": "",
-            "phone": "",
-            "phoneBusiness": "",
-            "instagram": "@vikingosmayorista",
-            "website": "",
-            "facebook": "",
-            "rubro": "Indumentaria / Ropa",
-            "serviceType": "chatbot",
-            "status": "nuevo",
-            "monthlyPlan": 0,
-            "systemTotal": "$0",
-            "setupPrice": "",
-            "metaAdsCap": "",
-            "billingDay": "1",
-            "paymentStatus": "al_dia",
-            "address": "Av. Avellaneda 3280, Flores, CABA",
-            "lat": -34.6298,
-            "lng": -58.4758,
-            "photo": "",
-            "visitDate": "",
-            "notes": "Bermudas rústicas, chombas piqué y camisas lisas.",
-            "createdAt": "2026-09-08T10:00:00.000Z"
-      },
-      {
-            "id": "flores_ninos_01",
-            "businessName": "Peques Mayorista Infantil",
-            "contactName": "",
-            "phone": "",
-            "phoneBusiness": "",
-            "instagram": "@pequesmayoristaflores",
-            "website": "",
-            "facebook": "",
-            "rubro": "Indumentaria / Ropa",
-            "serviceType": "hibrido",
-            "status": "nuevo",
-            "monthlyPlan": 0,
-            "systemTotal": "$0",
-            "setupPrice": "",
-            "metaAdsCap": "",
-            "billingDay": "1",
-            "paymentStatus": "al_dia",
-            "address": "Av. Avellaneda 2780, Flores, CABA",
-            "lat": -34.6282,
-            "lng": -58.4685,
-            "photo": "",
-            "visitDate": "",
-            "notes": "Conjuntos frizados infantiles y bodys de bebé por mayor.",
-            "createdAt": "2026-09-08T10:00:00.000Z"
-      },
-      {
-            "id": "flores_ninos_02",
-            "businessName": "Bambino Ropa Infantil",
-            "contactName": "",
-            "phone": "",
-            "phoneBusiness": "",
-            "instagram": "@bambinomayorista",
-            "website": "",
-            "facebook": "",
-            "rubro": "Indumentaria / Ropa",
-            "serviceType": "chatbot",
-            "status": "nuevo",
-            "monthlyPlan": 0,
-            "systemTotal": "$0",
-            "setupPrice": "",
-            "metaAdsCap": "",
-            "billingDay": "1",
-            "paymentStatus": "al_dia",
-            "address": "Bogotá 2750, Flores, CABA",
-            "lat": -34.627,
-            "lng": -58.468,
-            "photo": "",
-            "visitDate": "",
-            "notes": "Pijamas infantiles y vestidos de nena por curva.",
-            "createdAt": "2026-09-08T10:00:00.000Z"
-      },
-      {
-            "id": "flores_ninos_03",
-            "businessName": "Colegiales & Guardapolvos Flores",
-            "contactName": "",
-            "phone": "",
-            "phoneBusiness": "",
-            "instagram": "@colegialesflores",
-            "website": "",
-            "facebook": "",
-            "rubro": "Indumentaria / Ropa",
-            "serviceType": "chatbot",
-            "status": "nuevo",
-            "monthlyPlan": 0,
-            "systemTotal": "$0",
-            "setupPrice": "",
-            "metaAdsCap": "",
-            "billingDay": "1",
-            "paymentStatus": "al_dia",
-            "address": "Helguera 210, Flores, CABA",
-            "lat": -34.6288,
-            "lng": -58.4698,
-            "photo": "",
-            "visitDate": "",
-            "notes": "Guardapolvos, chombas escolares y conjuntos de colegio.",
-            "createdAt": "2026-09-08T10:00:00.000Z"
-      },
-      {
-            "id": "flores_deporte_01",
-            "businessName": "Sport Flores Mayorista",
-            "contactName": "",
-            "phone": "",
-            "phoneBusiness": "",
-            "instagram": "@sportfloresmayorista",
-            "website": "",
-            "facebook": "",
-            "rubro": "Indumentaria / Ropa",
-            "serviceType": "hibrido",
-            "status": "nuevo",
-            "monthlyPlan": 0,
-            "systemTotal": "$0",
-            "setupPrice": "",
-            "metaAdsCap": "",
-            "billingDay": "1",
-            "paymentStatus": "al_dia",
-            "address": "Av. Avellaneda 3390, Flores, CABA",
-            "lat": -34.6302,
-            "lng": -58.477,
-            "photo": "",
-            "visitDate": "",
-            "notes": "Conjuntos deportivos acetato y microfibra por curva.",
-            "createdAt": "2026-09-08T10:00:00.000Z"
-      },
-      {
-            "id": "flores_deporte_02",
-            "businessName": "Fit Zone B2B",
-            "contactName": "",
-            "phone": "",
-            "phoneBusiness": "",
-            "instagram": "@fitzonemayorista",
-            "website": "",
-            "facebook": "",
-            "rubro": "Indumentaria / Ropa",
-            "serviceType": "chatbot",
-            "status": "nuevo",
-            "monthlyPlan": 0,
-            "systemTotal": "$0",
-            "setupPrice": "",
-            "metaAdsCap": "",
-            "billingDay": "1",
-            "paymentStatus": "al_dia",
-            "address": "Bogotá 3240, Flores, CABA",
-            "lat": -34.6283,
-            "lng": -58.4755,
-            "photo": "",
-            "visitDate": "",
-            "notes": "Tops deportivos, calzas biker y shorts running.",
-            "createdAt": "2026-09-08T10:00:00.000Z"
-      },
-      {
-            "id": "flores_deporte_03",
-            "businessName": "Zapatillas & Calzado Urbano B2B",
-            "contactName": "",
-            "phone": "",
-            "phoneBusiness": "",
-            "instagram": "@calzadofloresmayorista",
-            "website": "",
-            "facebook": "",
-            "rubro": "Indumentaria / Ropa",
-            "serviceType": "chatbot",
-            "status": "nuevo",
-            "monthlyPlan": 0,
-            "systemTotal": "$0",
-            "setupPrice": "",
-            "metaAdsCap": "",
-            "billingDay": "1",
-            "paymentStatus": "al_dia",
-            "address": "Av. Nazca 350, Flores, CABA",
-            "lat": -34.6279,
-            "lng": -58.4665,
-            "photo": "",
-            "visitDate": "",
-            "notes": "Zapatillas de lona, botitas y calzado urbano por bulto.",
-            "createdAt": "2026-09-08T10:00:00.000Z"
-      }
+    {
+        "id": "adar_01",
+        "businessName": "ADAR Insumos",
+        "contactName": "Isaak Lair Haboba",
+        "phone": "1130960114",
+        "phoneBusiness": "1130960114",
+        "instagram": "@adarinsumos",
+        "website": "https://adarinsumos.com.ar",
+        "facebook": "",
+        "rubro": "Bazar / Hogar / Termos",
+        "serviceType": "hibrido",
+        "status": "cerrado",
+        "monthlyPlan": 180,
+        "systemTotal": "$0",
+        "setupPrice": "$150 USD (Pagado)",
+        "metaAdsCap": "$200.000 ARS (Tope Fee)",
+        "billingDay": "16",
+        "paymentStatus": "al_dia",
+        "address": "Gallo 823, Balvanera, CABA",
+        "lat": -34.5999626,
+        "lng": -58.4121197,
+        "photo": "",
+        "visitDate": "2026-08-16",
+        "notes": "Ecommerce bazar. Vence todos los 16. Meta Ads tope $200k ARS.",
+        "createdAt": "2026-08-16T12:00:00.000Z"
+    },
+    {
+        "id": "sakkal_02",
+        "businessName": "Sakkal Mayorista",
+        "contactName": "Brian Sakkal",
+        "phone": "1155667788",
+        "phoneBusiness": "1155667788",
+        "instagram": "@sakkal_mayorista",
+        "website": "https://sakkalmayorista.com",
+        "facebook": "",
+        "rubro": "Indumentaria / Ropa",
+        "serviceType": "hibrido",
+        "status": "propuesta",
+        "monthlyPlan": 200,
+        "systemTotal": "$0",
+        "setupPrice": "$150 USD Setup + 50% Bot",
+        "metaAdsCap": "$300.000 ARS (20% Fee)",
+        "billingDay": "2",
+        "paymentStatus": "pendiente",
+        "address": "Av. Rivadavia 2715, Once, CABA",
+        "lat": -34.6099213,
+        "lng": -58.4048591,
+        "photo": "",
+        "visitDate": "2026-08-25",
+        "notes": "Nuevo cliente. 2 Sept paga $250 ($150 Setup + $100 [50% Bot]). 2 Oct paga $200. Meta Ads tope $300k.",
+        "createdAt": "2026-08-25T12:00:00.000Z"
+    },
+    {
+        "id": "bross_03",
+        "businessName": "BrossUnderwear",
+        "contactName": "Gabriel & Brian Treyan",
+        "phone": "1144332211",
+        "phoneBusiness": "1144332211",
+        "instagram": "@brossunderwear",
+        "website": "https://brossunderwear.com.ar",
+        "facebook": "facebook.com/brossunderwear",
+        "rubro": "Indumentaria / Ropa",
+        "serviceType": "sistema_medida",
+        "status": "pausa",
+        "monthlyPlan": 0,
+        "systemTotal": "$800.000 ARS",
+        "setupPrice": "Pagado Sep 2025",
+        "metaAdsCap": "Sin Ads",
+        "billingDay": "10",
+        "paymentStatus": "al_dia",
+        "address": "Av. Corrientes 3023, Balvanera, CABA",
+        "lat": -34.6040946,
+        "lng": -58.4080818,
+        "photo": "",
+        "visitDate": "2025-09-10",
+        "notes": "Ecommerce MercadoLibre. Sistema vendido Sep 2025. En pausa por falta de creditos IA.",
+        "createdAt": "2025-09-10T12:00:00.000Z"
+    }
 ];
-
     let prospects = JSON.parse(localStorage.getItem(STORAGE_KEY)) || DEFAULT_PROSPECTS;
+
+    // RADAR MASTER PROSPECTS
+    const RADAR_PROSPECTS = [
+  {
+    "id": "once_bazar_01",
+    "businessName": "Deonce Mayorista",
+    "contactName": "",
+    "phone": "",
+    "phoneBusiness": "",
+    "instagram": "@deoncemayorista",
+    "website": "https://deonce.com.ar",
+    "facebook": "",
+    "rubro": "Bazar / Hogar / Termos",
+    "serviceType": "hibrido",
+    "status": "nuevo",
+    "monthlyPlan": 0,
+    "systemTotal": "$0",
+    "setupPrice": "",
+    "metaAdsCap": "",
+    "billingDay": "1",
+    "paymentStatus": "al_dia",
+    "address": "Pasteur 240, Balvanera, CABA",
+    "lat": -34.6062,
+    "lng": -58.3989,
+    "photo": "",
+    "visitDate": "",
+    "notes": "Importador directo de bazar, termos y organizadores. Alto volumen de mensajes de revendedores.",
+    "createdAt": "2026-09-08T10:00:00.000Z"
+  },
+  {
+    "id": "once_bazar_02",
+    "businessName": "Bazar Once Importaciones",
+    "contactName": "",
+    "phone": "",
+    "phoneBusiness": "",
+    "instagram": "@bazaroncemayorista",
+    "website": "https://bazar-once-mayorista.mitiendanube.com",
+    "facebook": "",
+    "rubro": "Bazar / Hogar / Termos",
+    "serviceType": "hibrido",
+    "status": "nuevo",
+    "monthlyPlan": 0,
+    "systemTotal": "$0",
+    "setupPrice": "",
+    "metaAdsCap": "",
+    "billingDay": "1",
+    "paymentStatus": "al_dia",
+    "address": "Pasteur 315, Balvanera, CABA",
+    "lat": -34.6058,
+    "lng": -58.4001,
+    "photo": "",
+    "visitDate": "",
+    "notes": "Termos tipo Stanley, vasos quenchers, botellas deportivas. Validación de seña 10% con OCR.",
+    "createdAt": "2026-09-08T10:00:00.000Z"
+  },
+  {
+    "id": "once_bazar_03",
+    "businessName": "Mundo Termo & Mate Mayorista",
+    "contactName": "",
+    "phone": "",
+    "phoneBusiness": "",
+    "instagram": "@mundotermomayorista",
+    "website": "",
+    "facebook": "",
+    "rubro": "Bazar / Hogar / Termos",
+    "serviceType": "chatbot",
+    "status": "nuevo",
+    "monthlyPlan": 0,
+    "systemTotal": "$0",
+    "setupPrice": "",
+    "metaAdsCap": "",
+    "billingDay": "1",
+    "paymentStatus": "al_dia",
+    "address": "Pasteur 420, Balvanera, CABA",
+    "lat": -34.6053,
+    "lng": -58.4022,
+    "photo": "",
+    "visitDate": "",
+    "notes": "Sets materos, termos grabados y bombillas por mayor.",
+    "createdAt": "2026-09-08T10:00:00.000Z"
+  },
+  {
+    "id": "once_bazar_04",
+    "businessName": "Pasteur Import & Novedades",
+    "contactName": "",
+    "phone": "",
+    "phoneBusiness": "",
+    "instagram": "@pasteurimport",
+    "website": "",
+    "facebook": "",
+    "rubro": "Bazar / Hogar / Termos",
+    "serviceType": "chatbot",
+    "status": "nuevo",
+    "monthlyPlan": 0,
+    "systemTotal": "$0",
+    "setupPrice": "",
+    "metaAdsCap": "",
+    "billingDay": "1",
+    "paymentStatus": "al_dia",
+    "address": "Pasteur 180, Balvanera, CABA",
+    "lat": -34.6065,
+    "lng": -58.3975,
+    "photo": "",
+    "visitDate": "",
+    "notes": "Novedades de cocina, gadgets y bazar gastronómico.",
+    "createdAt": "2026-09-08T10:00:00.000Z"
+  },
+  {
+    "id": "once_bazar_05",
+    "businessName": "Mega Bazar Pasteur",
+    "contactName": "",
+    "phone": "",
+    "phoneBusiness": "",
+    "instagram": "@megabazarpasteur",
+    "website": "",
+    "facebook": "",
+    "rubro": "Bazar / Hogar / Termos",
+    "serviceType": "chatbot",
+    "status": "nuevo",
+    "monthlyPlan": 0,
+    "systemTotal": "$0",
+    "setupPrice": "",
+    "metaAdsCap": "",
+    "billingDay": "1",
+    "paymentStatus": "al_dia",
+    "address": "Pasteur 130, Balvanera, CABA",
+    "lat": -34.6068,
+    "lng": -58.3965,
+    "photo": "",
+    "visitDate": "",
+    "notes": "Herméticos plásticos, organizadores y artículos de limpieza.",
+    "createdAt": "2026-09-08T10:00:00.000Z"
+  },
+  {
+    "id": "once_bazar_06",
+    "businessName": "Distribuidora Perón Mayorista",
+    "contactName": "",
+    "phone": "",
+    "phoneBusiness": "",
+    "instagram": "@peronmayorista",
+    "website": "",
+    "facebook": "",
+    "rubro": "Bazar / Hogar / Termos",
+    "serviceType": "hibrido",
+    "status": "nuevo",
+    "monthlyPlan": 0,
+    "systemTotal": "$0",
+    "setupPrice": "",
+    "metaAdsCap": "",
+    "billingDay": "1",
+    "paymentStatus": "al_dia",
+    "address": "Tte. Gral. Juan Domingo Perón 2420, Balvanera, CABA",
+    "lat": -34.6061,
+    "lng": -58.4018,
+    "photo": "",
+    "visitDate": "",
+    "notes": "Bazar importado por bulto cerrado y pallets.",
+    "createdAt": "2026-09-08T10:00:00.000Z"
+  },
+  {
+    "id": "once_bazar_07",
+    "businessName": "Sarmiento Import Bazar",
+    "contactName": "",
+    "phone": "",
+    "phoneBusiness": "",
+    "instagram": "@sarmientoimport",
+    "website": "",
+    "facebook": "",
+    "rubro": "Bazar / Hogar / Termos",
+    "serviceType": "chatbot",
+    "status": "nuevo",
+    "monthlyPlan": 0,
+    "systemTotal": "$0",
+    "setupPrice": "",
+    "metaAdsCap": "",
+    "billingDay": "1",
+    "paymentStatus": "al_dia",
+    "address": "Sarmiento 2350, Balvanera, CABA",
+    "lat": -34.6057,
+    "lng": -58.4005,
+    "photo": "",
+    "visitDate": "",
+    "notes": "Gadgets térmicos y regalería funcional.",
+    "createdAt": "2026-09-08T10:00:00.000Z"
+  },
+  {
+    "id": "once_bazar_08",
+    "businessName": "Corrientes Bazar & Regalería",
+    "contactName": "",
+    "phone": "",
+    "phoneBusiness": "",
+    "instagram": "@corrientesbazar",
+    "website": "",
+    "facebook": "",
+    "rubro": "Bazar / Hogar / Termos",
+    "serviceType": "chatbot",
+    "status": "nuevo",
+    "monthlyPlan": 0,
+    "systemTotal": "$0",
+    "setupPrice": "",
+    "metaAdsCap": "",
+    "billingDay": "1",
+    "paymentStatus": "al_dia",
+    "address": "Av. Corrientes 2650, Balvanera, CABA",
+    "lat": -34.6048,
+    "lng": -58.4042,
+    "photo": "",
+    "visitDate": "",
+    "notes": "Tazas térmicas y botellas motivacionales por mayor.",
+    "createdAt": "2026-09-08T10:00:00.000Z"
+  },
+  {
+    "id": "once_bazar_09",
+    "businessName": "Pueyrredón Bazar & Hogar",
+    "contactName": "",
+    "phone": "",
+    "phoneBusiness": "",
+    "instagram": "@pueyrredonbazar",
+    "website": "",
+    "facebook": "",
+    "rubro": "Bazar / Hogar / Termos",
+    "serviceType": "chatbot",
+    "status": "nuevo",
+    "monthlyPlan": 0,
+    "systemTotal": "$0",
+    "setupPrice": "",
+    "metaAdsCap": "",
+    "billingDay": "1",
+    "paymentStatus": "al_dia",
+    "address": "Av. Pueyrredón 320, Balvanera, CABA",
+    "lat": -34.6069,
+    "lng": -58.4055,
+    "photo": "",
+    "visitDate": "",
+    "notes": "Electro chicos, batidoras, picadoras manuales y eléctricas.",
+    "createdAt": "2026-09-08T10:00:00.000Z"
+  },
+  {
+    "id": "once_lenceria_01",
+    "businessName": "Lencería Dulce Pasión",
+    "contactName": "",
+    "phone": "",
+    "phoneBusiness": "",
+    "instagram": "@dulcepasionlenceria",
+    "website": "",
+    "facebook": "",
+    "rubro": "Indumentaria / Ropa",
+    "serviceType": "hibrido",
+    "status": "nuevo",
+    "monthlyPlan": 0,
+    "systemTotal": "$0",
+    "setupPrice": "",
+    "metaAdsCap": "",
+    "billingDay": "1",
+    "paymentStatus": "al_dia",
+    "address": "Paso 235, Balvanera, CABA",
+    "lat": -34.6081,
+    "lng": -58.4008,
+    "photo": "",
+    "visitDate": "",
+    "notes": "Lencería femenina por docena, batas y corsetería.",
+    "createdAt": "2026-09-08T10:00:00.000Z"
+  },
+  {
+    "id": "once_lenceria_02",
+    "businessName": "Mundo Lencería Once",
+    "contactName": "",
+    "phone": "",
+    "phoneBusiness": "",
+    "instagram": "@mundolenceriaonce",
+    "website": "",
+    "facebook": "",
+    "rubro": "Indumentaria / Ropa",
+    "serviceType": "chatbot",
+    "status": "nuevo",
+    "monthlyPlan": 0,
+    "systemTotal": "$0",
+    "setupPrice": "",
+    "metaAdsCap": "",
+    "billingDay": "1",
+    "paymentStatus": "al_dia",
+    "address": "Paso 280, Balvanera, CABA",
+    "lat": -34.6079,
+    "lng": -58.4019,
+    "photo": "",
+    "visitDate": "",
+    "notes": "Mayorista multimarca de corsetería y ropa interior.",
+    "createdAt": "2026-09-08T10:00:00.000Z"
+  },
+  {
+    "id": "once_lenceria_03",
+    "businessName": "Sweet Lencería Larrea",
+    "contactName": "",
+    "phone": "",
+    "phoneBusiness": "",
+    "instagram": "@sweetlenceria",
+    "website": "",
+    "facebook": "",
+    "rubro": "Indumentaria / Ropa",
+    "serviceType": "chatbot",
+    "status": "nuevo",
+    "monthlyPlan": 0,
+    "systemTotal": "$0",
+    "setupPrice": "",
+    "metaAdsCap": "",
+    "billingDay": "1",
+    "paymentStatus": "al_dia",
+    "address": "Larrea 180, Balvanera, CABA",
+    "lat": -34.6045,
+    "lng": -58.3982,
+    "photo": "",
+    "visitDate": "",
+    "notes": "Conjuntos de encaje, algodón y bodies.",
+    "createdAt": "2026-09-08T10:00:00.000Z"
+  },
+  {
+    "id": "once_lenceria_04",
+    "businessName": "Textil Azcuénaga Medias & Bóxers",
+    "contactName": "",
+    "phone": "",
+    "phoneBusiness": "",
+    "instagram": "@textilazcuenaga",
+    "website": "",
+    "facebook": "",
+    "rubro": "Indumentaria / Ropa",
+    "serviceType": "chatbot",
+    "status": "nuevo",
+    "monthlyPlan": 0,
+    "systemTotal": "$0",
+    "setupPrice": "",
+    "metaAdsCap": "",
+    "billingDay": "1",
+    "paymentStatus": "al_dia",
+    "address": "Azcuénaga 320, Balvanera, CABA",
+    "lat": -34.6038,
+    "lng": -58.4025,
+    "photo": "",
+    "visitDate": "",
+    "notes": "Medias por docena, soquetes y slips masculinos.",
+    "createdAt": "2026-09-08T10:00:00.000Z"
+  },
+  {
+    "id": "once_lenceria_05",
+    "businessName": "Larrea Pijamas & Homewear",
+    "contactName": "",
+    "phone": "",
+    "phoneBusiness": "",
+    "instagram": "@larreapijamas",
+    "website": "",
+    "facebook": "",
+    "rubro": "Indumentaria / Ropa",
+    "serviceType": "chatbot",
+    "status": "nuevo",
+    "monthlyPlan": 0,
+    "systemTotal": "$0",
+    "setupPrice": "",
+    "metaAdsCap": "",
+    "billingDay": "1",
+    "paymentStatus": "al_dia",
+    "address": "Larrea 220, Balvanera, CABA",
+    "lat": -34.6043,
+    "lng": -58.3991,
+    "photo": "",
+    "visitDate": "",
+    "notes": "Pijamas térmicos y de satén por curva.",
+    "createdAt": "2026-09-08T10:00:00.000Z"
+  },
+  {
+    "id": "once_lenceria_06",
+    "businessName": "Distribuidora Bross Paso",
+    "contactName": "",
+    "phone": "",
+    "phoneBusiness": "",
+    "instagram": "@distribuidorabross",
+    "website": "",
+    "facebook": "",
+    "rubro": "Indumentaria / Ropa",
+    "serviceType": "chatbot",
+    "status": "nuevo",
+    "monthlyPlan": 0,
+    "systemTotal": "$0",
+    "setupPrice": "",
+    "metaAdsCap": "",
+    "billingDay": "1",
+    "paymentStatus": "al_dia",
+    "address": "Paso 415, Balvanera, CABA",
+    "lat": -34.6073,
+    "lng": -58.4045,
+    "photo": "",
+    "visitDate": "",
+    "notes": "Bóxers Bross London, remeras y básicos por mayor.",
+    "createdAt": "2026-09-08T10:00:00.000Z"
+  },
+  {
+    "id": "once_lenceria_07",
+    "businessName": "Paso Jeans Mayorista",
+    "contactName": "",
+    "phone": "",
+    "phoneBusiness": "",
+    "instagram": "@pasojeans",
+    "website": "",
+    "facebook": "",
+    "rubro": "Indumentaria / Ropa",
+    "serviceType": "chatbot",
+    "status": "nuevo",
+    "monthlyPlan": 0,
+    "systemTotal": "$0",
+    "setupPrice": "",
+    "metaAdsCap": "",
+    "billingDay": "1",
+    "paymentStatus": "al_dia",
+    "address": "Paso 185, Balvanera, CABA",
+    "lat": -34.6083,
+    "lng": -58.4001,
+    "photo": "",
+    "visitDate": "",
+    "notes": "Jeans, bermudas y denim por mayor.",
+    "createdAt": "2026-09-08T10:00:00.000Z"
+  },
+  {
+    "id": "once_lenceria_08",
+    "businessName": "Kiddos Mayorista Infantil",
+    "contactName": "",
+    "phone": "",
+    "phoneBusiness": "",
+    "instagram": "@kiddosmayorista",
+    "website": "",
+    "facebook": "",
+    "rubro": "Indumentaria / Ropa",
+    "serviceType": "chatbot",
+    "status": "nuevo",
+    "monthlyPlan": 0,
+    "systemTotal": "$0",
+    "setupPrice": "",
+    "metaAdsCap": "",
+    "billingDay": "1",
+    "paymentStatus": "al_dia",
+    "address": "Paso 360, Balvanera, CABA",
+    "lat": -34.6076,
+    "lng": -58.4034,
+    "photo": "",
+    "visitDate": "",
+    "notes": "Ropa de niños y bebés por mayor.",
+    "createdAt": "2026-09-08T10:00:00.000Z"
+  },
+  {
+    "id": "once_blanco_01",
+    "businessName": "Blanquería Once Hogar",
+    "contactName": "",
+    "phone": "",
+    "phoneBusiness": "",
+    "instagram": "@blanqueriaonce",
+    "website": "",
+    "facebook": "",
+    "rubro": "Blanquería / Hogar",
+    "serviceType": "hibrido",
+    "status": "nuevo",
+    "monthlyPlan": 0,
+    "systemTotal": "$0",
+    "setupPrice": "",
+    "metaAdsCap": "",
+    "billingDay": "1",
+    "paymentStatus": "al_dia",
+    "address": "Paso 142, Balvanera, CABA",
+    "lat": -34.6085,
+    "lng": -58.3992,
+    "photo": "",
+    "visitDate": "",
+    "notes": "Sábanas 144 a 600 hilos, acolchados y toallones.",
+    "createdAt": "2026-09-08T10:00:00.000Z"
+  },
+  {
+    "id": "once_blanco_02",
+    "businessName": "Blanquería Larrea",
+    "contactName": "",
+    "phone": "",
+    "phoneBusiness": "",
+    "instagram": "@blanquerialarrea",
+    "website": "",
+    "facebook": "",
+    "rubro": "Blanquería / Hogar",
+    "serviceType": "chatbot",
+    "status": "nuevo",
+    "monthlyPlan": 0,
+    "systemTotal": "$0",
+    "setupPrice": "",
+    "metaAdsCap": "",
+    "billingDay": "1",
+    "paymentStatus": "al_dia",
+    "address": "Larrea 150, Balvanera, CABA",
+    "lat": -34.6047,
+    "lng": -58.3975,
+    "photo": "",
+    "visitDate": "",
+    "notes": "Toallas hoteleras, cortinas y cubrecolchones.",
+    "createdAt": "2026-09-08T10:00:00.000Z"
+  },
+  {
+    "id": "once_blanco_03",
+    "businessName": "Perón Textil Hogar",
+    "contactName": "",
+    "phone": "",
+    "phoneBusiness": "",
+    "instagram": "@perontextil",
+    "website": "",
+    "facebook": "",
+    "rubro": "Blanquería / Hogar",
+    "serviceType": "chatbot",
+    "status": "nuevo",
+    "monthlyPlan": 0,
+    "systemTotal": "$0",
+    "setupPrice": "",
+    "metaAdsCap": "",
+    "billingDay": "1",
+    "paymentStatus": "al_dia",
+    "address": "Tte. Gral. Juan Domingo Perón 2550, Balvanera, CABA",
+    "lat": -34.6056,
+    "lng": -58.4032,
+    "photo": "",
+    "visitDate": "",
+    "notes": "Manteles antimancha, fundas de sillón y acolchados.",
+    "createdAt": "2026-09-08T10:00:00.000Z"
+  },
+  {
+    "id": "once_blanco_04",
+    "businessName": "Rivadavia Blanquería Express",
+    "contactName": "",
+    "phone": "",
+    "phoneBusiness": "",
+    "instagram": "@rivadaviablanqueria",
+    "website": "",
+    "facebook": "",
+    "rubro": "Blanquería / Hogar",
+    "serviceType": "chatbot",
+    "status": "nuevo",
+    "monthlyPlan": 0,
+    "systemTotal": "$0",
+    "setupPrice": "",
+    "metaAdsCap": "",
+    "billingDay": "1",
+    "paymentStatus": "al_dia",
+    "address": "Av. Rivadavia 2830, Balvanera, CABA",
+    "lat": -34.6105,
+    "lng": -58.4062,
+    "photo": "",
+    "visitDate": "",
+    "notes": "Sábanas Danubio, Cannon y alternativas hoteleras.",
+    "createdAt": "2026-09-08T10:00:00.000Z"
+  },
+  {
+    "id": "once_blanco_05",
+    "businessName": "Cortinas & Almohadones Once",
+    "contactName": "",
+    "phone": "",
+    "phoneBusiness": "",
+    "instagram": "@cortinasonce",
+    "website": "",
+    "facebook": "",
+    "rubro": "Blanquería / Hogar",
+    "serviceType": "chatbot",
+    "status": "nuevo",
+    "monthlyPlan": 0,
+    "systemTotal": "$0",
+    "setupPrice": "",
+    "metaAdsCap": "",
+    "billingDay": "1",
+    "paymentStatus": "al_dia",
+    "address": "Azcuénaga 280, Balvanera, CABA",
+    "lat": -34.6039,
+    "lng": -58.4015,
+    "photo": "",
+    "visitDate": "",
+    "notes": "Cortinas blackout, gasa pañalera y rellenos de vellón.",
+    "createdAt": "2026-09-08T10:00:00.000Z"
+  },
+  {
+    "id": "once_marroqui_01",
+    "businessName": "Quemoda Marroquinería",
+    "contactName": "",
+    "phone": "",
+    "phoneBusiness": "",
+    "instagram": "@quemodamayorista",
+    "website": "https://quemoda.com.ar",
+    "facebook": "",
+    "rubro": "Marroquinería / Valijas",
+    "serviceType": "hibrido",
+    "status": "nuevo",
+    "monthlyPlan": 0,
+    "systemTotal": "$0",
+    "setupPrice": "",
+    "metaAdsCap": "",
+    "billingDay": "1",
+    "paymentStatus": "al_dia",
+    "address": "Moreno 3160, Balvanera, CABA",
+    "lat": -34.6135,
+    "lng": -58.4098,
+    "photo": "",
+    "visitDate": "",
+    "notes": "Importadores de valijas carry-on, bolsos de viaje y mochilas.",
+    "createdAt": "2026-09-08T10:00:00.000Z"
+  },
+  {
+    "id": "once_marroqui_02",
+    "businessName": "Azcuénaga Valijas & Mochilas",
+    "contactName": "",
+    "phone": "",
+    "phoneBusiness": "",
+    "instagram": "@azcuenagavalijas",
+    "website": "",
+    "facebook": "",
+    "rubro": "Marroquinería / Valijas",
+    "serviceType": "chatbot",
+    "status": "nuevo",
+    "monthlyPlan": 0,
+    "systemTotal": "$0",
+    "setupPrice": "",
+    "metaAdsCap": "",
+    "billingDay": "1",
+    "paymentStatus": "al_dia",
+    "address": "Azcuénaga 240, Balvanera, CABA",
+    "lat": -34.6041,
+    "lng": -58.4005,
+    "photo": "",
+    "visitDate": "",
+    "notes": "Valijas rígidas ABS y mochilas urbanas por mayor.",
+    "createdAt": "2026-09-08T10:00:00.000Z"
+  },
+  {
+    "id": "once_marroqui_03",
+    "businessName": "Mochilas & Valijas Once B2B",
+    "contactName": "",
+    "phone": "",
+    "phoneBusiness": "",
+    "instagram": "@mochilas_once",
+    "website": "",
+    "facebook": "",
+    "rubro": "Marroquinería / Valijas",
+    "serviceType": "chatbot",
+    "status": "nuevo",
+    "monthlyPlan": 0,
+    "systemTotal": "$0",
+    "setupPrice": "",
+    "metaAdsCap": "",
+    "billingDay": "1",
+    "paymentStatus": "al_dia",
+    "address": "Castelli 190, Balvanera, CABA",
+    "lat": -34.6072,
+    "lng": -58.3995,
+    "photo": "",
+    "visitDate": "",
+    "notes": "Mochilas escolares con carrito y bolsos deportivos.",
+    "createdAt": "2026-09-08T10:00:00.000Z"
+  },
+  {
+    "id": "once_marroqui_04",
+    "businessName": "Bolsos & Carteras Trendy",
+    "contactName": "",
+    "phone": "",
+    "phoneBusiness": "",
+    "instagram": "@trendycarteras",
+    "website": "",
+    "facebook": "",
+    "rubro": "Marroquinería / Valijas",
+    "serviceType": "chatbot",
+    "status": "nuevo",
+    "monthlyPlan": 0,
+    "systemTotal": "$0",
+    "setupPrice": "",
+    "metaAdsCap": "",
+    "billingDay": "1",
+    "paymentStatus": "al_dia",
+    "address": "Castelli 115, Balvanera, CABA",
+    "lat": -34.6075,
+    "lng": -58.398,
+    "photo": "",
+    "visitDate": "",
+    "notes": "Riñoneras, bolsos maternales y billeteras ecocuero.",
+    "createdAt": "2026-09-08T10:00:00.000Z"
+  },
+  {
+    "id": "once_marroqui_05",
+    "businessName": "Sarmiento Mochilas B2B",
+    "contactName": "",
+    "phone": "",
+    "phoneBusiness": "",
+    "instagram": "@sarmientomochilas",
+    "website": "",
+    "facebook": "",
+    "rubro": "Marroquinería / Valijas",
+    "serviceType": "chatbot",
+    "status": "nuevo",
+    "monthlyPlan": 0,
+    "systemTotal": "$0",
+    "setupPrice": "",
+    "metaAdsCap": "",
+    "billingDay": "1",
+    "paymentStatus": "al_dia",
+    "address": "Sarmiento 2280, Balvanera, CABA",
+    "lat": -34.6059,
+    "lng": -58.3995,
+    "photo": "",
+    "visitDate": "",
+    "notes": "Mochilas porta notebook y bolsos térmicos.",
+    "createdAt": "2026-09-08T10:00:00.000Z"
+  },
+  {
+    "id": "once_cosmetica_01",
+    "businessName": "Glow Cosmética Mayorista",
+    "contactName": "",
+    "phone": "",
+    "phoneBusiness": "",
+    "instagram": "@glowcosmeticaonce",
+    "website": "",
+    "facebook": "",
+    "rubro": "Cosmética / Belleza",
+    "serviceType": "hibrido",
+    "status": "nuevo",
+    "monthlyPlan": 0,
+    "systemTotal": "$0",
+    "setupPrice": "",
+    "metaAdsCap": "",
+    "billingDay": "1",
+    "paymentStatus": "al_dia",
+    "address": "Castelli 245, Balvanera, CABA",
+    "lat": -34.607,
+    "lng": -58.4008,
+    "photo": "",
+    "visitDate": "",
+    "notes": "Maquillaje por mayor, labiales, bases y correctores.",
+    "createdAt": "2026-09-08T10:00:00.000Z"
+  },
+  {
+    "id": "once_cosmetica_02",
+    "businessName": "Novedades Cosmética Castelli",
+    "contactName": "",
+    "phone": "",
+    "phoneBusiness": "",
+    "instagram": "@novedadescastelli",
+    "website": "",
+    "facebook": "",
+    "rubro": "Cosmética / Belleza",
+    "serviceType": "chatbot",
+    "status": "nuevo",
+    "monthlyPlan": 0,
+    "systemTotal": "$0",
+    "setupPrice": "",
+    "metaAdsCap": "",
+    "billingDay": "1",
+    "paymentStatus": "al_dia",
+    "address": "Castelli 380, Balvanera, CABA",
+    "lat": -34.6065,
+    "lng": -58.4032,
+    "photo": "",
+    "visitDate": "",
+    "notes": "Skincare coreano, serums y mascarillas faciales virales.",
+    "createdAt": "2026-09-08T10:00:00.000Z"
+  },
+  {
+    "id": "once_cosmetica_03",
+    "businessName": "Lavalle Makeup & Nails",
+    "contactName": "",
+    "phone": "",
+    "phoneBusiness": "",
+    "instagram": "@lavallenails",
+    "website": "",
+    "facebook": "",
+    "rubro": "Cosmética / Belleza",
+    "serviceType": "chatbot",
+    "status": "nuevo",
+    "monthlyPlan": 0,
+    "systemTotal": "$0",
+    "setupPrice": "",
+    "metaAdsCap": "",
+    "billingDay": "1",
+    "paymentStatus": "al_dia",
+    "address": "Lavalle 2480, Balvanera, CABA",
+    "lat": -34.605,
+    "lng": -58.4005,
+    "photo": "",
+    "visitDate": "",
+    "notes": "Esmaltes semipermanentes, cabinas UV y tornos de manicuría.",
+    "createdAt": "2026-09-08T10:00:00.000Z"
+  },
+  {
+    "id": "once_electro_01",
+    "businessName": "Castelli Accesorios Celulares",
+    "contactName": "",
+    "phone": "",
+    "phoneBusiness": "",
+    "instagram": "@castelliaccesorios",
+    "website": "",
+    "facebook": "",
+    "rubro": "Electrónica / Audio",
+    "serviceType": "hibrido",
+    "status": "nuevo",
+    "monthlyPlan": 0,
+    "systemTotal": "$0",
+    "setupPrice": "",
+    "metaAdsCap": "",
+    "billingDay": "1",
+    "paymentStatus": "al_dia",
+    "address": "Castelli 160, Balvanera, CABA",
+    "lat": -34.6073,
+    "lng": -58.3988,
+    "photo": "",
+    "visitDate": "",
+    "notes": "Fundas para iPhone/Samsung, templados 9D y cargadores rápidos.",
+    "createdAt": "2026-09-08T10:00:00.000Z"
+  },
+  {
+    "id": "once_electro_02",
+    "businessName": "Castelli Tech Mayorista",
+    "contactName": "",
+    "phone": "",
+    "phoneBusiness": "",
+    "instagram": "@castellitech",
+    "website": "",
+    "facebook": "",
+    "rubro": "Electrónica / Audio",
+    "serviceType": "chatbot",
+    "status": "nuevo",
+    "monthlyPlan": 0,
+    "systemTotal": "$0",
+    "setupPrice": "",
+    "metaAdsCap": "",
+    "billingDay": "1",
+    "paymentStatus": "al_dia",
+    "address": "Castelli 420, Balvanera, CABA",
+    "lat": -34.6063,
+    "lng": -58.404,
+    "photo": "",
+    "visitDate": "",
+    "notes": "Parlantes bluetooth, aros de luz y soportes para celular.",
+    "createdAt": "2026-09-08T10:00:00.000Z"
+  },
+  {
+    "id": "once_electro_03",
+    "businessName": "Pueyrredón Tech Express",
+    "contactName": "",
+    "phone": "",
+    "phoneBusiness": "",
+    "instagram": "@pueyrredontech",
+    "website": "",
+    "facebook": "",
+    "rubro": "Electrónica / Audio",
+    "serviceType": "chatbot",
+    "status": "nuevo",
+    "monthlyPlan": 0,
+    "systemTotal": "$0",
+    "setupPrice": "",
+    "metaAdsCap": "",
+    "billingDay": "1",
+    "paymentStatus": "al_dia",
+    "address": "Av. Pueyrredón 450, Balvanera, CABA",
+    "lat": -34.6072,
+    "lng": -58.4078,
+    "photo": "",
+    "visitDate": "",
+    "notes": "Smartwatches, auriculares inalámbricos TWS y cables reforzados.",
+    "createdAt": "2026-09-08T10:00:00.000Z"
+  },
+  {
+    "id": "once_electro_04",
+    "businessName": "Sarmiento Tech Audio",
+    "contactName": "",
+    "phone": "",
+    "phoneBusiness": "",
+    "instagram": "@sarmientotech",
+    "website": "",
+    "facebook": "",
+    "rubro": "Electrónica / Audio",
+    "serviceType": "chatbot",
+    "status": "nuevo",
+    "monthlyPlan": 0,
+    "systemTotal": "$0",
+    "setupPrice": "",
+    "metaAdsCap": "",
+    "billingDay": "1",
+    "paymentStatus": "al_dia",
+    "address": "Sarmiento 2520, Balvanera, CABA",
+    "lat": -34.6052,
+    "lng": -58.4025,
+    "photo": "",
+    "visitDate": "",
+    "notes": "Torres de sonido, micrófonos y accesorios de streaming.",
+    "createdAt": "2026-09-08T10:00:00.000Z"
+  },
+  {
+    "id": "flores_moda_01",
+    "businessName": "Cocoliche Mayorista",
+    "contactName": "",
+    "phone": "",
+    "phoneBusiness": "",
+    "instagram": "@cocolichemayorista",
+    "website": "https://cocolichemayorista.mitiendanube.com",
+    "facebook": "",
+    "rubro": "Indumentaria / Ropa",
+    "serviceType": "hibrido",
+    "status": "nuevo",
+    "monthlyPlan": 0,
+    "systemTotal": "$0",
+    "setupPrice": "",
+    "metaAdsCap": "",
+    "billingDay": "1",
+    "paymentStatus": "al_dia",
+    "address": "Av. Avellaneda 2850, Flores, CABA",
+    "lat": -34.6285,
+    "lng": -58.4695,
+    "photo": "",
+    "visitDate": "",
+    "notes": "Fabricante remeras oversize, buzos de friza y chalecos. Venta por curva.",
+    "createdAt": "2026-09-08T10:00:00.000Z"
+  },
+  {
+    "id": "flores_moda_02",
+    "businessName": "Avellaneda Urban Chic",
+    "contactName": "",
+    "phone": "",
+    "phoneBusiness": "",
+    "instagram": "@avellanedaurban",
+    "website": "",
+    "facebook": "",
+    "rubro": "Indumentaria / Ropa",
+    "serviceType": "chatbot",
+    "status": "nuevo",
+    "monthlyPlan": 0,
+    "systemTotal": "$0",
+    "setupPrice": "",
+    "metaAdsCap": "",
+    "billingDay": "1",
+    "paymentStatus": "al_dia",
+    "address": "Av. Avellaneda 2940, Flores, CABA",
+    "lat": -34.6288,
+    "lng": -58.471,
+    "photo": "",
+    "visitDate": "",
+    "notes": "Pantalones sastreros, blazers y tops por mayor.",
+    "createdAt": "2026-09-08T10:00:00.000Z"
+  },
+  {
+    "id": "flores_moda_03",
+    "businessName": "Look Femenino Mayorista",
+    "contactName": "",
+    "phone": "",
+    "phoneBusiness": "",
+    "instagram": "@lookfemeninomayorista",
+    "website": "",
+    "facebook": "",
+    "rubro": "Indumentaria / Ropa",
+    "serviceType": "chatbot",
+    "status": "nuevo",
+    "monthlyPlan": 0,
+    "systemTotal": "$0",
+    "setupPrice": "",
+    "metaAdsCap": "",
+    "billingDay": "1",
+    "paymentStatus": "al_dia",
+    "address": "Bogotá 2830, Flores, CABA",
+    "lat": -34.6272,
+    "lng": -58.4691,
+    "photo": "",
+    "visitDate": "",
+    "notes": "Vestidos de fiesta, satén y prendas de noche.",
+    "createdAt": "2026-09-08T10:00:00.000Z"
+  },
+  {
+    "id": "flores_moda_04",
+    "businessName": "Mona Moda Flores",
+    "contactName": "",
+    "phone": "",
+    "phoneBusiness": "",
+    "instagram": "@monamodaflores",
+    "website": "",
+    "facebook": "",
+    "rubro": "Indumentaria / Ropa",
+    "serviceType": "chatbot",
+    "status": "nuevo",
+    "monthlyPlan": 0,
+    "systemTotal": "$0",
+    "setupPrice": "",
+    "metaAdsCap": "",
+    "billingDay": "1",
+    "paymentStatus": "al_dia",
+    "address": "Helguera 340, Flores, CABA",
+    "lat": -34.6292,
+    "lng": -58.4705,
+    "photo": "",
+    "visitDate": "",
+    "notes": "Sweaters de hilo, poleras y cárdigans por docena.",
+    "createdAt": "2026-09-08T10:00:00.000Z"
+  },
+  {
+    "id": "flores_moda_05",
+    "businessName": "Flores Trendy B2B",
+    "contactName": "",
+    "phone": "",
+    "phoneBusiness": "",
+    "instagram": "@florestrendy",
+    "website": "",
+    "facebook": "",
+    "rubro": "Indumentaria / Ropa",
+    "serviceType": "chatbot",
+    "status": "nuevo",
+    "monthlyPlan": 0,
+    "systemTotal": "$0",
+    "setupPrice": "",
+    "metaAdsCap": "",
+    "billingDay": "1",
+    "paymentStatus": "al_dia",
+    "address": "Av. Avellaneda 3120, Flores, CABA",
+    "lat": -34.6295,
+    "lng": -58.4735,
+    "photo": "",
+    "visitDate": "",
+    "notes": "Conjuntos rústicos, joggings y camperas deportivas.",
+    "createdAt": "2026-09-08T10:00:00.000Z"
+  },
+  {
+    "id": "flores_moda_06",
+    "businessName": "Bella Ragazza Mayorista",
+    "contactName": "",
+    "phone": "",
+    "phoneBusiness": "",
+    "instagram": "@bellaragazzamayorista",
+    "website": "",
+    "facebook": "",
+    "rubro": "Indumentaria / Ropa",
+    "serviceType": "chatbot",
+    "status": "nuevo",
+    "monthlyPlan": 0,
+    "systemTotal": "$0",
+    "setupPrice": "",
+    "metaAdsCap": "",
+    "billingDay": "1",
+    "paymentStatus": "al_dia",
+    "address": "Cuenca 350, Flores, CABA",
+    "lat": -34.6281,
+    "lng": -58.4682,
+    "photo": "",
+    "visitDate": "",
+    "notes": "Blusas, camisas fibrana y palazzos por mayor.",
+    "createdAt": "2026-09-08T10:00:00.000Z"
+  },
+  {
+    "id": "flores_moda_07",
+    "businessName": "Indumentaria Roma",
+    "contactName": "",
+    "phone": "",
+    "phoneBusiness": "",
+    "instagram": "@indumentariaroma",
+    "website": "",
+    "facebook": "",
+    "rubro": "Indumentaria / Ropa",
+    "serviceType": "chatbot",
+    "status": "nuevo",
+    "monthlyPlan": 0,
+    "systemTotal": "$0",
+    "setupPrice": "",
+    "metaAdsCap": "",
+    "billingDay": "1",
+    "paymentStatus": "al_dia",
+    "address": "Av. Avellaneda 3250, Flores, CABA",
+    "lat": -34.6299,
+    "lng": -58.4752,
+    "photo": "",
+    "visitDate": "",
+    "notes": "Ropa deportiva mujer, calzas seamless y tops.",
+    "createdAt": "2026-09-08T10:00:00.000Z"
+  },
+  {
+    "id": "flores_moda_08",
+    "businessName": "Amelie Mayorista",
+    "contactName": "",
+    "phone": "",
+    "phoneBusiness": "",
+    "instagram": "@ameliemayorista",
+    "website": "",
+    "facebook": "",
+    "rubro": "Indumentaria / Ropa",
+    "serviceType": "chatbot",
+    "status": "nuevo",
+    "monthlyPlan": 0,
+    "systemTotal": "$0",
+    "setupPrice": "",
+    "metaAdsCap": "",
+    "billingDay": "1",
+    "paymentStatus": "al_dia",
+    "address": "Argerich 380, Flores, CABA",
+    "lat": -34.6289,
+    "lng": -58.4718,
+    "photo": "",
+    "visitDate": "",
+    "notes": "Buzos hoodie estampados DTF y remeras gráficas.",
+    "createdAt": "2026-09-08T10:00:00.000Z"
+  },
+  {
+    "id": "flores_moda_09",
+    "businessName": "Diva Showroom Flores",
+    "contactName": "",
+    "phone": "",
+    "phoneBusiness": "",
+    "instagram": "@divafloresmayorista",
+    "website": "",
+    "facebook": "",
+    "rubro": "Indumentaria / Ropa",
+    "serviceType": "chatbot",
+    "status": "nuevo",
+    "monthlyPlan": 0,
+    "systemTotal": "$0",
+    "setupPrice": "",
+    "metaAdsCap": "",
+    "billingDay": "1",
+    "paymentStatus": "al_dia",
+    "address": "Av. Avellaneda 3410, Flores, CABA",
+    "lat": -34.6304,
+    "lng": -58.4775,
+    "photo": "",
+    "visitDate": "",
+    "notes": "Camperas puffer, ecocuero y chalecos de abrigo.",
+    "createdAt": "2026-09-08T10:00:00.000Z"
+  },
+  {
+    "id": "flores_denim_01",
+    "businessName": "Blue Jeans Mayorista",
+    "contactName": "",
+    "phone": "",
+    "phoneBusiness": "",
+    "instagram": "@bluejeansmayorista",
+    "website": "",
+    "facebook": "",
+    "rubro": "Indumentaria / Ropa",
+    "serviceType": "hibrido",
+    "status": "nuevo",
+    "monthlyPlan": 0,
+    "systemTotal": "$0",
+    "setupPrice": "",
+    "metaAdsCap": "",
+    "billingDay": "1",
+    "paymentStatus": "al_dia",
+    "address": "Av. Avellaneda 2980, Flores, CABA",
+    "lat": -34.6289,
+    "lng": -58.4715,
+    "photo": "",
+    "visitDate": "",
+    "notes": "Jeans wide leg, mom y cargo por curva para revendedores.",
+    "createdAt": "2026-09-08T10:00:00.000Z"
+  },
+  {
+    "id": "flores_denim_02",
+    "businessName": "Denim Factory Flores",
+    "contactName": "",
+    "phone": "",
+    "phoneBusiness": "",
+    "instagram": "@denimfactoryflores",
+    "website": "",
+    "facebook": "",
+    "rubro": "Indumentaria / Ropa",
+    "serviceType": "chatbot",
+    "status": "nuevo",
+    "monthlyPlan": 0,
+    "systemTotal": "$0",
+    "setupPrice": "",
+    "metaAdsCap": "",
+    "billingDay": "1",
+    "paymentStatus": "al_dia",
+    "address": "Helguera 280, Flores, CABA",
+    "lat": -34.629,
+    "lng": -58.4701,
+    "photo": "",
+    "visitDate": "",
+    "notes": "Jeans rígidos y elastizados tiro alto por mayor.",
+    "createdAt": "2026-09-08T10:00:00.000Z"
+  },
+  {
+    "id": "flores_denim_03",
+    "businessName": "Texas Jeans Mayorista",
+    "contactName": "",
+    "phone": "",
+    "phoneBusiness": "",
+    "instagram": "@texasjeansmayorista",
+    "website": "",
+    "facebook": "",
+    "rubro": "Indumentaria / Ropa",
+    "serviceType": "chatbot",
+    "status": "nuevo",
+    "monthlyPlan": 0,
+    "systemTotal": "$0",
+    "setupPrice": "",
+    "metaAdsCap": "",
+    "billingDay": "1",
+    "paymentStatus": "al_dia",
+    "address": "Bogotá 2920, Flores, CABA",
+    "lat": -34.6275,
+    "lng": -58.4705,
+    "photo": "",
+    "visitDate": "",
+    "notes": "Pantalones cargo de gabardina y bermudas denim.",
+    "createdAt": "2026-09-08T10:00:00.000Z"
+  },
+  {
+    "id": "flores_denim_04",
+    "businessName": "Distrito Denim",
+    "contactName": "",
+    "phone": "",
+    "phoneBusiness": "",
+    "instagram": "@distritodenim",
+    "website": "",
+    "facebook": "",
+    "rubro": "Indumentaria / Ropa",
+    "serviceType": "chatbot",
+    "status": "nuevo",
+    "monthlyPlan": 0,
+    "systemTotal": "$0",
+    "setupPrice": "",
+    "metaAdsCap": "",
+    "billingDay": "1",
+    "paymentStatus": "al_dia",
+    "address": "Av. Avellaneda 3340, Flores, CABA",
+    "lat": -34.6301,
+    "lng": -58.4765,
+    "photo": "",
+    "visitDate": "",
+    "notes": "Shorts de jean rotos, chupines y polleras denim.",
+    "createdAt": "2026-09-08T10:00:00.000Z"
+  },
+  {
+    "id": "flores_hombre_01",
+    "businessName": "Hombre Urbano Flores",
+    "contactName": "",
+    "phone": "",
+    "phoneBusiness": "",
+    "instagram": "@hombreurbanoflores",
+    "website": "",
+    "facebook": "",
+    "rubro": "Indumentaria / Ropa",
+    "serviceType": "hibrido",
+    "status": "nuevo",
+    "monthlyPlan": 0,
+    "systemTotal": "$0",
+    "setupPrice": "",
+    "metaAdsCap": "",
+    "billingDay": "1",
+    "paymentStatus": "al_dia",
+    "address": "Av. Avellaneda 3050, Flores, CABA",
+    "lat": -34.6291,
+    "lng": -58.4725,
+    "photo": "",
+    "visitDate": "",
+    "notes": "Remeras jersey 24/1 lisas y estampadas por curva.",
+    "createdAt": "2026-09-08T10:00:00.000Z"
+  },
+  {
+    "id": "flores_hombre_02",
+    "businessName": "Brotherhood Indumentaria",
+    "contactName": "",
+    "phone": "",
+    "phoneBusiness": "",
+    "instagram": "@brotherhoodmayorista",
+    "website": "",
+    "facebook": "",
+    "rubro": "Indumentaria / Ropa",
+    "serviceType": "chatbot",
+    "status": "nuevo",
+    "monthlyPlan": 0,
+    "systemTotal": "$0",
+    "setupPrice": "",
+    "metaAdsCap": "",
+    "billingDay": "1",
+    "paymentStatus": "al_dia",
+    "address": "Bogotá 3150, Flores, CABA",
+    "lat": -34.628,
+    "lng": -58.474,
+    "photo": "",
+    "visitDate": "",
+    "notes": "Buzos oversize, jogger rústico y musculosas.",
+    "createdAt": "2026-09-08T10:00:00.000Z"
+  },
+  {
+    "id": "flores_hombre_03",
+    "businessName": "King Street B2B",
+    "contactName": "",
+    "phone": "",
+    "phoneBusiness": "",
+    "instagram": "@kingstreetmayorista",
+    "website": "",
+    "facebook": "",
+    "rubro": "Indumentaria / Ropa",
+    "serviceType": "chatbot",
+    "status": "nuevo",
+    "monthlyPlan": 0,
+    "systemTotal": "$0",
+    "setupPrice": "",
+    "metaAdsCap": "",
+    "billingDay": "1",
+    "paymentStatus": "al_dia",
+    "address": "Helguera 410, Flores, CABA",
+    "lat": -34.6296,
+    "lng": -58.471,
+    "photo": "",
+    "visitDate": "",
+    "notes": "Remeras algodón pima y camperas deportivas.",
+    "createdAt": "2026-09-08T10:00:00.000Z"
+  },
+  {
+    "id": "flores_hombre_04",
+    "businessName": "Vikingos Indumentaria Masculina",
+    "contactName": "",
+    "phone": "",
+    "phoneBusiness": "",
+    "instagram": "@vikingosmayorista",
+    "website": "",
+    "facebook": "",
+    "rubro": "Indumentaria / Ropa",
+    "serviceType": "chatbot",
+    "status": "nuevo",
+    "monthlyPlan": 0,
+    "systemTotal": "$0",
+    "setupPrice": "",
+    "metaAdsCap": "",
+    "billingDay": "1",
+    "paymentStatus": "al_dia",
+    "address": "Av. Avellaneda 3280, Flores, CABA",
+    "lat": -34.6298,
+    "lng": -58.4758,
+    "photo": "",
+    "visitDate": "",
+    "notes": "Bermudas rústicas, chombas piqué y camisas lisas.",
+    "createdAt": "2026-09-08T10:00:00.000Z"
+  },
+  {
+    "id": "flores_ninos_01",
+    "businessName": "Peques Mayorista Infantil",
+    "contactName": "",
+    "phone": "",
+    "phoneBusiness": "",
+    "instagram": "@pequesmayoristaflores",
+    "website": "",
+    "facebook": "",
+    "rubro": "Indumentaria / Ropa",
+    "serviceType": "hibrido",
+    "status": "nuevo",
+    "monthlyPlan": 0,
+    "systemTotal": "$0",
+    "setupPrice": "",
+    "metaAdsCap": "",
+    "billingDay": "1",
+    "paymentStatus": "al_dia",
+    "address": "Av. Avellaneda 2780, Flores, CABA",
+    "lat": -34.6282,
+    "lng": -58.4685,
+    "photo": "",
+    "visitDate": "",
+    "notes": "Conjuntos frizados infantiles y bodys de bebé por mayor.",
+    "createdAt": "2026-09-08T10:00:00.000Z"
+  },
+  {
+    "id": "flores_ninos_02",
+    "businessName": "Bambino Ropa Infantil",
+    "contactName": "",
+    "phone": "",
+    "phoneBusiness": "",
+    "instagram": "@bambinomayorista",
+    "website": "",
+    "facebook": "",
+    "rubro": "Indumentaria / Ropa",
+    "serviceType": "chatbot",
+    "status": "nuevo",
+    "monthlyPlan": 0,
+    "systemTotal": "$0",
+    "setupPrice": "",
+    "metaAdsCap": "",
+    "billingDay": "1",
+    "paymentStatus": "al_dia",
+    "address": "Bogotá 2750, Flores, CABA",
+    "lat": -34.627,
+    "lng": -58.468,
+    "photo": "",
+    "visitDate": "",
+    "notes": "Pijamas infantiles y vestidos de nena por curva.",
+    "createdAt": "2026-09-08T10:00:00.000Z"
+  },
+  {
+    "id": "flores_ninos_03",
+    "businessName": "Colegiales & Guardapolvos Flores",
+    "contactName": "",
+    "phone": "",
+    "phoneBusiness": "",
+    "instagram": "@colegialesflores",
+    "website": "",
+    "facebook": "",
+    "rubro": "Indumentaria / Ropa",
+    "serviceType": "chatbot",
+    "status": "nuevo",
+    "monthlyPlan": 0,
+    "systemTotal": "$0",
+    "setupPrice": "",
+    "metaAdsCap": "",
+    "billingDay": "1",
+    "paymentStatus": "al_dia",
+    "address": "Helguera 210, Flores, CABA",
+    "lat": -34.6288,
+    "lng": -58.4698,
+    "photo": "",
+    "visitDate": "",
+    "notes": "Guardapolvos, chombas escolares y conjuntos de colegio.",
+    "createdAt": "2026-09-08T10:00:00.000Z"
+  },
+  {
+    "id": "flores_deporte_01",
+    "businessName": "Sport Flores Mayorista",
+    "contactName": "",
+    "phone": "",
+    "phoneBusiness": "",
+    "instagram": "@sportfloresmayorista",
+    "website": "",
+    "facebook": "",
+    "rubro": "Indumentaria / Ropa",
+    "serviceType": "hibrido",
+    "status": "nuevo",
+    "monthlyPlan": 0,
+    "systemTotal": "$0",
+    "setupPrice": "",
+    "metaAdsCap": "",
+    "billingDay": "1",
+    "paymentStatus": "al_dia",
+    "address": "Av. Avellaneda 3390, Flores, CABA",
+    "lat": -34.6302,
+    "lng": -58.477,
+    "photo": "",
+    "visitDate": "",
+    "notes": "Conjuntos deportivos acetato y microfibra por curva.",
+    "createdAt": "2026-09-08T10:00:00.000Z"
+  },
+  {
+    "id": "flores_deporte_02",
+    "businessName": "Fit Zone B2B",
+    "contactName": "",
+    "phone": "",
+    "phoneBusiness": "",
+    "instagram": "@fitzonemayorista",
+    "website": "",
+    "facebook": "",
+    "rubro": "Indumentaria / Ropa",
+    "serviceType": "chatbot",
+    "status": "nuevo",
+    "monthlyPlan": 0,
+    "systemTotal": "$0",
+    "setupPrice": "",
+    "metaAdsCap": "",
+    "billingDay": "1",
+    "paymentStatus": "al_dia",
+    "address": "Bogotá 3240, Flores, CABA",
+    "lat": -34.6283,
+    "lng": -58.4755,
+    "photo": "",
+    "visitDate": "",
+    "notes": "Tops deportivos, calzas biker y shorts running.",
+    "createdAt": "2026-09-08T10:00:00.000Z"
+  },
+  {
+    "id": "flores_deporte_03",
+    "businessName": "Zapatillas & Calzado Urbano B2B",
+    "contactName": "",
+    "phone": "",
+    "phoneBusiness": "",
+    "instagram": "@calzadofloresmayorista",
+    "website": "",
+    "facebook": "",
+    "rubro": "Indumentaria / Ropa",
+    "serviceType": "chatbot",
+    "status": "nuevo",
+    "monthlyPlan": 0,
+    "systemTotal": "$0",
+    "setupPrice": "",
+    "metaAdsCap": "",
+    "billingDay": "1",
+    "paymentStatus": "al_dia",
+    "address": "Av. Nazca 350, Flores, CABA",
+    "lat": -34.6279,
+    "lng": -58.4665,
+    "photo": "",
+    "visitDate": "",
+    "notes": "Zapatillas de lona, botitas y calzado urbano por bulto.",
+    "createdAt": "2026-09-08T10:00:00.000Z"
+  }
+];
+    let currentRadarZone = 'todos';
+    let currentRadarRubro = 'todos';
+    let radarSearchQuery = '';
+    let currentNavTab = 'clientes';
+
+    function switchNavTab(tab) {
+      currentNavTab = tab;
+      
+      // Update Tab Buttons
+      document.querySelectorAll('.nav-tab-btn').forEach(btn => btn.classList.remove('active'));
+      const activeBtn = document.getElementById('btn-tab-' + tab);
+      if (activeBtn) activeBtn.classList.add('active');
+
+      // Containers
+      const clientesContainer = document.getElementById('view-clientes-container');
+      const radarContainer = document.getElementById('view-radar-container');
+      const mapContainer = document.getElementById('map-view-container');
+
+      if (tab === 'clientes') {
+        if (clientesContainer) clientesContainer.style.display = 'block';
+        if (radarContainer) radarContainer.style.display = 'none';
+        if (mapContainer) mapContainer.style.display = 'none';
+        renderCards();
+      } else if (tab === 'radar') {
+        if (clientesContainer) clientesContainer.style.display = 'none';
+        if (radarContainer) radarContainer.style.display = 'block';
+        if (mapContainer) mapContainer.style.display = 'none';
+        renderRadarCards();
+      } else if (tab === 'mapa') {
+        if (clientesContainer) clientesContainer.style.display = 'none';
+        if (radarContainer) radarContainer.style.display = 'none';
+        if (mapContainer) mapContainer.style.display = 'block';
+        initMap();
+        setTimeout(() => { if (map) map.invalidateSize(); }, 200);
+      }
+    }
+
+    function renderRadarCards() {
+      const container = document.getElementById('radar-cards-list');
+      if (!container) return;
+
+      // Update Counts
+      const onceCount = RADAR_PROSPECTS.filter(p => p.address.toLowerCase().includes('balvanera') || p.id.startsWith('once')).length;
+      const floresCount = RADAR_PROSPECTS.filter(p => p.address.toLowerCase().includes('flores') || p.id.startsWith('flores')).length;
+      
+      const elTodos = document.getElementById('zone-count-todos');
+      const elOnce = document.getElementById('zone-count-once');
+      const elFlores = document.getElementById('zone-count-flores');
+      const elCountRadar = document.getElementById('count-radar');
+
+      if (elTodos) elTodos.textContent = RADAR_PROSPECTS.length;
+      if (elOnce) elOnce.textContent = onceCount;
+      if (elFlores) elFlores.textContent = floresCount;
+      if (elCountRadar) elCountRadar.textContent = RADAR_PROSPECTS.length;
+
+      let filtered = RADAR_PROSPECTS.filter(item => {
+        // Zone filter
+        const isOnce = item.address.toLowerCase().includes('balvanera') || item.id.startsWith('once');
+        const isFlores = item.address.toLowerCase().includes('flores') || item.id.startsWith('flores');
+        
+        if (currentRadarZone === 'once' && !isOnce) return false;
+        if (currentRadarZone === 'flores' && !isFlores) return false;
+
+        // Rubro filter
+        if (currentRadarRubro !== 'todos' && item.rubro !== currentRadarRubro) return false;
+
+        // Search query
+        if (radarSearchQuery) {
+          const q = radarSearchQuery.toLowerCase();
+          const matchName = (item.businessName || '').toLowerCase().includes(q);
+          const matchAddr = (item.address || '').toLowerCase().includes(q);
+          const matchRubro = (item.rubro || '').toLowerCase().includes(q);
+          const matchNotes = (item.notes || '').toLowerCase().includes(q);
+          const matchIg = (item.instagram || '').toLowerCase().includes(q);
+          if (!matchName && !matchAddr && !matchRubro && !matchNotes && !matchIg) return false;
+        }
+
+        return true;
+      });
+
+      if (filtered.length === 0) {
+        container.innerHTML = `
+          <div style="text-align: center; padding: 30px; color: var(--text-muted); background: var(--card-bg); border-radius: 12px; border: 1px dashed var(--card-border);">
+            <i class="fa-solid fa-radar fa-spin" style="font-size: 2rem; color: #c084fc; margin-bottom: 10px;"></i>
+            <p>No se encontraron comercios en esta categoría del Radar.</p>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = filtered.map(item => {
+        const isOnce = item.id.startsWith('once');
+        const zoneClass = isOnce ? 'zone-once' : 'zone-flores';
+        const zoneLabel = isOnce ? '📍 Once' : '👕 Flores';
+        
+        const igClean = (item.instagram || '').replace('@', '').trim();
+        const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(item.address)}`;
+
+        return `
+          <div class="radar-card ${zoneClass}">
+            <div class="radar-card-header">
+              <div class="radar-card-title">
+                <h3>${item.businessName}</h3>
+                <p><i class="fa-solid fa-location-dot"></i> ${item.address}</p>
+              </div>
+              <div class="radar-badges-row">
+                <span class="radar-badge zone">${zoneLabel}</span>
+                <span class="radar-badge rubro">${item.rubro}</span>
+              </div>
+            </div>
+
+            <div class="radar-hook">
+              <strong><i class="fa-solid fa-lightbulb"></i> Gancho de Venta:</strong> ${item.notes || 'Comercio mayorista de alto volumen.'}
+            </div>
+
+            <div class="radar-actions-row">
+              <button type="button" class="btn-radar-visit" onclick="convertRadarToClient('${item.id}')">
+                <i class="fa-solid fa-location-arrow"></i> Registrar Visita / Pasar al CRM
+              </button>
+              ${igClean ? `
+                <a href="https://instagram.com/${igClean}" target="_blank" class="btn-radar-link" title="Ver Instagram">
+                  <i class="fa-brands fa-instagram" style="color: #f472b6;"></i> IG
+                </a>
+              ` : ''}
+              ${item.website ? `
+                <a href="${item.website}" target="_blank" class="btn-radar-link" title="Ver Catálogo Web">
+                  <i class="fa-solid fa-globe" style="color: var(--primary);"></i> Web
+                </a>
+              ` : ''}
+              <a href="${mapsUrl}" target="_blank" class="btn-radar-link" title="Abrir en GPS">
+                <i class="fa-solid fa-map" style="color: #fbbf24;"></i> GPS
+              </a>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function setRadarZone(zone, el) {
+      currentRadarZone = zone;
+      document.querySelectorAll('.radar-zone-btn').forEach(btn => btn.classList.remove('active'));
+      if (el) el.classList.add('active');
+      renderRadarCards();
+    }
+
+    function setRadarRubro(rubro, el) {
+      currentRadarRubro = rubro;
+      document.querySelectorAll('#radar-rubro-bar .filter-tab').forEach(btn => btn.classList.remove('active'));
+      if (el) el.classList.add('active');
+      renderRadarCards();
+    }
+
+    function handleRadarSearch() {
+      const input = document.getElementById('radar-search-input');
+      radarSearchQuery = input ? input.value : '';
+      renderRadarCards();
+    }
+
+    async function convertRadarToClient(radarId) {
+      const target = RADAR_PROSPECTS.find(p => p.id === radarId);
+      if (!target) return;
+
+      const today = new Date().toISOString().split('T')[0];
+      const newClient = {
+        id: 'rec_' + Date.now(),
+        businessName: target.businessName,
+        contactName: target.contactName || '',
+        phone: target.phone || '',
+        phoneBusiness: target.phoneBusiness || '',
+        instagram: target.instagram || '',
+        website: target.website || '',
+        facebook: target.facebook || '',
+        rubro: target.rubro || 'Indumentaria / Ropa',
+        serviceType: target.serviceType || 'hibrido',
+        status: 'visitado',
+        monthlyPlan: 0,
+        systemTotal: '$0',
+        setupPrice: '',
+        metaAdsCap: '',
+        billingDay: '1',
+        paymentStatus: 'al_dia',
+        address: target.address,
+        lat: target.lat,
+        lng: target.lng,
+        photo: '',
+        visitDate: today,
+        notes: target.notes || 'Visita presencial a local mayorista.',
+        createdAt: new Date().toISOString()
+      };
+
+      prospects.unshift(newClient);
+      saveProspects();
+      updateMetrics();
+      renderCards();
+
+      // Sync to Supabase
+      if (supabaseClient) {
+        try {
+          await supabaseClient.from('crm_prospects').upsert([{
+            id: newClient.id,
+            business_name: newClient.businessName,
+            contact_name: newClient.contactName,
+            phone: newClient.phone,
+            phone_business: newClient.phoneBusiness,
+            instagram: newClient.instagram,
+            website: newClient.website,
+            facebook: newClient.facebook,
+            rubro: newClient.rubro,
+            service_type: newClient.serviceType,
+            status: newClient.status,
+            monthly_plan: newClient.monthlyPlan,
+            system_total: newClient.systemTotal,
+            setup_price: newClient.setupPrice,
+            meta_ads_cap: newClient.metaAdsCap,
+            billing_day: newClient.billingDay,
+            payment_status: newClient.paymentStatus,
+            address: newClient.address,
+            lat: newClient.lat,
+            lng: newClient.lng,
+            photo: newClient.photo,
+            visit_date: newClient.visitDate,
+            notes: newClient.notes,
+            created_at: newClient.createdAt
+          }]);
+        } catch(e) { console.warn('Supabase sync warning:', e); }
+      }
+
+      showToast(`📍 ${target.businessName} agregado a Mis Clientes`);
+      
+      // Switch to Clientes Tab and open edit mode
+      switchNavTab('clientes');
+      startEdit(newClient.id);
+      
+      const formEl = document.getElementById('form-container');
+      if (formEl) formEl.scrollIntoView({ behavior: 'smooth' });
+    }
+
     let currentFilter = 'todos';
     let searchQuery = '';
     let map = null;
