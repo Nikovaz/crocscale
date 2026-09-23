@@ -15152,7 +15152,13 @@
     "notes": "Telas de punto, modal y morley para confección. Bot para consultar disponibilidad de rollos y colores.",
     "createdAt": "2026-09-08T12:00:00.000Z"
   }
-]; }
+];
+
+    let discardedRadarIds = [];
+    try {
+      discardedRadarIds = JSON.parse(localStorage.getItem('crocscale_discarded_radar_ids') || '[]');
+    } catch(e) { discardedRadarIds = []; }
+
     let currentRadarZone = 'todos';
     let currentRadarRubro = 'todos';
     let radarSearchQuery = '';
