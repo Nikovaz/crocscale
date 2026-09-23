@@ -1037,6 +1037,29 @@
       text-decoration: none;
     }
 
+        .btn-radar-delete {
+      background: rgba(255, 77, 77, 0.1);
+      border: 1px solid rgba(255, 77, 77, 0.35);
+      color: #ff4d4d;
+      padding: 8px 11px;
+      border-radius: 8px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .btn-radar-delete:hover {
+      background: rgba(255, 77, 77, 0.28);
+      border-color: #ff4d4d;
+      color: #ffffff;
+      transform: translateY(-1px);
+    }
+
     .btn-radar-link:hover {
       border-color: var(--primary);
       color: var(--primary);
@@ -1448,8 +1471,13 @@
           <h2><i class="fa-solid fa-crosshairs" style="color: #c084fc;"></i> Radar Mayoristas & Importadores</h2>
           <p>200 Comercios mayoristas clave en Once y Flores listos para prospección</p>
         </div>
-        <div style="font-size: 0.78rem; color: #c084fc; font-weight: 700; background: rgba(157, 78, 221, 0.2); padding: 4px 10px; border-radius: 20px; border: 1px solid rgba(157, 78, 221, 0.4);">
-          <span id="zone-count-todos-header">200</span> Comercios Activos
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <button type="button" id="btn-restore-radar" onclick="restoreDiscardedRadar()" style="display: none; font-size: 0.75rem; color: #fbbf24; font-weight: 700; background: rgba(251, 191, 36, 0.15); border: 1px solid rgba(251, 191, 36, 0.4); padding: 4px 10px; border-radius: 20px; cursor: pointer; transition: all 0.2s;">
+            <i class="fa-solid fa-rotate-left"></i> Restaurar Descartados
+          </button>
+          <div style="font-size: 0.78rem; color: #c084fc; font-weight: 700; background: rgba(157, 78, 221, 0.2); padding: 4px 10px; border-radius: 20px; border: 1px solid rgba(157, 78, 221, 0.4);">
+            <span id="zone-count-todos-header">200</span> Comercios Activos
+          </div>
         </div>
       </div>
 
@@ -7026,6 +7054,10 @@
   }
 ];
 
+        let discardedRadarIds = [];
+    try {
+      discardedRadarIds = JSON.parse(localStorage.getItem('crocscale_discarded_radar_ids') || '[]');
+    } catch(e) { discardedRadarIds = []; }
     let currentRadarZone = 'todos';
     let currentRadarRubro = 'todos';
     let radarSearchQuery = '';
@@ -7072,9 +7104,22 @@
       const container = document.getElementById('radar-cards-list');
       if (!container) return;
 
+      const activeProspects = RADAR_PROSPECTS.filter(p => !discardedRadarIds.includes(p.id));
+
+      // Update Restore Button State
+      const restoreBtn = document.getElementById('btn-restore-radar');
+      if (restoreBtn) {
+        if (discardedRadarIds.length > 0) {
+          restoreBtn.style.display = 'inline-flex';
+          restoreBtn.innerHTML = `<i class="fa-solid fa-rotate-left"></i> Restaurar ${discardedRadarIds.length} Descartados`;
+        } else {
+          restoreBtn.style.display = 'none';
+        }
+      }
+
       // Update Counts
-      const onceCount = RADAR_PROSPECTS.filter(p => p.address.toLowerCase().includes('balvanera') || p.id.startsWith('once')).length;
-      const floresCount = RADAR_PROSPECTS.filter(p => p.address.toLowerCase().includes('flores') || p.id.startsWith('flores')).length;
+      const onceCount = activeProspects.filter(p => p.address.toLowerCase().includes('balvanera') || p.id.startsWith('once')).length;
+      const floresCount = activeProspects.filter(p => p.address.toLowerCase().includes('flores') || p.id.startsWith('flores')).length;
       
       const elTodos = document.getElementById('zone-count-todos');
       const elTodosHeader = document.getElementById('zone-count-todos-header');
@@ -7082,13 +7127,13 @@
       const elFlores = document.getElementById('zone-count-flores');
       const elCountRadar = document.getElementById('count-radar');
 
-      if (elTodos) elTodos.textContent = RADAR_PROSPECTS.length;
-      if (elTodosHeader) elTodosHeader.textContent = RADAR_PROSPECTS.length;
+      if (elTodos) elTodos.textContent = activeProspects.length;
+      if (elTodosHeader) elTodosHeader.textContent = activeProspects.length;
       if (elOnce) elOnce.textContent = onceCount;
       if (elFlores) elFlores.textContent = floresCount;
-      if (elCountRadar) elCountRadar.textContent = RADAR_PROSPECTS.length;
+      if (elCountRadar) elCountRadar.textContent = activeProspects.length;
 
-      let filtered = RADAR_PROSPECTS.filter(item => {
+      let filtered = activeProspects.filter(item => {
         // Zone filter
         const isOnce = item.address.toLowerCase().includes('balvanera') || item.id.startsWith('once');
         const isFlores = item.address.toLowerCase().includes('flores') || item.id.startsWith('flores');
@@ -7165,6 +7210,9 @@
               <a href="${mapsUrl}" target="_blank" class="btn-radar-link" title="Abrir en GPS">
                 <i class="fa-solid fa-map" style="color: #fbbf24;"></i> GPS
               </a>
+              <button type="button" class="btn-radar-delete" onclick="deleteRadarProspect('${item.id}', '${(item.businessName || '').replace(/'/g, "\'")}')" title="Eliminar / Descartar del Radar">
+                <i class="fa-solid fa-trash-can"></i> Descartar
+              </button>
             </div>
           </div>
         `;
@@ -7259,6 +7307,13 @@
           }]);
         } catch(e) { console.warn('Supabase sync warning:', e); }
       }
+
+      // Auto-remove from Radar when converted to Client
+      if (!discardedRadarIds.includes(radarId)) {
+        discardedRadarIds.push(radarId);
+        localStorage.setItem('crocscale_discarded_radar_ids', JSON.stringify(discardedRadarIds));
+      }
+      renderRadarCards();
 
       showToast(`📍 ${target.businessName} agregado a Mis Clientes`);
       
@@ -7842,7 +7897,7 @@
       });
 
       // 2. Add Radar Wholesalers (Distinct pins)
-      RADAR_PROSPECTS.forEach(item => {
+      RADAR_PROSPECTS.filter(item => !discardedRadarIds.includes(item.id)).forEach(item => {
         if (!item.lat || !item.lng) return;
         const lat = parseFloat(item.lat);
         const lng = parseFloat(item.lng);
