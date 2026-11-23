@@ -1337,6 +1337,65 @@
       border-color: var(--primary);
     }
 
+  
+    /* --- CHECKBOX / TILDE VERIFICACIÓN PARA PROMPT IA --- */
+    .radar-prompt-verify-bar, .prospect-prompt-verify-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px dashed rgba(255, 255, 255, 0.16);
+      border-radius: 8px;
+      padding: 7px 10px;
+      margin: 8px 0;
+      transition: all 0.25s ease;
+    }
+
+    .radar-prompt-verify-bar.is-verified, .prospect-prompt-verify-bar.is-verified {
+      background: rgba(16, 185, 129, 0.12);
+      border: 1px solid rgba(16, 185, 129, 0.5);
+      box-shadow: 0 0 12px rgba(16, 185, 129, 0.15);
+    }
+
+    .prompt-checkbox-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      user-select: none;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      margin: 0;
+    }
+
+    .prompt-check-input {
+      width: 17px;
+      height: 17px;
+      accent-color: #10b981;
+      cursor: pointer;
+    }
+
+    .badge-prompt-ready {
+      font-size: 0.65rem;
+      font-weight: 700;
+      color: #10b981;
+      background: rgba(16, 185, 129, 0.2);
+      border: 1px solid rgba(16, 185, 129, 0.4);
+      padding: 2px 8px;
+      border-radius: 12px;
+      letter-spacing: 0.5px;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      white-space: nowrap;
+    }
+
+    .radar-card.card-prompt-verified {
+      border-color: rgba(16, 185, 129, 0.6) !important;
+      border-left: 4px solid #10b981 !important;
+      box-shadow: 0 0 14px rgba(16, 185, 129, 0.15) !important;
+    }
+
   </style>
 </head>
 <body>
@@ -1642,6 +1701,9 @@
         <button class="filter-tab" onclick="setFilter('cerrado', this)">✅ Activos / Clientes</button>
         <button class="filter-tab" onclick="setFilter('propuesta', this)">🚀 Interesados</button>
         <button class="filter-tab" onclick="setFilter('calle', this)">🚶‍♂️ Visitas Calle</button>
+        <button class="filter-tab" onclick="setFilter('prompt_ready', this)" style="border-color: rgba(16, 185, 129, 0.35); color: #10b981;">
+          <i class="fa-solid fa-circle-check"></i> Listos Prompt (<span id="count-prospects-verified">0</span>)
+        </button>
         <button class="filter-tab" onclick="setFilter('deuda', this)">🔴 Cobros Pendientes</button>
         <button class="filter-tab" onclick="setFilter('no_interesa', this)">⚪ No Interesa</button>
       </div>
@@ -1736,6 +1798,26 @@
     <div id="view-demos-container" style="display: none;">
       
       <!-- HERO DEMO ACTIVA -->
+      <!-- COLA DE COMERCIOS CONFIRMADOS POR NICO PARA ARMAR PROMPT -->
+      <div class="demos-verified-section" id="demos-verified-queue-card" style="background: rgba(16, 185, 129, 0.08); border: 1px solid rgba(16, 185, 129, 0.35); border-radius: 12px; padding: 12px 16px; margin-bottom: 14px;">
+        <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px;">
+          <div>
+            <h3 style="margin: 0; font-size: 0.95rem; color: #fff; display: flex; align-items: center; gap: 8px;">
+              <i class="fa-solid fa-list-check" style="color: #10b981;"></i> Comercios Confirmados con Tilde para Prompt
+            </h3>
+            <p style="margin: 4px 0 0 0; font-size: 0.74rem; color: var(--text-muted);">
+              Confirmaste <strong id="demos-verified-count-badge" style="color: #10b981;">0</strong> comercios para que la IA extraiga su catálogo (Web/IG) y genere su prompt.
+            </p>
+          </div>
+          <button type="button" class="btn-secondary" onclick="switchNavTab('radar'); setRadarZone('verified', document.getElementById('radar-btn-verified'));" style="font-size: 0.75rem; padding: 6px 12px; border-color: rgba(16, 185, 129, 0.4); color: #10b981;">
+            <i class="fa-solid fa-radar"></i> Ver en Radar
+          </button>
+        </div>
+        <div id="demos-verified-chips" style="display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px;">
+          <!-- Loaded dynamically -->
+        </div>
+      </div>
+
       <div class="demos-hero-card">
         <div class="demos-hero-top">
           <div style="display: flex; align-items: center; gap: 8px;">
@@ -15436,6 +15518,140 @@
   }
 ];
 
+    
+    // --- GESTIÓN DE PROMPTS CONFIRMADOS POR NICOLÁS ---
+    let verifiedPromptIds = [];
+    try {
+      verifiedPromptIds = JSON.parse(localStorage.getItem('crocscale_verified_prompt_ids') || '[]');
+    } catch(e) { verifiedPromptIds = []; }
+
+    function updatePromptVerifiedCounters() {
+      const elRadarVerified = document.getElementById('zone-count-verified');
+      if (elRadarVerified) elRadarVerified.textContent = verifiedPromptIds.length;
+
+      const elProspectsVerified = document.getElementById('count-prospects-verified');
+      if (elProspectsVerified) {
+        const pCount = (prospects || []).filter(p => p.promptReady || verifiedPromptIds.includes(p.id)).length;
+        elProspectsVerified.textContent = pCount;
+      }
+
+      const elBadge = document.getElementById('demos-verified-count-badge');
+      if (elBadge) elBadge.textContent = verifiedPromptIds.length;
+
+      renderVerifiedChipsInDemos();
+    }
+
+    function renderVerifiedChipsInDemos() {
+      const container = document.getElementById('demos-verified-chips');
+      if (!container) return;
+
+      if (verifiedPromptIds.length === 0) {
+        container.innerHTML = '<span style="font-size: 0.72rem; color: var(--text-muted); font-style: italic;">No marcaste ningún comercio todavía. Andá a la pestaña Radar o Clientes y activá la tilde en los que quieras armar el prompt.</span>';
+        return;
+      }
+
+      const verifiedItems = [];
+      verifiedPromptIds.forEach(id => {
+        const rItem = (typeof RADAR_PROSPECTS !== 'undefined' ? RADAR_PROSPECTS : []).find(x => x.id === id);
+        const pItem = (prospects || []).find(x => x.id === id);
+        const item = rItem || pItem;
+        if (item) verifiedItems.push(item);
+      });
+
+      container.innerHTML = verifiedItems.map(item => `
+        <div style="background: rgba(16, 185, 129, 0.15); border: 1px solid rgba(16, 185, 129, 0.35); border-radius: 8px; padding: 4px 10px; font-size: 0.72rem; display: inline-flex; align-items: center; gap: 6px; color: #fff;">
+          <strong>${item.businessName}</strong>
+          ${item.instagram ? `<a href="https://instagram.com/${item.instagram.replace('@','')}" target="_blank" style="color: #f472b6; text-decoration: none;" title="Ver Instagram"><i class="fa-brands fa-instagram"></i></a>` : ''}
+          ${item.website ? `<a href="${item.website}" target="_blank" style="color: var(--primary); text-decoration: none;" title="Ver Web"><i class="fa-solid fa-globe"></i></a>` : ''}
+          <button type="button" onclick="toggleVerifyPrompt('${item.id}')" style="background: none; border: none; color: rgba(255,255,255,0.6); cursor: pointer; padding: 0 2px; font-size: 0.75rem;" title="Quitar confirmación">&times;</button>
+        </div>
+      `).join('');
+    }
+
+    async function toggleVerifyPrompt(id) {
+      const idx = verifiedPromptIds.indexOf(id);
+      const isNowVerified = (idx === -1);
+      if (isNowVerified) {
+        verifiedPromptIds.push(id);
+      } else {
+        verifiedPromptIds.splice(idx, 1);
+      }
+      localStorage.setItem('crocscale_verified_prompt_ids', JSON.stringify(verifiedPromptIds));
+      updatePromptVerifiedCounters();
+      if (typeof renderRadarCards === 'function') renderRadarCards();
+      if (typeof renderCards === 'function') renderCards();
+
+      const item = (typeof RADAR_PROSPECTS !== 'undefined' ? RADAR_PROSPECTS : []).find(p => p.id === id) || (prospects || []).find(p => p.id === id);
+      const bName = item ? item.businessName : 'Comercio';
+
+      if (isNowVerified) {
+        showToast(`✅ ${bName}: Info confirmada para armar Prompt`);
+      } else {
+        showToast(`Tilde removida: ${bName}`);
+      }
+
+      // Sync Supabase
+      if (supabaseClient && item) {
+        try {
+          if (isNowVerified) {
+            await supabaseClient.from('verified_prompt_leads').upsert([{
+              id: item.id,
+              business_name: item.businessName,
+              rubro: item.rubro || item.subRubro || 'General',
+              instagram: item.instagram || '',
+              website: item.website || '',
+              address: item.address || '',
+              notes: item.notes || '',
+              verified_at: new Date().toISOString()
+            }], { onConflict: 'id' });
+          } else {
+            await supabaseClient.from('verified_prompt_leads').delete().eq('id', id);
+          }
+        } catch(e) {
+          console.warn('Error syncing verified prompt lead:', e);
+        }
+      }
+    }
+
+    async function toggleVerifyProspectPrompt(id) {
+      const p = prospects.find(x => x.id === id);
+      if (!p) return;
+      p.promptReady = !p.promptReady;
+
+      const idx = verifiedPromptIds.indexOf(id);
+      if (p.promptReady && idx === -1) verifiedPromptIds.push(id);
+      else if (!p.promptReady && idx !== -1) verifiedPromptIds.splice(idx, 1);
+
+      localStorage.setItem('crocscale_verified_prompt_ids', JSON.stringify(verifiedPromptIds));
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(prospects));
+      updatePromptVerifiedCounters();
+      renderCards();
+
+      showToast(p.promptReady ? `✅ ${p.businessName}: Info confirmada para Prompt` : `Tilde removida: ${p.businessName}`);
+
+      if (supabaseClient) {
+        try {
+          await supabaseClient.from('crm_prospects').update({ prompt_ready: p.promptReady }).eq('id', id);
+        } catch(e) {}
+      }
+    }
+
+    async function loadVerifiedPromptFromCloud() {
+      if (supabaseClient) {
+        try {
+          const { data, error } = await supabaseClient.from('verified_prompt_leads').select('id');
+          if (data && data.length > 0) {
+            const cloudIds = data.map(d => d.id);
+            verifiedPromptIds = Array.from(new Set([...verifiedPromptIds, ...cloudIds]));
+            localStorage.setItem('crocscale_verified_prompt_ids', JSON.stringify(verifiedPromptIds));
+          }
+        } catch(err) {
+          console.warn('Error loading verified prompt leads:', err);
+        }
+      }
+      updatePromptVerifiedCounters();
+    }
+
     let discardedRadarIds = [];
     try {
       discardedRadarIds = JSON.parse(localStorage.getItem('crocscale_discarded_radar_ids') || '[]');
@@ -15470,6 +15686,7 @@
         if (mapContainer) mapContainer.style.display = 'none';
         if (demosContainer) demosContainer.style.display = 'block';
         loadDemoPrompts();
+      loadVerifiedPromptFromCloud();
       } else if (tab === 'clientes') {
         if (clientesContainer) clientesContainer.style.display = 'block';
         if (radarContainer) radarContainer.style.display = 'none';
@@ -15522,6 +15739,8 @@
       if (elTodosHeader) elTodosHeader.textContent = activeProspects.length;
       if (elOnce) elOnce.textContent = onceCount;
       if (elFlores) elFlores.textContent = floresCount;
+      const elVerified = document.getElementById('zone-count-verified');
+      if (elVerified) elVerified.textContent = activeProspects.filter(p => verifiedPromptIds.includes(p.id)).length;
       if (elCountRadar) elCountRadar.textContent = activeProspects.length;
 
       let filtered = activeProspects.filter(item => {
@@ -15531,6 +15750,7 @@
         
         if (currentRadarZone === 'once' && !isOnce) return false;
         if (currentRadarZone === 'flores' && !isFlores) return false;
+        if (currentRadarZone === 'verified' && !verifiedPromptIds.includes(item.id)) return false;
 
         // Rubro filter
         if (currentRadarRubro !== 'todos' && item.rubro !== currentRadarRubro) return false;
@@ -15568,7 +15788,7 @@
         const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(item.address)}`;
 
         return `
-          <div class="radar-card ${zoneClass}">
+          <div class="radar-card ${zoneClass} ${verifiedPromptIds.includes(item.id) ? 'card-prompt-verified' : ''}">
             <div class="radar-card-header">
               <div class="radar-card-title">
                 <h3>${item.businessName}</h3>
@@ -15582,6 +15802,17 @@
 
             <div class="radar-hook">
               <strong><i class="fa-solid fa-lightbulb"></i> Gancho de Venta:</strong> ${item.notes || 'Comercio mayorista de alto volumen.'}
+            </div>
+
+            <!-- TILDE CONFIRMACIÓN DE INFO PARA ARMAR PROMPT -->
+            <div class="radar-prompt-verify-bar ${verifiedPromptIds.includes(item.id) ? 'is-verified' : ''}">
+              <label class="prompt-checkbox-label" onclick="event.stopPropagation();">
+                <input type="checkbox" class="prompt-check-input" ${verifiedPromptIds.includes(item.id) ? 'checked' : ''} onchange="toggleVerifyPrompt('${item.id}')">
+                <span class="prompt-check-text">
+                  ${verifiedPromptIds.includes(item.id) ? '<strong style="color: #10b981;"><i class="fa-solid fa-circle-check"></i> Info confirmada para armar Prompt (Web / IG OK)</strong>' : '<i class="fa-regular fa-square-check"></i> Confirmar info para armar Prompt (Web / IG OK)'}
+                </span>
+              </label>
+              ${verifiedPromptIds.includes(item.id) ? '<span class="badge-prompt-ready"><i class="fa-solid fa-robot"></i> LISTO PARA PROMPT</span>' : ''}
             </div>
 
             <div class="radar-actions-row">
@@ -16348,6 +16579,7 @@
         if (currentFilter === 'calle') matchTab = p.status === 'visitado' || p.status === 'ya_tiene_bot';
         else if (currentFilter === 'no_interesa') matchTab = p.status === 'no_interesa';
         else if (currentFilter === 'deuda') matchTab = p.paymentStatus === 'pendiente';
+        else if (currentFilter === 'prompt_ready') matchTab = (p.promptReady === true || verifiedPromptIds.includes(p.id));
         else if (currentFilter !== 'todos') matchTab = p.status === currentFilter;
 
         let matchSearch = true;
