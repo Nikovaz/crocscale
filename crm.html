@@ -1151,6 +1151,192 @@
       .top-nav-tabs { gap: 4px; }
       .nav-tab-btn { font-size: 0.75rem; padding: 8px 4px; }
     }
+  
+    /* --- DEMOS IA TAB & VIEW STYLES --- */
+    .nav-tab-btn.active#btn-tab-demos {
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.25), rgba(0, 242, 254, 0.25));
+      border-color: #10b981;
+      color: #fff;
+      box-shadow: 0 0 16px rgba(16, 185, 129, 0.35);
+    }
+
+    #view-demos-container {
+      margin-top: 10px;
+    }
+
+    .demos-hero-card {
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.12), rgba(0, 242, 254, 0.08));
+      border: 1px solid rgba(16, 185, 129, 0.35);
+      border-radius: 12px;
+      padding: 14px 16px;
+      margin-bottom: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      position: relative;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    }
+
+    .demos-hero-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .live-pulse-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: #10b981;
+      background: rgba(16, 185, 129, 0.18);
+      border: 1px solid rgba(16, 185, 129, 0.4);
+      padding: 4px 10px;
+      border-radius: 20px;
+      letter-spacing: 0.5px;
+    }
+
+    .pulse-dot {
+      width: 8px;
+      height: 8px;
+      background: #10b981;
+      border-radius: 50%;
+      box-shadow: 0 0 8px #10b981;
+      animation: pulseAnim 1.6s infinite;
+    }
+
+    @keyframes pulseAnim {
+      0% { transform: scale(0.9); opacity: 0.7; }
+      50% { transform: scale(1.3); opacity: 1; }
+      100% { transform: scale(0.9); opacity: 0.7; }
+    }
+
+    .demos-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+      gap: 12px;
+      margin-top: 10px;
+    }
+
+    .demo-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      transition: all 0.25s ease;
+      position: relative;
+    }
+
+    .demo-card.active-live {
+      border-color: #10b981;
+      background: linear-gradient(145deg, rgba(16, 185, 129, 0.08), rgba(26, 32, 44, 0.8));
+      box-shadow: 0 0 16px rgba(16, 185, 129, 0.2);
+    }
+
+    .demo-card-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .demo-brand-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #fff;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .demo-cat-badge {
+      font-size: 0.68rem;
+      color: var(--primary);
+      background: rgba(0, 242, 254, 0.12);
+      border: 1px solid rgba(0, 242, 254, 0.25);
+      padding: 2px 8px;
+      border-radius: 12px;
+    }
+
+    .demo-prompt-preview {
+      font-family: monospace;
+      font-size: 0.74rem;
+      color: var(--text-muted);
+      background: rgba(0, 0, 0, 0.25);
+      border-radius: 6px;
+      padding: 8px 10px;
+      max-height: 85px;
+      overflow-y: hidden;
+      line-height: 1.4;
+      border-left: 2px solid var(--primary);
+    }
+
+    .demo-card-actions {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: auto;
+    }
+
+    .btn-activate-demo {
+      flex: 1;
+      padding: 8px 12px;
+      border-radius: 8px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+    }
+
+    .btn-activate-demo.is-active {
+      background: rgba(16, 185, 129, 0.2);
+      color: #10b981;
+      border: 1px solid rgba(16, 185, 129, 0.4);
+      cursor: default;
+    }
+
+    .btn-activate-demo.can-activate {
+      background: linear-gradient(135deg, #10b981, #059669);
+      color: #fff;
+      box-shadow: 0 2px 10px rgba(16, 185, 129, 0.35);
+    }
+    .btn-activate-demo.can-activate:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 14px rgba(16, 185, 129, 0.5);
+    }
+
+    .btn-icon-demo {
+      width: 34px;
+      height: 34px;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border-color);
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 0.85rem;
+      transition: all 0.2s;
+    }
+    .btn-icon-demo:hover {
+      background: rgba(255, 255, 255, 0.12);
+      color: #fff;
+      border-color: var(--primary);
+    }
+
   </style>
 </head>
 <body>
@@ -1187,6 +1373,11 @@
         <i class="fa-solid fa-crosshairs"></i>
         <span>Radar Por Visitar</span>
         <span class="nav-tab-badge" id="count-radar">500</span>
+      </button>
+      <button type="button" class="nav-tab-btn" id="btn-tab-demos" onclick="switchNavTab('demos')">
+        <i class="fa-solid fa-robot"></i>
+        <span>Demos IA</span>
+        <span class="nav-tab-badge" id="active-demo-badge" style="background: rgba(16, 185, 129, 0.25); color: #10b981; font-weight: 700;">🟢 En Vivo</span>
       </button>
       <button type="button" class="nav-tab-btn" id="btn-tab-mapa" onclick="switchNavTab('mapa')">
         <i class="fa-solid fa-map-location-dot"></i>
@@ -1541,6 +1732,97 @@
       <div id="map-element"></div>
     </div>
 
+    <!-- VIEW 4: DEMOS IA SWITCHER -->
+    <div id="view-demos-container" style="display: none;">
+      
+      <!-- HERO DEMO ACTIVA -->
+      <div class="demos-hero-card">
+        <div class="demos-hero-top">
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <div class="live-pulse-badge">
+              <span class="pulse-dot"></span>
+              BOT ATENDIENDO EN VIVO
+            </div>
+            <span style="font-size: 0.75rem; color: var(--text-muted);">WABA Nacha: <strong>+54 9 11 7827-3060</strong></span>
+          </div>
+          <button type="button" class="btn-primary" onclick="openNewDemoModal()" style="font-size: 0.78rem; padding: 6px 12px;">
+            <i class="fa-solid fa-plus"></i> Nueva Marca Demo
+          </button>
+        </div>
+        <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px;">
+          <div>
+            <h2 id="hero-active-brand" style="margin: 0; font-size: 1.25rem; color: #fff; display: flex; align-items: center; gap: 8px;">
+              <i class="fa-solid fa-store" style="color: #10b981;"></i> Pequeños Consentidos
+            </h2>
+            <p id="hero-active-cat" style="margin: 4px 0 0 0; font-size: 0.78rem; color: var(--text-muted);">
+              Rubro: Pet Shop & Mascotas • Se actualiza en tiempo real en la nube
+            </p>
+          </div>
+          <a id="btn-test-whatsapp" href="https://wa.me/5491178273060?text=Hola,%20quiero%20ver%20los%20productos" target="_blank" class="btn-secondary" style="font-size: 0.8rem; padding: 7px 14px; background: rgba(37, 211, 102, 0.15); border-color: rgba(37, 211, 102, 0.4); color: #25d366; text-decoration: none;">
+            <i class="fa-brands fa-whatsapp"></i> Probar en WhatsApp
+          </a>
+        </div>
+      </div>
+
+      <!-- LISTA DE MARCAS -->
+      <div style="display: flex; align-items: center; justify-content: space-between; margin: 16px 0 8px 0;">
+        <h3 style="font-size: 0.95rem; color: #fff; margin: 0;">
+          <i class="fa-solid fa-layer-group" style="color: var(--primary);"></i> Marcas Cargadas en la Nube
+        </h3>
+        <span id="demos-total-count" style="font-size: 0.75rem; color: var(--text-muted);">0 marcas configuradas</span>
+      </div>
+
+      <div class="demos-grid" id="demos-cards-grid">
+        <!-- Rendered by renderDemoCards() -->
+      </div>
+    </div>
+
+
+  </div>
+
+  
+  <!-- MODAL NUEVO / EDITAR DEMO PROMPT -->
+  <div class="modal-overlay" id="modal-demo-prompt" style="display: none;">
+    <div class="modal-content" style="max-width: 650px; width: 92%;">
+      <div class="modal-header">
+        <h3 id="modal-demo-title" style="margin: 0; font-size: 1.1rem; color: #fff; display: flex; align-items: center; gap: 8px;">
+          <i class="fa-solid fa-robot" style="color: var(--primary);"></i> Configurar Marca Demo
+        </h3>
+        <button type="button" class="btn-close-modal" onclick="closeDemoModal()"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <form id="form-demo-prompt" onsubmit="saveDemoPrompt(event)">
+        <input type="hidden" id="demo-prompt-id" value="">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px;">
+          <div class="form-group">
+            <label>Nombre de la Marca / Negocio *</label>
+            <input type="text" id="demo-brand-name" required placeholder="Ej: Pequeños Consentidos" class="form-control">
+          </div>
+          <div class="form-group">
+            <label>Rubro / Categoría *</label>
+            <input type="text" id="demo-category" required placeholder="Ej: Pet Shop, Ropa, Ferretería" class="form-control">
+          </div>
+        </div>
+        <div class="form-group" style="margin-bottom: 14px;">
+          <label style="display: flex; align-items: center; justify-content: space-between;">
+            <span>System Prompt del Bot (Catálogo, Precios, Reglas de Venta) *</span>
+            <span style="font-size: 0.7rem; color: var(--text-muted);">Se inyecta al Agente IA</span>
+          </label>
+          <textarea id="demo-system-prompt" required rows="14" class="form-control" style="font-family: monospace; font-size: 0.78rem; line-height: 1.4; resize: vertical;" placeholder="# PERSONA Y ROL..."></textarea>
+        </div>
+        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 16px;">
+          <input type="checkbox" id="demo-set-active" style="width: 16px; height: 16px; accent-color: #10b981; cursor: pointer;">
+          <label for="demo-set-active" style="font-size: 0.85rem; color: #fff; cursor: pointer; margin: 0;">
+            Activar esta demo inmediatamente en el WhatsApp de Nacha al guardar
+          </label>
+        </div>
+        <div style="display: flex; align-items: center; justify-content: flex-end; gap: 10px;">
+          <button type="button" class="btn-secondary" onclick="closeDemoModal()">Cancelar</button>
+          <button type="submit" class="btn-primary" id="btn-save-demo-prompt">
+            <i class="fa-solid fa-cloud-arrow-up"></i> Guardar en la Nube
+          </button>
+        </div>
+      </form>
+    </div>
   </div>
 
   <!-- TOAST -->
@@ -15180,8 +15462,15 @@
       const clientesContainer = document.getElementById('view-clientes-container');
       const radarContainer = document.getElementById('view-radar-container');
       const mapContainer = document.getElementById('map-view-container');
+      const demosContainer = document.getElementById('view-demos-container');
 
-      if (tab === 'clientes') {
+      if (tab === 'demos') {
+        if (clientesContainer) clientesContainer.style.display = 'none';
+        if (radarContainer) radarContainer.style.display = 'none';
+        if (mapContainer) mapContainer.style.display = 'none';
+        if (demosContainer) demosContainer.style.display = 'block';
+        loadDemoPrompts();
+      } else if (tab === 'clientes') {
         if (clientesContainer) clientesContainer.style.display = 'block';
         if (radarContainer) radarContainer.style.display = 'none';
         if (mapContainer) mapContainer.style.display = 'none';
@@ -15189,6 +15478,7 @@
         updateMetrics();
       } else if (tab === 'radar') {
         if (clientesContainer) clientesContainer.style.display = 'none';
+        if (demosContainer) demosContainer.style.display = 'none';
         if (radarContainer) radarContainer.style.display = 'block';
         if (mapContainer) mapContainer.style.display = 'none';
         renderRadarCards();
