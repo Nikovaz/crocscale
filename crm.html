@@ -16398,6 +16398,68 @@ Tu objetivo es vender rápido, generar máxima confianza y cerrar ventas por Wha
       updatePromptVerifiedCounters();
     }
 
+    
+    // ============================================================
+    // 🗑️ DESCARTAR Y RESTAURAR COMERCIOS DEL RADAR
+    // ============================================================
+    window.deleteRadarProspect = function(id) {
+      try {
+        const item = (typeof RADAR_PROSPECTS !== 'undefined' ? RADAR_PROSPECTS : []).find(p => String(p.id) === String(id));
+        const bName = item ? item.businessName : 'este comercio';
+        
+        if (!confirm(`¿Descartar a "${bName}" del Radar?`)) return;
+
+        if (!discardedRadarIds.includes(id)) {
+          discardedRadarIds.push(id);
+          localStorage.setItem('crocscale_discarded_radar_ids', JSON.stringify(discardedRadarIds));
+        }
+
+        // Si estaba tildado para prompt, removerlo
+        if (typeof verifiedPromptIds !== 'undefined') {
+          const vIdx = verifiedPromptIds.indexOf(id);
+          if (vIdx !== -1) {
+            verifiedPromptIds.splice(vIdx, 1);
+            localStorage.setItem('crocscale_verified_prompt_ids', JSON.stringify(verifiedPromptIds));
+            if (typeof updatePromptVerifiedCounters === 'function') updatePromptVerifiedCounters();
+          }
+        }
+
+        renderRadarCards();
+        if (typeof renderMapMarkers === 'function') renderMapMarkers();
+        showToast(`🗑️ ${bName} descartado del Radar`);
+
+        // Sincronizar en Supabase si está disponible
+        if (supabaseClient) {
+          try {
+            supabaseClient.from('discarded_radar_leads').upsert([{
+              id: id,
+              business_name: bName,
+              discarded_at: new Date().toISOString()
+            }], { onConflict: 'id' }).then(() => {});
+          } catch(err) {
+            console.warn('Sync discard to cloud warning:', err);
+          }
+        }
+      } catch (err) {
+        console.error('Error en deleteRadarProspect:', err);
+        alert('Error al descartar comercio: ' + err.message);
+      }
+    };
+
+    window.restoreDiscardedRadar = function() {
+      if (!discardedRadarIds || discardedRadarIds.length === 0) {
+        showToast('No hay comercios descartados');
+        return;
+      }
+      if (!confirm(`¿Restaurar los ${discardedRadarIds.length} comercios descartados al Radar?`)) return;
+      
+      discardedRadarIds = [];
+      localStorage.removeItem('crocscale_discarded_radar_ids');
+      renderRadarCards();
+      if (typeof renderMapMarkers === 'function') renderMapMarkers();
+      showToast('✅ Comercios restaurados en el Radar');
+    };
+
     let discardedRadarIds = [];
     try {
       discardedRadarIds = JSON.parse(localStorage.getItem('crocscale_discarded_radar_ids') || '[]');
@@ -16595,7 +16657,7 @@ Tu objetivo es vender rápido, generar máxima confianza y cerrar ventas por Wha
               <a href="${mapsUrl}" target="_blank" class="btn-radar-link" title="Abrir en GPS">
                 <i class="fa-solid fa-map" style="color: #fbbf24;"></i> GPS
               </a>
-              <button type="button" class="btn-radar-delete" onclick="deleteRadarProspect('${item.id}', '${(item.businessName || '').replace(/'/g, "\'")}')" title="Eliminar / Descartar del Radar">
+              <button type="button" class="btn-radar-delete" onclick="event.stopPropagation(); deleteRadarProspect('${item.id}')" title="Eliminar / Descartar del Radar">
                 <i class="fa-solid fa-trash-can"></i> Descartar
               </button>
             </div>
