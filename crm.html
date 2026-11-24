@@ -1396,6 +1396,49 @@
       box-shadow: 0 0 14px rgba(16, 185, 129, 0.15) !important;
     }
 
+  
+    /* --- QUICK EDIT SOCIAL & VERIFIED PROMPT BADGES --- */
+    .btn-quick-edit-social {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      color: #e2e8f0;
+      border-radius: 6px;
+      padding: 4px 9px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+    .btn-quick-edit-social:hover {
+      background: rgba(0, 242, 254, 0.2);
+      border-color: var(--primary);
+      color: #fff;
+      transform: translateY(-1px);
+      box-shadow: 0 2px 8px rgba(0, 242, 254, 0.25);
+    }
+
+    .verified-lead-card {
+      background: rgba(16, 185, 129, 0.08);
+      border: 1px solid rgba(16, 185, 129, 0.35);
+      border-radius: 10px;
+      padding: 10px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+      transition: all 0.2s ease;
+    }
+    .verified-lead-card:hover {
+      border-color: #10b981;
+      background: rgba(16, 185, 129, 0.14);
+      box-shadow: 0 0 14px rgba(16, 185, 129, 0.2);
+    }
+
   </style>
 </head>
 <body>
@@ -1745,6 +1788,9 @@
         <button type="button" class="radar-zone-btn" onclick="setRadarZone('flores', this)">
           👕 Flores / Avellaneda (<span id="zone-count-flores">250</span>)
         </button>
+        <button type="button" class="radar-zone-btn" id="radar-btn-verified" onclick="setRadarZone('verified', this)" style="border-color: rgba(16, 185, 129, 0.4); color: #10b981;">
+          <i class="fa-solid fa-circle-check"></i> Info Confirmada (<span id="zone-count-verified">0</span>)
+        </button>
       </div>
 
       <!-- RADAR SEARCH BOX -->
@@ -1863,6 +1909,82 @@
   </div>
 
   
+  
+  <!-- MODAL EDICIÓN RÁPIDA DE INSTAGRAM Y PÁGINA WEB -->
+  <div class="modal-overlay" id="modal-quick-edit-social" style="display: none;">
+    <div class="modal-content" style="max-width: 520px; width: 94%;">
+      <div class="modal-header">
+        <h3 style="margin: 0; font-size: 1.05rem; color: #fff; display: flex; align-items: center; gap: 8px;">
+          <i class="fa-solid fa-pen-to-square" style="color: var(--primary);"></i>
+          <span>Editar Redes y Web del Comercio</span>
+        </h3>
+        <button type="button" class="btn-close-modal" onclick="closeQuickEditSocial()"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <form id="form-quick-edit-social" onsubmit="saveQuickEditSocial(event)">
+        <input type="hidden" id="quick-edit-id" value="">
+        <input type="hidden" id="quick-edit-is-radar" value="false">
+
+        <div style="background: rgba(255,255,255,0.03); border: 1px solid var(--border-color); border-radius: 8px; padding: 10px 14px; margin-bottom: 14px;">
+          <label style="font-size: 0.72rem; color: var(--text-muted); text-transform: uppercase; font-weight: 700; letter-spacing: 0.5px; display: block; margin-bottom: 4px;">Comercio / Marca</label>
+          <div id="quick-edit-business-name" style="font-size: 1.1rem; font-weight: 700; color: #fff;"></div>
+          <div id="quick-edit-location" style="font-size: 0.76rem; color: var(--text-muted); margin-top: 2px;"></div>
+        </div>
+
+        <div class="form-group" style="margin-bottom: 14px;">
+          <label style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px;">
+            <span><i class="fa-brands fa-instagram" style="color: #f472b6;"></i> Usuario o Link de Instagram</span>
+            <a id="btn-test-ig" href="#" target="_blank" style="font-size: 0.72rem; color: #f472b6; text-decoration: none; display: none;">
+              <i class="fa-solid fa-arrow-up-right-from-square"></i> Probar en IG
+            </a>
+          </label>
+          <div style="display: flex; gap: 6px;">
+            <input type="text" id="quick-edit-instagram" class="form-control" placeholder="Ej: @laslocasjeans o laslocasjeans" oninput="updateSocialTestLinks()">
+            <button type="button" class="btn-secondary" onclick="testInstagramLink()" style="padding: 0 12px; font-size: 0.78rem;" title="Abrir y verificar Instagram">
+              <i class="fa-brands fa-instagram"></i> Probar
+            </button>
+          </div>
+        </div>
+
+        <div class="form-group" style="margin-bottom: 16px;">
+          <label style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px;">
+            <span><i class="fa-solid fa-globe" style="color: var(--primary);"></i> Sitio Web / Tienda Online / Catálogo</span>
+            <a id="btn-test-web" href="#" target="_blank" style="font-size: 0.72rem; color: var(--primary); text-decoration: none; display: none;">
+              <i class="fa-solid fa-arrow-up-right-from-square"></i> Abrir Web
+            </a>
+          </label>
+          <div style="display: flex; gap: 6px;">
+            <input type="text" id="quick-edit-website" class="form-control" placeholder="Ej: https://tienda.com" oninput="updateSocialTestLinks()">
+            <button type="button" class="btn-secondary" onclick="testWebLink()" style="padding: 0 12px; font-size: 0.78rem;" title="Abrir y verificar Web">
+              <i class="fa-solid fa-globe"></i> Probar
+            </button>
+          </div>
+        </div>
+
+        <!-- TILDE DE CONFIRMACIÓN EN EL MODAL -->
+        <div style="background: rgba(16, 185, 129, 0.12); border: 1px solid rgba(16, 185, 129, 0.35); border-radius: 8px; padding: 12px; margin-bottom: 18px;">
+          <label style="display: flex; align-items: flex-start; gap: 10px; cursor: pointer; margin: 0;">
+            <input type="checkbox" id="quick-edit-confirm-check" style="width: 18px; height: 18px; accent-color: #10b981; cursor: pointer; margin-top: 2px;">
+            <div>
+              <span style="font-size: 0.85rem; color: #fff; font-weight: 700; display: block;">
+                ✅ Info correcta para armar Prompt de Venta IA
+              </span>
+              <span style="font-size: 0.73rem; color: #a7f3d0; display: block; margin-top: 2px;">
+                Tildá acá para confirmar que la web y/o Instagram tienen la información válida para scrapear productos y armar el prompt.
+              </span>
+            </div>
+          </label>
+        </div>
+
+        <div style="display: flex; align-items: center; justify-content: flex-end; gap: 10px;">
+          <button type="button" class="btn-secondary" onclick="closeQuickEditSocial()" style="font-size: 0.82rem; padding: 8px 14px;">Cancelar</button>
+          <button type="submit" class="btn-primary" style="font-size: 0.82rem; padding: 8px 18px; background: linear-gradient(135deg, #10b981, #059669); border-color: #10b981;">
+            <i class="fa-solid fa-floppy-disk"></i> Guardar Cambios
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
   <!-- MODAL NUEVO / EDITAR DEMO PROMPT -->
   <div class="modal-overlay" id="modal-demo-prompt" style="display: none;">
     <div class="modal-content" style="max-width: 650px; width: 92%;">
@@ -2011,6 +2133,453 @@
         "createdAt": "2025-09-10T12:00:00.000Z"
       }
     ];
+
+    
+    // ============================================================
+    // 🌐 GESTIÓN DE EDICIÓN RÁPIDA DE INSTAGRAM / WEB & CUSTOM EDITS
+    // ============================================================
+    let radarCustomEdits = {};
+    try {
+      radarCustomEdits = JSON.parse(localStorage.getItem('crocscale_radar_custom_edits') || '{}');
+    } catch(e) { radarCustomEdits = {}; }
+
+    function openQuickEditSocial(id, isRadar) {
+      let item = null;
+      if (isRadar) {
+        item = (typeof RADAR_PROSPECTS !== 'undefined' ? RADAR_PROSPECTS : []).find(x => x.id === id);
+        if (item && radarCustomEdits[id]) {
+          item = { ...item, ...radarCustomEdits[id] };
+        }
+      } else {
+        item = (prospects || []).find(x => x.id === id);
+      }
+
+      if (!item) return;
+
+      document.getElementById('quick-edit-id').value = id;
+      document.getElementById('quick-edit-is-radar').value = isRadar ? 'true' : 'false';
+      document.getElementById('quick-edit-business-name').textContent = item.businessName || 'Comercio';
+      document.getElementById('quick-edit-location').textContent = (item.rubro ? item.rubro + ' • ' : '') + (item.address || '');
+      document.getElementById('quick-edit-instagram').value = item.instagram || '';
+      document.getElementById('quick-edit-website').value = item.website || '';
+      
+      const isVerified = verifiedPromptIds.includes(id);
+      document.getElementById('quick-edit-confirm-check').checked = isVerified;
+
+      updateSocialTestLinks();
+      document.getElementById('modal-quick-edit-social').style.display = 'flex';
+    }
+
+    function closeQuickEditSocial() {
+      document.getElementById('modal-quick-edit-social').style.display = 'none';
+    }
+
+    function updateSocialTestLinks() {
+      const igVal = (document.getElementById('quick-edit-instagram').value || '').trim().replace('@', '');
+      const webVal = (document.getElementById('quick-edit-website').value || '').trim();
+
+      const btnIg = document.getElementById('btn-test-ig');
+      const btnWeb = document.getElementById('btn-test-web');
+
+      if (btnIg) {
+        if (igVal) {
+          btnIg.href = `https://instagram.com/${igVal}`;
+          btnIg.style.display = 'inline-flex';
+        } else {
+          btnIg.style.display = 'none';
+        }
+      }
+
+      if (btnWeb) {
+        if (webVal) {
+          btnWeb.href = webVal.startsWith('http') ? webVal : 'https://' + webVal;
+          btnWeb.style.display = 'inline-flex';
+        } else {
+          btnWeb.style.display = 'none';
+        }
+      }
+    }
+
+    function testInstagramLink() {
+      const igVal = (document.getElementById('quick-edit-instagram').value || '').trim().replace('@', '');
+      if (!igVal) {
+        alert('Ingresá un usuario de Instagram para probar.');
+        return;
+      }
+      window.open(`https://instagram.com/${igVal}`, '_blank');
+    }
+
+    function testWebLink() {
+      const webVal = (document.getElementById('quick-edit-website').value || '').trim();
+      if (!webVal) {
+        alert('Ingresá una dirección web para probar.');
+        return;
+      }
+      window.open(webVal.startsWith('http') ? webVal : 'https://' + webVal, '_blank');
+    }
+
+    async function saveQuickEditSocial(e) {
+      e.preventDefault();
+      const id = document.getElementById('quick-edit-id').value;
+      const isRadar = document.getElementById('quick-edit-is-radar').value === 'true';
+      const newIg = document.getElementById('quick-edit-instagram').value.trim();
+      const newWeb = document.getElementById('quick-edit-website').value.trim();
+      const markConfirmed = document.getElementById('quick-edit-confirm-check').checked;
+
+      if (isRadar) {
+        radarCustomEdits[id] = {
+          ...(radarCustomEdits[id] || {}),
+          instagram: newIg,
+          website: newWeb
+        };
+        localStorage.setItem('crocscale_radar_custom_edits', JSON.stringify(radarCustomEdits));
+
+        // Actualizar estado de verificación
+        const idx = verifiedPromptIds.indexOf(id);
+        if (markConfirmed && idx === -1) {
+          verifiedPromptIds.push(id);
+        } else if (!markConfirmed && idx !== -1) {
+          verifiedPromptIds.splice(idx, 1);
+        }
+        localStorage.setItem('crocscale_verified_prompt_ids', JSON.stringify(verifiedPromptIds));
+
+        // Sincronizar a Supabase
+        if (supabaseClient) {
+          try {
+            const target = (typeof RADAR_PROSPECTS !== 'undefined' ? RADAR_PROSPECTS : []).find(x => x.id === id);
+            await supabaseClient.from('verified_prompt_leads').upsert([{
+              id: id,
+              business_name: target ? target.businessName : 'Comercio',
+              rubro: target ? target.rubro : 'General',
+              instagram: newIg,
+              website: newWeb,
+              address: target ? target.address : '',
+              notes: target ? target.notes : '',
+              verified_at: new Date().toISOString()
+            }], { onConflict: 'id' });
+          } catch(err) {
+            console.warn('Sync radar edit to cloud:', err);
+          }
+        }
+
+        renderRadarCards();
+      } else {
+        // Clientes / Gestión Comercial
+        const p = (prospects || []).find(x => x.id === id);
+        if (p) {
+          p.instagram = newIg;
+          p.website = newWeb;
+          p.promptReady = markConfirmed;
+
+          const idx = verifiedPromptIds.indexOf(id);
+          if (markConfirmed && idx === -1) {
+            verifiedPromptIds.push(id);
+          } else if (!markConfirmed && idx !== -1) {
+            verifiedPromptIds.splice(idx, 1);
+          }
+
+          localStorage.setItem('crocscale_verified_prompt_ids', JSON.stringify(verifiedPromptIds));
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(prospects));
+
+          if (supabaseClient) {
+            try {
+              await supabaseClient.from('crm_prospects').update({
+                instagram: newIg,
+                website: newWeb,
+                prompt_ready: markConfirmed
+              }).eq('id', id);
+            } catch(err) {
+              console.warn('Sync prospect edit to cloud:', err);
+            }
+          }
+
+          renderCards();
+        }
+      }
+
+      updatePromptVerifiedCounters();
+      closeQuickEditSocial();
+      showToast(markConfirmed ? '✅ Info actualizada y confirmada para Prompt' : '✅ Redes y Web actualizadas');
+    }
+
+    // ============================================================
+    // 🤖 GESTOR DE PROMPTS Y DEMOS DINÁMICAS (CrocScale Bot Switcher)
+    // ============================================================
+    let demoPromptsList = [];
+
+    const DEFAULT_DEMOS = [
+      {
+        id: "demo-petshop",
+        brand_name: "Pequeños Consentidos",
+        category: "Pet Shop & Mascotas",
+        system_prompt: `# PERSONA Y ROL
+Eres el asesor estrella y vendedor experto de **Pequeños Consentidos** (Pet Shop & Boutique Canina y Felina - Web oficial: pequenosconsentidos.com.ar). Tu objetivo es vender rápido, asesorar con cariño por los animales, generar máxima confianza y cerrar ventas por WhatsApp en Argentina.
+- Tu estilo es ágil, canchero, ultra humano (máximo 2 a 3 líneas cortas por mensaje) y enfocado en avanzar hacia el cierre.
+- Hablamos en criollo con voseo argentino natural ("tenés", "podés", "fijate", "te lo separo", "dale").
+- Emojis: 🐶, 🐱, 🙌, 😎, 👌, 🔥, 🛵. PROHIBIDO usar emojis agresivos.
+- REGLA DE ORO DE CIERRE: Cerrá SIEMPRE cada mensaje con UNA sola pregunta corta que invite a elegir modelo, talle o localidad.
+
+# 📦 CATÁLOGO DE PRODUCTOS Y PRECIOS
+1. Chaleco Premium Acolchado: $7.000 a $12.000
+2. Buzo Adipet Deportivo: $7.000 a $12.000
+3. Mochila Transparente de Gato Panorámica: $63.000
+4. Bolso Hello Cat: $55.000
+5. Rascador Tito's Agatar: $11.600 a $18.800
+6. Rascador Medio Infinito Curvo: $14.000
+7. Comedero Doble de Madera con bowls de acero: $35.000
+8. Bebedero Automático 3L con Sensor: $65.000
+9. Catnip Ball Giratorio Adhesivo: $4.400
+
+# 🛵 LOGÍSTICA Y ENVÍOS
+- Consultá siempre la herramienta Precios_envios_AMBA1 para cotizar moto y HACÉ LA CUENTA COMPLETA al cliente (Producto + Moto = Total exacto).
+- Retiro gratis en Abasto (Jean Jaurés y Av. Corrientes) de 12:00 a 14:00 hs.
+- Feriado Lunes 23/11 cerrado. Envíos post-feriado Martes 24/11.
+
+# ⛔ REGLA DE FOTOS
+- Prohibido mandar la misma foto más de 1 vez. Solo si pide ver fotos explícitamente.`,
+        is_active: true,
+        updated_at: new Date().toISOString()
+      },
+      {
+        id: "demo-nachahome",
+        brand_name: "Nacha Home",
+        category: "Blanquería & Hogar",
+        system_prompt: `# PERSONA Y ROL
+Eres el asesor experto de **Nacha Home** (Blanquería, sábanas, acolchados y deco del hogar directo de fábrica).
+Tu objetivo es vender rápido, generar máxima confianza y cerrar ventas por WhatsApp en Argentina.
+- Estilo: Cercano, cálido, ágil (máximo 2 a 3 oraciones cortas). Voseo argentino.
+- Cerrar cada mensaje con pregunta corta para avanzar hacia el talle de cama o localidad.
+
+# 📦 CATÁLOGO Y PROMOS
+1. Juego de Sábanas 1 1/2 Plaza: $18.500
+2. Juego de Sábanas 2 1/2 Plazas Queen: $26.900
+3. Acolchado Reversible Térmico King: $45.000
+4. Pack x2 Almohadas Inteligentes: $22.000
+
+# 🛵 ENVÍOS
+- Moto en CABA y AMBA consultando Precios_envios_AMBA1 con pago al recibir en mano.`,
+        is_active: false,
+        updated_at: new Date().toISOString()
+      }
+    ];
+
+    async function loadDemoPrompts() {
+      try {
+        if (supabaseClient) {
+          const { data, error } = await supabaseClient
+            .from('demo_prompts')
+            .select('*')
+            .order('is_active', { ascending: false });
+
+          if (!error && data && data.length > 0) {
+            demoPromptsList = data;
+          } else {
+            const local = localStorage.getItem('crocscale_demo_prompts');
+            demoPromptsList = local ? JSON.parse(local) : DEFAULT_DEMOS;
+          }
+        } else {
+          const local = localStorage.getItem('crocscale_demo_prompts');
+          demoPromptsList = local ? JSON.parse(local) : DEFAULT_DEMOS;
+        }
+      } catch (err) {
+        console.warn('Error loading demo prompts:', err);
+        demoPromptsList = DEFAULT_DEMOS;
+      }
+      renderDemoCards();
+    }
+
+    function renderDemoCards() {
+      const grid = document.getElementById('demos-cards-grid');
+      if (!grid) return;
+
+      const activeItem = demoPromptsList.find(d => d.is_active);
+      const heroBrand = document.getElementById('hero-active-brand');
+      const heroCat = document.getElementById('hero-active-cat');
+
+      if (activeItem) {
+        if (heroBrand) heroBrand.innerHTML = `<i class="fa-solid fa-store" style="color: #10b981;"></i> ${activeItem.brand_name}`;
+        if (heroCat) heroCat.textContent = `Rubro: ${activeItem.category || 'General'} • Sincronizado en vivo con WhatsApp`;
+      }
+
+      const totalCount = document.getElementById('demos-total-count');
+      if (totalCount) totalCount.textContent = `${demoPromptsList.length} marcas configuradas`;
+
+      grid.innerHTML = demoPromptsList.map(item => `
+        <div class="demo-card ${item.is_active ? 'active-live' : ''}">
+          <div class="demo-card-header">
+            <div>
+              <h4 class="demo-brand-title">
+                ${item.brand_name}
+                ${item.is_active ? '<span style="font-size: 0.65rem; color: #10b981; font-weight: 700; background: rgba(16,185,129,0.15); padding: 2px 6px; border-radius: 10px;">🟢 ACTIVA</span>' : ''}
+              </h4>
+              <span class="demo-cat-badge">${item.category || 'General'}</span>
+            </div>
+          </div>
+          <div class="demo-prompt-preview">${(item.system_prompt || '').slice(0, 220).replace(/</g, '&lt;')}...</div>
+          <div class="demo-card-actions">
+            ${item.is_active ? `
+              <button class="btn-activate-demo is-active">
+                <i class="fa-solid fa-circle-check"></i> Activo Ahora
+              </button>
+            ` : `
+              <button class="btn-activate-demo can-activate" onclick="activateDemoPrompt('${item.id}')">
+                <i class="fa-solid fa-bolt"></i> Activar Demo
+              </button>
+            `}
+            <button class="btn-icon-demo" onclick="editDemoPrompt('${item.id}')" title="Editar Prompt">
+              <i class="fa-solid fa-pen-to-square"></i>
+            </button>
+            <button class="btn-icon-demo" onclick="copyDemoPrompt('${item.id}')" title="Copiar Prompt">
+              <i class="fa-regular fa-copy"></i>
+            </button>
+            ${!item.is_active ? `
+              <button class="btn-icon-demo" onclick="deleteDemoPrompt('${item.id}')" title="Eliminar Demo" style="color: #f87171;">
+                <i class="fa-regular fa-trash-can"></i>
+              </button>
+            ` : ''}
+          </div>
+        </div>
+      `).join('');
+    }
+
+    async function activateDemoPrompt(id) {
+      const item = demoPromptsList.find(d => String(d.id) === String(id));
+      if (!item) return;
+
+      demoPromptsList.forEach(d => d.is_active = (String(d.id) === String(id)));
+      localStorage.setItem('crocscale_demo_prompts', JSON.stringify(demoPromptsList));
+      renderDemoCards();
+      showToast(`⚡ Bot cambiado a: ${item.brand_name}`);
+
+      if (supabaseClient) {
+        try {
+          await supabaseClient.from('demo_prompts').update({ is_active: false }).neq('id', '00000000-0000-0000-0000-000000000000');
+          await supabaseClient.from('demo_prompts').update({ is_active: true, updated_at: new Date().toISOString() }).eq('id', id);
+        } catch (err) {
+          console.warn('Error syncing active prompt to Supabase:', err);
+        }
+      }
+    }
+
+    function openNewDemoModal(prefillBrand, prefillCategory) {
+      document.getElementById('demo-prompt-id').value = '';
+      document.getElementById('demo-brand-name').value = prefillBrand || '';
+      document.getElementById('demo-category').value = prefillCategory || '';
+      document.getElementById('demo-system-prompt').value = '';
+      document.getElementById('demo-set-active').checked = true;
+      document.getElementById('modal-demo-title').innerHTML = '<i class="fa-solid fa-robot" style="color: var(--primary);"></i> Nueva Marca Demo';
+      document.getElementById('modal-demo-prompt').style.display = 'flex';
+    }
+
+    function closeDemoModal() {
+      document.getElementById('modal-demo-prompt').style.display = 'none';
+    }
+
+    function editDemoPrompt(id) {
+      const item = demoPromptsList.find(d => String(d.id) === String(id));
+      if (!item) return;
+
+      document.getElementById('demo-prompt-id').value = item.id;
+      document.getElementById('demo-brand-name').value = item.brand_name;
+      document.getElementById('demo-category').value = item.category || '';
+      document.getElementById('demo-system-prompt').value = item.system_prompt;
+      document.getElementById('demo-set-active').checked = !!item.is_active;
+      document.getElementById('modal-demo-title').innerHTML = `<i class="fa-solid fa-pen-to-square" style="color: var(--primary);"></i> Editar Demo: ${item.brand_name}`;
+      document.getElementById('modal-demo-prompt').style.display = 'flex';
+    }
+
+    async function saveDemoPrompt(e) {
+      e.preventDefault();
+      const id = document.getElementById('demo-prompt-id').value;
+      const brandName = document.getElementById('demo-brand-name').value.trim();
+      const category = document.getElementById('demo-category').value.trim();
+      const prompt = document.getElementById('demo-system-prompt').value.trim();
+      const setActive = document.getElementById('demo-set-active').checked;
+
+      if (!brandName || !prompt) {
+        alert('Completá el nombre de la marca y el system prompt.');
+        return;
+      }
+
+      showToast('Guardando marca demo...');
+      const targetId = id || ('demo_' + Date.now());
+
+      if (setActive) {
+        demoPromptsList.forEach(d => d.is_active = false);
+      }
+
+      const existingIdx = demoPromptsList.findIndex(d => String(d.id) === String(targetId));
+      const demoData = {
+        id: targetId,
+        brand_name: brandName,
+        category: category || 'General',
+        system_prompt: prompt,
+        is_active: setActive,
+        updated_at: new Date().toISOString()
+      };
+
+      if (existingIdx !== -1) {
+        demoPromptsList[existingIdx] = demoData;
+      } else {
+        demoPromptsList.unshift(demoData);
+      }
+
+      localStorage.setItem('crocscale_demo_prompts', JSON.stringify(demoPromptsList));
+      closeDemoModal();
+      renderDemoCards();
+
+      if (supabaseClient) {
+        try {
+          if (setActive) {
+            await supabaseClient.from('demo_prompts').update({ is_active: false }).neq('id', '00000000-0000-0000-0000-000000000000');
+          }
+          const payload = {
+            brand_name: brandName,
+            category: category,
+            system_prompt: prompt,
+            is_active: setActive,
+            updated_at: new Date().toISOString()
+          };
+          if (id && id.length > 20) payload.id = id;
+
+          await supabaseClient.from('demo_prompts').upsert(payload, { onConflict: 'brand_name' });
+          showToast(`✅ ${brandName} sincronizado en la nube`);
+        } catch (err) {
+          console.warn('Error saving to Supabase:', err);
+          showToast('Guardado localmente');
+        }
+      }
+    }
+
+    function copyDemoPrompt(id) {
+      const item = demoPromptsList.find(d => String(d.id) === String(id));
+      if (item && item.system_prompt) {
+        navigator.clipboard.writeText(item.system_prompt).then(() => {
+          showToast(`📋 Prompt de ${item.brand_name} copiado al portapapeles`);
+        });
+      }
+    }
+
+    async function deleteDemoPrompt(id) {
+      const item = demoPromptsList.find(d => String(d.id) === String(id));
+      if (!item) return;
+      if (item.is_active) {
+        alert('No podés eliminar la marca que está activa atendiendo en WhatsApp.');
+        return;
+      }
+      if (!confirm(`¿Eliminar la demo de ${item.brand_name}?`)) return;
+
+      demoPromptsList = demoPromptsList.filter(d => String(d.id) !== String(id));
+      localStorage.setItem('crocscale_demo_prompts', JSON.stringify(demoPromptsList));
+      renderDemoCards();
+
+      if (supabaseClient) {
+        try {
+          await supabaseClient.from('demo_prompts').delete().eq('id', id);
+          showToast('Eliminado de la nube');
+        } catch (e) {}
+      }
+    }
 
     let prospects = JSON.parse(localStorage.getItem(STORAGE_KEY)) || DEFAULT_PROSPECTS;
 
@@ -15546,7 +16115,13 @@
       if (!container) return;
 
       if (verifiedPromptIds.length === 0) {
-        container.innerHTML = '<span style="font-size: 0.72rem; color: var(--text-muted); font-style: italic;">No marcaste ningún comercio todavía. Andá a la pestaña Radar o Clientes y activá la tilde en los que quieras armar el prompt.</span>';
+        container.innerHTML = `
+          <div style="padding: 16px; text-align: center; color: var(--text-muted); font-size: 0.78rem; width: 100%;">
+            <i class="fa-regular fa-square-check" style="font-size: 1.5rem; color: #10b981; margin-bottom: 6px; display: block;"></i>
+            No confirmaste ningún comercio todavía.<br>
+            Entrá a la pestaña <strong>Radar</strong> o <strong>Clientes</strong> y marcá la <strong>tilde</strong> en los que quieras que la IA prepare el prompt con su Web/Instagram.
+          </div>
+        `;
         return;
       }
 
@@ -15554,18 +16129,71 @@
       verifiedPromptIds.forEach(id => {
         const rItem = (typeof RADAR_PROSPECTS !== 'undefined' ? RADAR_PROSPECTS : []).find(x => x.id === id);
         const pItem = (prospects || []).find(x => x.id === id);
-        const item = rItem || pItem;
-        if (item) verifiedItems.push(item);
+        const isRadar = !!rItem;
+        let item = rItem || pItem;
+        if (item) {
+          if (isRadar && typeof radarCustomEdits !== 'undefined' && radarCustomEdits[item.id]) {
+            item = { ...item, ...radarCustomEdits[item.id], isRadar: true };
+          } else {
+            item = { ...item, isRadar: false };
+          }
+          verifiedItems.push(item);
+        }
       });
 
-      container.innerHTML = verifiedItems.map(item => `
-        <div style="background: rgba(16, 185, 129, 0.15); border: 1px solid rgba(16, 185, 129, 0.35); border-radius: 8px; padding: 4px 10px; font-size: 0.72rem; display: inline-flex; align-items: center; gap: 6px; color: #fff;">
-          <strong>${item.businessName}</strong>
-          ${item.instagram ? `<a href="https://instagram.com/${item.instagram.replace('@','')}" target="_blank" style="color: #f472b6; text-decoration: none;" title="Ver Instagram"><i class="fa-brands fa-instagram"></i></a>` : ''}
-          ${item.website ? `<a href="${item.website}" target="_blank" style="color: var(--primary); text-decoration: none;" title="Ver Web"><i class="fa-solid fa-globe"></i></a>` : ''}
-          <button type="button" onclick="toggleVerifyPrompt('${item.id}')" style="background: none; border: none; color: rgba(255,255,255,0.6); cursor: pointer; padding: 0 2px; font-size: 0.75rem;" title="Quitar confirmación">&times;</button>
-        </div>
-      `).join('');
+      container.innerHTML = verifiedItems.map(item => {
+        const igClean = (item.instagram || '').replace('@', '').trim();
+        const webUrl = (item.website || '').startsWith('http') ? item.website : (item.website ? 'https://' + item.website : '');
+
+        return `
+          <div class="verified-lead-card" style="width: 100%;">
+            <div style="flex: 1; min-width: 200px;">
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <strong style="color: #fff; font-size: 0.95rem;">${item.businessName}</strong>
+                <span class="badge-prompt-ready" style="font-size: 0.65rem;"><i class="fa-solid fa-circle-check"></i> Info OK</span>
+              </div>
+              <div style="font-size: 0.74rem; color: var(--text-muted); margin-top: 3px;">
+                ${item.rubro ? `<span style="color: var(--primary);">${item.rubro}</span> • ` : ''}${item.address || ''}
+              </div>
+            </div>
+
+            <!-- ENLACES Y EDICIÓN -->
+            <div style="display: flex; align-items: center; gap: 6px; flex-wrap: wrap;">
+              ${igClean ? `
+                <a href="https://instagram.com/${igClean}" target="_blank" class="btn-radar-link" style="padding: 4px 8px; font-size: 0.72rem;" title="Ver Instagram: @${igClean}">
+                  <i class="fa-brands fa-instagram" style="color: #f472b6;"></i> @${igClean.length > 14 ? igClean.slice(0,13)+'…' : igClean}
+                </a>
+              ` : `
+                <button type="button" onclick="openQuickEditSocial('${item.id}', ${item.isRadar})" class="btn-radar-link" style="padding: 4px 8px; font-size: 0.72rem; opacity: 0.7; border-style: dashed;" title="Agregar Instagram">
+                  <i class="fa-brands fa-instagram" style="color: #f472b6;"></i> + IG
+                </button>
+              `}
+
+              ${webUrl ? `
+                <a href="${webUrl}" target="_blank" class="btn-radar-link" style="padding: 4px 8px; font-size: 0.72rem;" title="Ver Web: ${item.website}">
+                  <i class="fa-solid fa-globe" style="color: var(--primary);"></i> Web
+                </a>
+              ` : `
+                <button type="button" onclick="openQuickEditSocial('${item.id}', ${item.isRadar})" class="btn-radar-link" style="padding: 4px 8px; font-size: 0.72rem; opacity: 0.7; border-style: dashed;" title="Agregar Sitio Web">
+                  <i class="fa-solid fa-globe" style="color: var(--primary);"></i> + Web
+                </button>
+              `}
+
+              <button type="button" class="btn-quick-edit-social" onclick="openQuickEditSocial('${item.id}', ${item.isRadar})" title="Editar Instagram y Página Web">
+                <i class="fa-solid fa-pen-to-square"></i> Editar Web / IG
+              </button>
+
+              <button type="button" class="btn-primary" onclick="openNewDemoModal('${item.businessName.replace(/'/g, "\'")}', '${(item.rubro || 'General').replace(/'/g, "\'")}')" style="padding: 5px 10px; font-size: 0.72rem; background: linear-gradient(135deg, #10b981, #059669); border-color: #10b981;" title="Crear Prompt en Demos para este comercio">
+                <i class="fa-solid fa-robot"></i> Crear Prompt
+              </button>
+
+              <button type="button" onclick="${item.isRadar ? `toggleVerifyPrompt('${item.id}')` : `toggleVerifyProspectPrompt('${item.id}')`}" style="background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.35); color: #fca5a5; border-radius: 6px; padding: 4px 8px; cursor: pointer; font-size: 0.72rem;" title="Desmarcar / Quitar confirmación">
+                <i class="fa-solid fa-xmark"></i>
+              </button>
+            </div>
+          </div>
+        `;
+      }).join('');
     }
 
     async function toggleVerifyPrompt(id) {
@@ -15784,7 +16412,11 @@
         const zoneClass = isOnce ? 'zone-once' : 'zone-flores';
         const zoneLabel = isOnce ? '📍 Once' : '👕 Flores';
         
-        const igClean = (item.instagram || '').replace('@', '').trim();
+        // Custom edits override (Web / Instagram)
+        const custom = (typeof radarCustomEdits !== 'undefined' && radarCustomEdits[item.id]) ? radarCustomEdits[item.id] : {};
+        const effectiveIg = custom.instagram !== undefined ? custom.instagram : (item.instagram || '');
+        const effectiveWeb = custom.website !== undefined ? custom.website : (item.website || '');
+        const igClean = effectiveIg.replace('@', '').trim();
         const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(item.address)}`;
 
         return `
@@ -15804,15 +16436,20 @@
               <strong><i class="fa-solid fa-lightbulb"></i> Gancho de Venta:</strong> ${item.notes || 'Comercio mayorista de alto volumen.'}
             </div>
 
-            <!-- TILDE CONFIRMACIÓN DE INFO PARA ARMAR PROMPT -->
+            <!-- TILDE CONFIRMACIÓN DE INFO PARA ARMAR PROMPT & BOTÓN EDITAR -->
             <div class="radar-prompt-verify-bar ${verifiedPromptIds.includes(item.id) ? 'is-verified' : ''}">
               <label class="prompt-checkbox-label" onclick="event.stopPropagation();">
                 <input type="checkbox" class="prompt-check-input" ${verifiedPromptIds.includes(item.id) ? 'checked' : ''} onchange="toggleVerifyPrompt('${item.id}')">
                 <span class="prompt-check-text">
-                  ${verifiedPromptIds.includes(item.id) ? '<strong style="color: #10b981;"><i class="fa-solid fa-circle-check"></i> Info confirmada para armar Prompt (Web / IG OK)</strong>' : '<i class="fa-regular fa-square-check"></i> Confirmar info para armar Prompt (Web / IG OK)'}
+                  ${verifiedPromptIds.includes(item.id) ? '<strong style="color: #10b981;"><i class="fa-solid fa-circle-check"></i> Info confirmada para Prompt</strong>' : '<i class="fa-regular fa-square-check"></i> Confirmar info para armar Prompt'}
                 </span>
               </label>
-              ${verifiedPromptIds.includes(item.id) ? '<span class="badge-prompt-ready"><i class="fa-solid fa-robot"></i> LISTO PARA PROMPT</span>' : ''}
+              <div style="display: flex; align-items: center; gap: 6px;">
+                <button type="button" class="btn-quick-edit-social" onclick="openQuickEditSocial('${item.id}', true)" title="Editar Instagram y Página Web">
+                  <i class="fa-solid fa-pen-to-square"></i> Editar Web / IG
+                </button>
+                ${verifiedPromptIds.includes(item.id) ? '<span class="badge-prompt-ready"><i class="fa-solid fa-robot"></i> LISTO</span>' : ''}
+              </div>
             </div>
 
             <div class="radar-actions-row">
@@ -15820,15 +16457,23 @@
                 <i class="fa-solid fa-location-arrow"></i> Registrar Visita / Pasar al CRM
               </button>
               ${igClean ? `
-                <a href="https://instagram.com/${igClean}" target="_blank" class="btn-radar-link" title="Ver Instagram">
-                  <i class="fa-brands fa-instagram" style="color: #f472b6;"></i> IG
+                <a href="https://instagram.com/${igClean}" target="_blank" class="btn-radar-link" title="Ver Instagram: @${igClean}">
+                  <i class="fa-brands fa-instagram" style="color: #f472b6;"></i> @${igClean.length > 14 ? igClean.slice(0,13)+'…' : igClean}
                 </a>
-              ` : ''}
-              ${item.website ? `
-                <a href="${item.website}" target="_blank" class="btn-radar-link" title="Ver Catálogo Web">
+              ` : `
+                <button type="button" onclick="openQuickEditSocial('${item.id}', true)" class="btn-radar-link" style="opacity: 0.65; border-style: dashed;" title="Agregar Instagram">
+                  <i class="fa-brands fa-instagram" style="color: #f472b6;"></i> + IG
+                </button>
+              `}
+              ${effectiveWeb ? `
+                <a href="${effectiveWeb.startsWith('http') ? effectiveWeb : 'https://' + effectiveWeb}" target="_blank" class="btn-radar-link" title="Ver Catálogo Web: ${effectiveWeb}">
                   <i class="fa-solid fa-globe" style="color: var(--primary);"></i> Web
                 </a>
-              ` : ''}
+              ` : `
+                <button type="button" onclick="openQuickEditSocial('${item.id}', true)" class="btn-radar-link" style="opacity: 0.65; border-style: dashed;" title="Agregar Sitio Web">
+                  <i class="fa-solid fa-globe" style="color: var(--primary);"></i> + Web
+                </button>
+              `}
               <a href="${mapsUrl}" target="_blank" class="btn-radar-link" title="Abrir en GPS">
                 <i class="fa-solid fa-map" style="color: #fbbf24;"></i> GPS
               </a>
@@ -16675,6 +17320,22 @@
               ${(p.phoneBusiness && p.phoneBusiness !== p.phone) ? `<a href="https://wa.me/549${cleanBusiness}" target="_blank" class="social-tag biz"><i class="fa-brands fa-whatsapp"></i> WSP Local</a>` : ''}
             </div>
           ` : ''}
+
+          <!-- TILDE CONFIRMACIÓN DE INFO PARA ARMAR PROMPT & BOTÓN EDITAR (CLIENTES) -->
+          <div class="prospect-prompt-verify-bar ${verifiedPromptIds.includes(p.id) ? 'is-verified' : ''}">
+            <label class="prompt-checkbox-label" onclick="event.stopPropagation();">
+              <input type="checkbox" class="prompt-check-input" ${verifiedPromptIds.includes(p.id) ? 'checked' : ''} onchange="toggleVerifyProspectPrompt('${p.id}')">
+              <span class="prompt-check-text">
+                ${verifiedPromptIds.includes(p.id) ? '<strong style="color: #10b981;"><i class="fa-solid fa-circle-check"></i> Info confirmada para Prompt</strong>' : '<i class="fa-regular fa-square-check"></i> Confirmar info para armar Prompt'}
+              </span>
+            </label>
+            <div style="display: flex; align-items: center; gap: 6px;">
+              <button type="button" class="btn-quick-edit-social" onclick="openQuickEditSocial('${p.id}', false)" title="Editar Instagram y Página Web">
+                <i class="fa-solid fa-pen-to-square"></i> Editar Web / IG
+              </button>
+              ${verifiedPromptIds.includes(p.id) ? '<span class="badge-prompt-ready"><i class="fa-solid fa-robot"></i> LISTO</span>' : ''}
+            </div>
+          </div>
 
           <!-- MODULO META ADS -->
           ${p.metaAdsCap && p.metaAdsCap !== 'Sin Ads' ? `
