@@ -1439,6 +1439,79 @@
       box-shadow: 0 0 14px rgba(16, 185, 129, 0.2);
     }
 
+  
+    /* --- MODAL POPUP & OVERLAY SYSTEM --- */
+    .modal-overlay {
+      position: fixed !important;
+      top: 0 !important;
+      left: 0 !important;
+      right: 0 !important;
+      bottom: 0 !important;
+      width: 100vw !important;
+      height: 100vh !important;
+      background: rgba(10, 15, 29, 0.85) !important;
+      backdrop-filter: blur(8px) !important;
+      -webkit-backdrop-filter: blur(8px) !important;
+      z-index: 999999 !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      padding: 16px !important;
+      box-sizing: border-box !important;
+    }
+
+    .modal-overlay[style*="display: none"] {
+      display: none !important;
+    }
+
+    .modal-content {
+      background: #111827 !important;
+      border: 1px solid rgba(0, 242, 254, 0.45) !important;
+      border-radius: 14px !important;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.9), 0 0 25px rgba(0, 242, 254, 0.25) !important;
+      padding: 22px !important;
+      box-sizing: border-box !important;
+      color: #fff !important;
+      max-height: 90vh !important;
+      overflow-y: auto !important;
+      animation: modalPopIn 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+      position: relative !important;
+    }
+
+    @keyframes modalPopIn {
+      from { opacity: 0; transform: scale(0.92) translateY(10px); }
+      to { opacity: 1; transform: scale(1) translateY(0); }
+    }
+
+    .modal-header {
+      display: flex !important;
+      align-items: center !important;
+      justify-content: space-between !important;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+      padding-bottom: 12px !important;
+      margin-bottom: 16px !important;
+    }
+
+    .btn-close-modal {
+      background: rgba(255, 255, 255, 0.08) !important;
+      border: 1px solid rgba(255, 255, 255, 0.15) !important;
+      color: #9ca3af !important;
+      width: 34px !important;
+      height: 34px !important;
+      border-radius: 8px !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      cursor: pointer !important;
+      font-size: 1.1rem !important;
+      transition: all 0.2s !important;
+    }
+    .btn-close-modal:hover {
+      background: rgba(239, 68, 68, 0.25) !important;
+      color: #f87171 !important;
+      border-color: #ef4444 !important;
+    }
+
   </style>
 </head>
 <body>
@@ -1911,7 +1984,7 @@
   
   
   <!-- MODAL EDICIÓN RÁPIDA DE INSTAGRAM Y PÁGINA WEB -->
-  <div class="modal-overlay" id="modal-quick-edit-social" style="display: none;">
+  <div class="modal-overlay" id="modal-quick-edit-social" style="display: none;" onclick="if(event.target === this) closeQuickEditSocial()">
     <div class="modal-content" style="max-width: 520px; width: 94%;">
       <div class="modal-header">
         <h3 style="margin: 0; font-size: 1.05rem; color: #fff; display: flex; align-items: center; gap: 8px;">
@@ -1986,7 +2059,7 @@
   </div>
 
   <!-- MODAL NUEVO / EDITAR DEMO PROMPT -->
-  <div class="modal-overlay" id="modal-demo-prompt" style="display: none;">
+  <div class="modal-overlay" id="modal-demo-prompt" style="display: none;" onclick="if(event.target === this) closeDemoModal()">
     <div class="modal-content" style="max-width: 650px; width: 92%;">
       <div class="modal-header">
         <h3 id="modal-demo-title" style="margin: 0; font-size: 1.1rem; color: #fff; display: flex; align-items: center; gap: 8px;">
@@ -2143,35 +2216,72 @@
       radarCustomEdits = JSON.parse(localStorage.getItem('crocscale_radar_custom_edits') || '{}');
     } catch(e) { radarCustomEdits = {}; }
 
-    function openQuickEditSocial(id, isRadar) {
-      let item = null;
-      if (isRadar) {
-        item = (typeof RADAR_PROSPECTS !== 'undefined' ? RADAR_PROSPECTS : []).find(x => x.id === id);
-        if (item && radarCustomEdits[id]) {
+    window.openQuickEditSocial = function(id, isRadar) {
+      try {
+        console.log('openQuickEditSocial called with:', id, isRadar);
+        let item = null;
+        if (typeof RADAR_PROSPECTS !== 'undefined') {
+          item = RADAR_PROSPECTS.find(x => String(x.id) === String(id));
+        }
+        if (!item && typeof prospects !== 'undefined') {
+          item = prospects.find(x => String(x.id) === String(id));
+        }
+
+        if (!item) {
+          console.warn('Item no encontrado directamente con id:', id);
+          item = { id: id, businessName: 'Comercio ' + id, instagram: '', website: '' };
+        }
+
+        const isActuallyRadar = (typeof RADAR_PROSPECTS !== 'undefined') && RADAR_PROSPECTS.some(x => String(x.id) === String(id));
+
+        if (isActuallyRadar && typeof radarCustomEdits !== 'undefined' && radarCustomEdits[id]) {
           item = { ...item, ...radarCustomEdits[id] };
         }
-      } else {
-        item = (prospects || []).find(x => x.id === id);
+
+        const modal = document.getElementById('modal-quick-edit-social');
+        if (!modal) {
+          console.error('modal-quick-edit-social no encontrado en el DOM');
+          alert('Error: No se encontró el modal de edición.');
+          return;
+        }
+
+        const elId = document.getElementById('quick-edit-id');
+        const elRadar = document.getElementById('quick-edit-is-radar');
+        const elName = document.getElementById('quick-edit-business-name');
+        const elLoc = document.getElementById('quick-edit-location');
+        const elIg = document.getElementById('quick-edit-instagram');
+        const elWeb = document.getElementById('quick-edit-website');
+        const elCheck = document.getElementById('quick-edit-confirm-check');
+
+        if (elId) elId.value = id;
+        if (elRadar) elRadar.value = isActuallyRadar ? 'true' : 'false';
+        if (elName) elName.textContent = item.businessName || 'Comercio';
+        if (elLoc) elLoc.textContent = (item.rubro ? item.rubro + ' • ' : '') + (item.address || '');
+        if (elIg) elIg.value = item.instagram || '';
+        if (elWeb) elWeb.value = item.website || '';
+        
+        if (elCheck) {
+          const isVerified = (typeof verifiedPromptIds !== 'undefined') && verifiedPromptIds.includes(id);
+          elCheck.checked = isVerified;
+        }
+
+        if (typeof updateSocialTestLinks === 'function') {
+          updateSocialTestLinks();
+        }
+
+        modal.style.display = 'flex';
+      } catch (err) {
+        console.error('Error en openQuickEditSocial:', err);
+        alert('Ocurrió un error al abrir el editor: ' + err.message);
       }
+    };
 
-      if (!item) return;
+    window.closeQuickEditSocial = function() {
+      const modal = document.getElementById('modal-quick-edit-social');
+      if (modal) modal.style.display = 'none';
+    };
 
-      document.getElementById('quick-edit-id').value = id;
-      document.getElementById('quick-edit-is-radar').value = isRadar ? 'true' : 'false';
-      document.getElementById('quick-edit-business-name').textContent = item.businessName || 'Comercio';
-      document.getElementById('quick-edit-location').textContent = (item.rubro ? item.rubro + ' • ' : '') + (item.address || '');
-      document.getElementById('quick-edit-instagram').value = item.instagram || '';
-      document.getElementById('quick-edit-website').value = item.website || '';
-      
-      const isVerified = verifiedPromptIds.includes(id);
-      document.getElementById('quick-edit-confirm-check').checked = isVerified;
-
-      updateSocialTestLinks();
-      document.getElementById('modal-quick-edit-social').style.display = 'flex';
-    }
-
-    function closeQuickEditSocial() {
-      document.getElementById('modal-quick-edit-social').style.display = 'none';
+    function dummy_openQuickEditSocial_replaced() {
     }
 
     function updateSocialTestLinks() {
@@ -2460,6 +2570,14 @@ Tu objetivo es vender rápido, generar máxima confianza y cerrar ventas por Wha
         }
       }
     }
+
+    
+    window.openNewDemoModal = openNewDemoModal;
+    window.closeDemoModal = closeDemoModal;
+    window.editDemoPrompt = editDemoPrompt;
+    window.copyDemoPrompt = copyDemoPrompt;
+    window.deleteDemoPrompt = deleteDemoPrompt;
+    window.activateDemoPrompt = activateDemoPrompt;
 
     function openNewDemoModal(prefillBrand, prefillCategory) {
       document.getElementById('demo-prompt-id').value = '';
@@ -16164,7 +16282,7 @@ Tu objetivo es vender rápido, generar máxima confianza y cerrar ventas por Wha
                   <i class="fa-brands fa-instagram" style="color: #f472b6;"></i> @${igClean.length > 14 ? igClean.slice(0,13)+'…' : igClean}
                 </a>
               ` : `
-                <button type="button" onclick="openQuickEditSocial('${item.id}', ${item.isRadar})" class="btn-radar-link" style="padding: 4px 8px; font-size: 0.72rem; opacity: 0.7; border-style: dashed;" title="Agregar Instagram">
+                <button type="button" onclick="event.stopPropagation(); openQuickEditSocial('${item.id}', ${item.isRadar})" class="btn-radar-link" style="padding: 4px 8px; font-size: 0.72rem; opacity: 0.7; border-style: dashed;" title="Agregar Instagram">
                   <i class="fa-brands fa-instagram" style="color: #f472b6;"></i> + IG
                 </button>
               `}
@@ -16174,12 +16292,12 @@ Tu objetivo es vender rápido, generar máxima confianza y cerrar ventas por Wha
                   <i class="fa-solid fa-globe" style="color: var(--primary);"></i> Web
                 </a>
               ` : `
-                <button type="button" onclick="openQuickEditSocial('${item.id}', ${item.isRadar})" class="btn-radar-link" style="padding: 4px 8px; font-size: 0.72rem; opacity: 0.7; border-style: dashed;" title="Agregar Sitio Web">
+                <button type="button" onclick="event.stopPropagation(); openQuickEditSocial('${item.id}', ${item.isRadar})" class="btn-radar-link" style="padding: 4px 8px; font-size: 0.72rem; opacity: 0.7; border-style: dashed;" title="Agregar Sitio Web">
                   <i class="fa-solid fa-globe" style="color: var(--primary);"></i> + Web
                 </button>
               `}
 
-              <button type="button" class="btn-quick-edit-social" onclick="openQuickEditSocial('${item.id}', ${item.isRadar})" title="Editar Instagram y Página Web">
+              <button type="button" class="btn-quick-edit-social" onclick="event.stopPropagation(); openQuickEditSocial('${item.id}', ${item.isRadar})" title="Editar Instagram y Página Web">
                 <i class="fa-solid fa-pen-to-square"></i> Editar Web / IG
               </button>
 
@@ -16445,7 +16563,7 @@ Tu objetivo es vender rápido, generar máxima confianza y cerrar ventas por Wha
                 </span>
               </label>
               <div style="display: flex; align-items: center; gap: 6px;">
-                <button type="button" class="btn-quick-edit-social" onclick="openQuickEditSocial('${item.id}', true)" title="Editar Instagram y Página Web">
+                <button type="button" class="btn-quick-edit-social" onclick="event.stopPropagation(); openQuickEditSocial('${item.id}', true)" title="Editar Instagram y Página Web">
                   <i class="fa-solid fa-pen-to-square"></i> Editar Web / IG
                 </button>
                 ${verifiedPromptIds.includes(item.id) ? '<span class="badge-prompt-ready"><i class="fa-solid fa-robot"></i> LISTO</span>' : ''}
@@ -16461,7 +16579,7 @@ Tu objetivo es vender rápido, generar máxima confianza y cerrar ventas por Wha
                   <i class="fa-brands fa-instagram" style="color: #f472b6;"></i> @${igClean.length > 14 ? igClean.slice(0,13)+'…' : igClean}
                 </a>
               ` : `
-                <button type="button" onclick="openQuickEditSocial('${item.id}', true)" class="btn-radar-link" style="opacity: 0.65; border-style: dashed;" title="Agregar Instagram">
+                <button type="button" onclick="event.stopPropagation(); openQuickEditSocial('${item.id}', true)" class="btn-radar-link" style="opacity: 0.65; border-style: dashed;" title="Agregar Instagram">
                   <i class="fa-brands fa-instagram" style="color: #f472b6;"></i> + IG
                 </button>
               `}
@@ -16470,7 +16588,7 @@ Tu objetivo es vender rápido, generar máxima confianza y cerrar ventas por Wha
                   <i class="fa-solid fa-globe" style="color: var(--primary);"></i> Web
                 </a>
               ` : `
-                <button type="button" onclick="openQuickEditSocial('${item.id}', true)" class="btn-radar-link" style="opacity: 0.65; border-style: dashed;" title="Agregar Sitio Web">
+                <button type="button" onclick="event.stopPropagation(); openQuickEditSocial('${item.id}', true)" class="btn-radar-link" style="opacity: 0.65; border-style: dashed;" title="Agregar Sitio Web">
                   <i class="fa-solid fa-globe" style="color: var(--primary);"></i> + Web
                 </button>
               `}
@@ -17330,7 +17448,7 @@ Tu objetivo es vender rápido, generar máxima confianza y cerrar ventas por Wha
               </span>
             </label>
             <div style="display: flex; align-items: center; gap: 6px;">
-              <button type="button" class="btn-quick-edit-social" onclick="openQuickEditSocial('${p.id}', false)" title="Editar Instagram y Página Web">
+              <button type="button" class="btn-quick-edit-social" onclick="event.stopPropagation(); openQuickEditSocial('${p.id}', false)" title="Editar Instagram y Página Web">
                 <i class="fa-solid fa-pen-to-square"></i> Editar Web / IG
               </button>
               ${verifiedPromptIds.includes(p.id) ? '<span class="badge-prompt-ready"><i class="fa-solid fa-robot"></i> LISTO</span>' : ''}
