@@ -1989,7 +1989,7 @@
       <div class="modal-header">
         <h3 style="margin: 0; font-size: 1.05rem; color: #fff; display: flex; align-items: center; gap: 8px;">
           <i class="fa-solid fa-pen-to-square" style="color: var(--primary);"></i>
-          <span>Editar Redes y Web del Comercio</span>
+          <span>Editar Dirección, Redes y Web</span>
         </h3>
         <button type="button" class="btn-close-modal" onclick="closeQuickEditSocial()"><i class="fa-solid fa-xmark"></i></button>
       </div>
@@ -2001,6 +2001,22 @@
           <label style="font-size: 0.72rem; color: var(--text-muted); text-transform: uppercase; font-weight: 700; letter-spacing: 0.5px; display: block; margin-bottom: 4px;">Comercio / Marca</label>
           <div id="quick-edit-business-name" style="font-size: 1.1rem; font-weight: 700; color: #fff;"></div>
           <div id="quick-edit-location" style="font-size: 0.76rem; color: var(--text-muted); margin-top: 2px;"></div>
+        </div>
+
+        <!-- CAMPO DIRECCIÓN EDITABLE -->
+        <div class="form-group" style="margin-bottom: 14px;">
+          <label style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px;">
+            <span><i class="fa-solid fa-location-dot" style="color: #fbbf24;"></i> Dirección / Altura / Calle *</span>
+            <a id="btn-test-map" href="#" target="_blank" style="font-size: 0.72rem; color: #fbbf24; text-decoration: none; display: none;">
+              <i class="fa-solid fa-arrow-up-right-from-square"></i> Ver en Maps
+            </a>
+          </label>
+          <div style="display: flex; gap: 6px;">
+            <input type="text" id="quick-edit-address" class="form-control" placeholder="Ej: Av. Avellaneda 2950, Flores" oninput="updateSocialTestLinks()">
+            <button type="button" class="btn-secondary" onclick="testMapLink()" style="padding: 0 12px; font-size: 0.78rem;" title="Abrir y verificar dirección en Google Maps">
+              <i class="fa-solid fa-map-location-dot"></i> GPS
+            </button>
+          </div>
         </div>
 
         <div class="form-group" style="margin-bottom: 14px;">
@@ -2256,7 +2272,10 @@
         if (elId) elId.value = id;
         if (elRadar) elRadar.value = isActuallyRadar ? 'true' : 'false';
         if (elName) elName.textContent = item.businessName || 'Comercio';
-        if (elLoc) elLoc.textContent = (item.rubro ? item.rubro + ' • ' : '') + (item.address || '');
+        const currentAddr = item.address || '';
+        if (elLoc) elLoc.textContent = (item.rubro ? item.rubro + ' • ' : '') + currentAddr;
+        const elAddr = document.getElementById('quick-edit-address');
+        if (elAddr) elAddr.value = currentAddr;
         if (elIg) elIg.value = item.instagram || '';
         if (elWeb) elWeb.value = item.website || '';
         
@@ -2308,6 +2327,28 @@
           btnWeb.style.display = 'none';
         }
       }
+
+      const addrEl = document.getElementById('quick-edit-address');
+      const addrVal = addrEl ? addrEl.value.trim() : '';
+      const btnMap = document.getElementById('btn-test-map');
+      if (btnMap) {
+        if (addrVal) {
+          btnMap.href = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(addrVal)}`;
+          btnMap.style.display = 'inline-flex';
+        } else {
+          btnMap.style.display = 'none';
+        }
+      }
+    }
+
+    function testMapLink() {
+      const addrEl = document.getElementById('quick-edit-address');
+      const addrVal = addrEl ? addrEl.value.trim() : '';
+      if (!addrVal) {
+        alert('Ingresá una dirección para buscar en el mapa.');
+        return;
+      }
+      window.open(`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(addrVal)}`, '_blank');
     }
 
     function testInstagramLink() {
@@ -2332,6 +2373,7 @@
       e.preventDefault();
       const id = document.getElementById('quick-edit-id').value;
       const isRadar = document.getElementById('quick-edit-is-radar').value === 'true';
+      const newAddr = (document.getElementById('quick-edit-address') ? document.getElementById('quick-edit-address').value.trim() : '');
       const newIg = document.getElementById('quick-edit-instagram').value.trim();
       const newWeb = document.getElementById('quick-edit-website').value.trim();
       const markConfirmed = document.getElementById('quick-edit-confirm-check').checked;
@@ -2340,7 +2382,8 @@
         radarCustomEdits[id] = {
           ...(radarCustomEdits[id] || {}),
           instagram: newIg,
-          website: newWeb
+          website: newWeb,
+          address: newAddr
         };
         localStorage.setItem('crocscale_radar_custom_edits', JSON.stringify(radarCustomEdits));
 
@@ -2363,7 +2406,7 @@
               rubro: target ? target.rubro : 'General',
               instagram: newIg,
               website: newWeb,
-              address: target ? target.address : '',
+              address: newAddr || (target ? target.address : ''),
               notes: target ? target.notes : '',
               verified_at: new Date().toISOString()
             }], { onConflict: 'id' });
@@ -2379,6 +2422,7 @@
         if (p) {
           p.instagram = newIg;
           p.website = newWeb;
+          if (newAddr) p.address = newAddr;
           p.promptReady = markConfirmed;
 
           const idx = verifiedPromptIds.indexOf(id);
@@ -2396,6 +2440,7 @@
               await supabaseClient.from('crm_prospects').update({
                 instagram: newIg,
                 website: newWeb,
+                address: p.address,
                 prompt_ready: markConfirmed
               }).eq('id', id);
             } catch(err) {
@@ -16596,15 +16641,16 @@ Tu objetivo es vender rápido, generar máxima confianza y cerrar ventas por Wha
         const custom = (typeof radarCustomEdits !== 'undefined' && radarCustomEdits[item.id]) ? radarCustomEdits[item.id] : {};
         const effectiveIg = custom.instagram !== undefined ? custom.instagram : (item.instagram || '');
         const effectiveWeb = custom.website !== undefined ? custom.website : (item.website || '');
+        const effectiveAddress = custom.address !== undefined ? custom.address : (item.address || '');
         const igClean = effectiveIg.replace('@', '').trim();
-        const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(item.address)}`;
+        const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(effectiveAddress)}`;
 
         return `
           <div class="radar-card ${zoneClass} ${verifiedPromptIds.includes(item.id) ? 'card-prompt-verified' : ''}">
             <div class="radar-card-header">
               <div class="radar-card-title">
                 <h3>${item.businessName}</h3>
-                <p><i class="fa-solid fa-location-dot"></i> ${item.address}</p>
+                <p><i class="fa-solid fa-location-dot"></i> ${effectiveAddress}</p>
               </div>
               <div class="radar-badges-row">
                 <span class="radar-badge zone">${zoneLabel}</span>
