@@ -1917,26 +1917,6 @@
     <div id="view-demos-container" style="display: none;">
       
       <!-- HERO DEMO ACTIVA -->
-      <!-- COLA DE COMERCIOS CONFIRMADOS POR NICO PARA ARMAR PROMPT -->
-      <div class="demos-verified-section" id="demos-verified-queue-card" style="background: rgba(16, 185, 129, 0.08); border: 1px solid rgba(16, 185, 129, 0.35); border-radius: 12px; padding: 12px 16px; margin-bottom: 14px;">
-        <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px;">
-          <div>
-            <h3 style="margin: 0; font-size: 0.95rem; color: #fff; display: flex; align-items: center; gap: 8px;">
-              <i class="fa-solid fa-list-check" style="color: #10b981;"></i> Comercios Confirmados con Tilde para Prompt
-            </h3>
-            <p style="margin: 4px 0 0 0; font-size: 0.74rem; color: var(--text-muted);">
-              Confirmaste <strong id="demos-verified-count-badge" style="color: #10b981;">0</strong> comercios para que la IA extraiga su catálogo (Web/IG) y genere su prompt.
-            </p>
-          </div>
-          <button type="button" class="btn-secondary" onclick="switchNavTab('radar'); setRadarZone('verified', document.getElementById('radar-btn-verified'));" style="font-size: 0.75rem; padding: 6px 12px; border-color: rgba(16, 185, 129, 0.4); color: #10b981;">
-            <i class="fa-solid fa-radar"></i> Ver en Radar
-          </button>
-        </div>
-        <div id="demos-verified-chips" style="display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px;">
-          <!-- Loaded dynamically -->
-        </div>
-      </div>
-
       <div class="demos-hero-card">
         <div class="demos-hero-top">
           <div style="display: flex; align-items: center; gap: 8px;">
@@ -1973,9 +1953,38 @@
         <span id="demos-total-count" style="font-size: 0.75rem; color: var(--text-muted);">0 marcas configuradas</span>
       </div>
 
-      <div class="demos-grid" id="demos-cards-grid">
+      
+      <div style="margin: 10px 0 14px 0;">
+        <input type="text" id="demos-search-input" class="form-control" placeholder="🔍 Buscar marca demo para prender (ej: Alfis, Kalif, Pasotti, Kingtex, Supré...)" oninput="renderDemoCards()" style="width: 100%; background: rgba(15, 23, 42, 0.85); border: 1px solid rgba(0, 242, 254, 0.3); color: #fff; padding: 10px 14px; border-radius: 10px; font-size: 0.85rem;">
+      </div>
+<div class="demos-grid" id="demos-cards-grid">
         <!-- Rendered by renderDemoCards() -->
       </div>
+
+      <div style="margin-top: 22px;">
+      <!-- COLA DE COMERCIOS CONFIRMADOS POR NICO PARA ARMAR PROMPT -->
+      <div class="demos-verified-section" id="demos-verified-queue-card" style="background: rgba(16, 185, 129, 0.08); border: 1px solid rgba(16, 185, 129, 0.35); border-radius: 12px; padding: 12px 16px; margin-bottom: 14px;">
+        <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px;">
+          <div>
+            <h3 style="margin: 0; font-size: 0.95rem; color: #fff; display: flex; align-items: center; gap: 8px;">
+              <i class="fa-solid fa-list-check" style="color: #10b981;"></i> Comercios Confirmados con Tilde para Prompt
+            </h3>
+            <p style="margin: 4px 0 0 0; font-size: 0.74rem; color: var(--text-muted);">
+              Confirmaste <strong id="demos-verified-count-badge" style="color: #10b981;">0</strong> comercios para que la IA extraiga su catálogo (Web/IG) y genere su prompt.
+            </p>
+          </div>
+          <button type="button" class="btn-secondary" onclick="switchNavTab('radar'); setRadarZone('verified', document.getElementById('radar-btn-verified'));" style="font-size: 0.75rem; padding: 6px 12px; border-color: rgba(16, 185, 129, 0.4); color: #10b981;">
+            <i class="fa-solid fa-radar"></i> Ver en Radar
+          </button>
+        </div>
+        <div id="demos-verified-chips" style="display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px;">
+          <!-- Loaded dynamically -->
+        </div>
+      </div>
+
+      
+      </div>
+
     </div>
 
 
@@ -3685,6 +3694,38 @@ Tu objetivo es vender rápido, generar máxima confianza y cerrar ventas por Wha
               "system_prompt": "# PERSONA Y ROL\nSos el asesor comercial de **Reducit** (Rojas 601, Caballito, CABA).\n- Atención directa y rápida por WhatsApp para consultas de catálogo, precios, talles y pedidos.\n- Hablás en argentino natural y conciso (2 a 3 líneas máx).\n- Cerrá SIEMPRE con una sola pregunta corta para avanzar con el pedido.\n\n# 📍 UBICACIÓN Y ENVÍOS\n- Punto en **Rojas 601, Caballito, CABA**. Envíos en CABA/AMBA y todo el país.",
               "is_active": false,
               "updated_at": "2026-11-27T23:30:00.000Z"
+      },
+      {
+              "id": "demo-laslocas",
+              "brand_name": "Las Locas Jeans",
+              "category": "Denim & Camperas Mayorista • Flores",
+              "system_prompt": "# PERSONA Y ROL\nSos la asesora mayorista de **Las Locas Jeans** (Bogotá 3054, Flores, CABA — Web: laslocas.com.ar | IG: @laslocas.caba / @laslocasjeans).\n- Especialistas en denim femenino, jeans y camperas de gabardina/jean al por mayor y menor en Flores.\n- Hablás en argentino natural, ágil y vendedor (2 a 3 líneas máx).\n- Cerrá SIEMPRE con una sola pregunta corta (qué modelo busca o si compra por mayor o menor).\n\n# 👖 CATÁLOGO Y ENVÍOS\n- Catálogo completo online en **laslocas.com.ar** (Tiendanube).\n- Local en **Bogotá 3054, Flores, CABA**. Envíos a todo el país por expreso y correo.",
+              "is_active": false,
+              "updated_at": "2026-11-27T23:55:00.000Z"
+      },
+      {
+              "id": "demo-kimeika",
+              "brand_name": "Kimeika",
+              "category": "Indumentaria Femenina Mayorista • Flores",
+              "system_prompt": "# PERSONA Y ROL\nSos la asesora mayorista de **Kimeika** (Helguera 448, Flores, CABA — Web: kimeika.com.ar | IG: @kimeika_oficial).\n- Marca referente de indumentaria femenina de tendencia en el polo mayorista de Flores.\n- Tono argentino cálido, canchero y directo (2 a 3 líneas máx).\n- Cerrá SIEMPRE con una sola pregunta corta (qué categoría busca o de qué provincia nos escribe).\n\n# 🛍️ CATÁLOGO Y ENVÍOS\n- Catálogo online en **kimeika.com.ar**.\n- Local en **Helguera 448, Flores, CABA**. Envíos a todo el país.",
+              "is_active": false,
+              "updated_at": "2026-11-27T23:55:00.000Z"
+      },
+      {
+              "id": "demo-batuk",
+              "brand_name": "Batuk Jeans",
+              "category": "Denim Mayorista • Flores",
+              "system_prompt": "# PERSONA Y ROL\nSos el asesor mayorista de **Batuk Jeans** (Av. Avellaneda 2980, Flores, CABA — Web: batuk.com.ar | IG: @batukjeans).\n- Marca líder de jeans y moda urbana en Av. Avellaneda con venta mayorista a todo el país.\n- Tono argentino claro, expeditivo y comercial (2 a 3 líneas máx).\n- Cerrá SIEMPRE con una sola pregunta corta (si compra para local/revendedor o qué línea quiere cotizar).\n\n# 📍 LOCAL Y WEB\n- Local en **Av. Avellaneda 2980, Flores, CABA** | Web: **batuk.com.ar**. Envíos a todo el país.",
+              "is_active": false,
+              "updated_at": "2026-11-27T23:55:00.000Z"
+      },
+      {
+              "id": "demo-cenitho",
+              "brand_name": "Cenitho Jeans",
+              "category": "Mayorista de Denim • Flores",
+              "system_prompt": "# PERSONA Y ROL\nSos el asesor mayorista de **Cenitho Jeans** (Bogotá 3419, Flores, CABA — Web: cenitho.com | IG: @cenithojeans).\n- Mayoristas especialistas en denim con curvas completas y alta rotación para comercios.\n- Tono argentino directo, cordial y breve (2 a 3 líneas máx).\n- Cerrá SIEMPRE con una sola pregunta corta (qué calce busca o si retira por Flores).\n\n# 📍 LOCAL Y WEB\n- Local en **Bogotá 3419, Flores, CABA** | Web: **cenitho.com**. Envíos a todo el país.",
+              "is_active": false,
+              "updated_at": "2026-11-27T23:55:00.000Z"
       }
     ];
 
@@ -3732,10 +3773,19 @@ Tu objetivo es vender rápido, generar máxima confianza y cerrar ventas por Wha
         if (heroCat) heroCat.textContent = `Rubro: ${activeItem.category || 'General'} • Sincronizado en vivo con WhatsApp`;
       }
 
-      const totalCount = document.getElementById('demos-total-count');
-      if (totalCount) totalCount.textContent = `${demoPromptsList.length} marcas configuradas`;
+      const searchQ = (document.getElementById('demos-search-input')?.value || '').trim().toLowerCase();
+      const filteredDemos = searchQ
+        ? demoPromptsList.filter(d =>
+            (d.brand_name || '').toLowerCase().includes(searchQ) ||
+            (d.category || '').toLowerCase().includes(searchQ) ||
+            (d.system_prompt || '').toLowerCase().includes(searchQ)
+          )
+        : demoPromptsList;
 
-      grid.innerHTML = demoPromptsList.map(item => `
+      const totalCount = document.getElementById('demos-total-count');
+      if (totalCount) totalCount.textContent = `${filteredDemos.length} de ${demoPromptsList.length} marcas listas para prender`;
+
+      grid.innerHTML = filteredDemos.map(item => `
         <div class="demo-card ${item.is_active ? 'active-live' : ''}">
           <div class="demo-card-header">
             <div>
@@ -3754,7 +3804,7 @@ Tu objetivo es vender rápido, generar máxima confianza y cerrar ventas por Wha
               </button>
             ` : `
               <button class="btn-activate-demo can-activate" onclick="activateDemoPrompt('${item.id}')">
-                <i class="fa-solid fa-bolt"></i> Activar Demo
+                <i class="fa-solid fa-bolt"></i> Prender Demo
               </button>
             `}
             <button class="btn-icon-demo" onclick="editDemoPrompt('${item.id}')" title="Editar Prompt">
@@ -3780,7 +3830,8 @@ Tu objetivo es vender rápido, generar máxima confianza y cerrar ventas por Wha
       demoPromptsList.forEach(d => d.is_active = (String(d.id) === String(id)));
       localStorage.setItem('crocscale_demo_prompts', JSON.stringify(demoPromptsList));
       renderDemoCards();
-      showToast(`⚡ Bot cambiado a: ${item.brand_name}`);
+      if (typeof renderVerifiedChipsInDemos === "function") renderVerifiedChipsInDemos();
+      showToast(`⚡ Demo PRENDIDA: ${item.brand_name}`);
 
       if (supabaseClient) {
         try {
@@ -3801,6 +3852,18 @@ Tu objetivo es vender rápido, generar máxima confianza y cerrar ventas por Wha
     window.activateDemoPrompt = activateDemoPrompt;
 
     function openNewDemoModal(prefillBrand, prefillCategory) {
+      if (prefillBrand && typeof demoPromptsList !== 'undefined') {
+        const normName = (s) => (s || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]/g, '');
+        const tn = normName(prefillBrand);
+        const existing = demoPromptsList.find(d => {
+          const dn = normName(d.brand_name);
+          return dn === tn || dn.includes(tn) || tn.includes(dn);
+        });
+        if (existing) {
+          editDemoPrompt(existing.id);
+          return;
+        }
+      }
       document.getElementById('demo-prompt-id').value = '';
       document.getElementById('demo-brand-name').value = prefillBrand || '';
       document.getElementById('demo-category').value = prefillCategory || '';
@@ -5764,7 +5827,8 @@ Tu objetivo es vender rápido, generar máxima confianza y cerrar ventas por Wha
       }
 
       const elBadge = document.getElementById('demos-verified-count-badge');
-      if (elBadge) elBadge.textContent = verifiedPromptIds.length;
+      const validVerifiedCount = verifiedPromptIds.filter(id => (typeof RADAR_PROSPECTS !== 'undefined' && RADAR_PROSPECTS.some(x => x.id === id)) || (typeof prospects !== 'undefined' && prospects.some(x => x.id === id))).length;
+      if (elBadge) elBadge.textContent = validVerifiedCount;
 
       renderVerifiedChipsInDemos();
     }
@@ -5842,9 +5906,35 @@ Tu objetivo es vender rápido, generar máxima confianza y cerrar ventas por Wha
                 <i class="fa-solid fa-pen-to-square"></i> Editar Web / IG
               </button>
 
-              <button type="button" class="btn-primary" onclick="openNewDemoModal('${item.businessName.replace(/'/g, "\'")}', '${(item.rubro || 'General').replace(/'/g, "\'")}')" style="padding: 5px 10px; font-size: 0.72rem; background: linear-gradient(135deg, #10b981, #059669); border-color: #10b981;" title="Crear Prompt en Demos para este comercio">
-                <i class="fa-solid fa-robot"></i> Crear Prompt
-              </button>
+              ${(() => {
+                const normName = (s) => (s || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]/g, '');
+                const targetNorm = normName(item.businessName);
+                const matchedDemo = (typeof demoPromptsList !== 'undefined' ? demoPromptsList : []).find(d => {
+                  const dn = normName(d.brand_name);
+                  return dn === targetNorm || dn.includes(targetNorm) || targetNorm.includes(dn);
+                });
+                if (matchedDemo) {
+                  return `
+                    ${matchedDemo.is_active ? `
+                      <span style="padding: 5px 10px; font-size: 0.72rem; border-radius: 8px; background: rgba(16, 185, 129, 0.2); border: 1px solid #10b981; color: #10b981; font-weight: 700;">
+                        <i class="fa-solid fa-circle-check"></i> Demo Prendida
+                      </span>
+                    ` : `
+                      <button type="button" class="btn-primary" onclick="activateDemoPrompt('${matchedDemo.id}')" style="padding: 5px 10px; font-size: 0.72rem; background: linear-gradient(135deg, #10b981, #059669); border-color: #10b981;" title="Prender esta Demo en WhatsApp ahora">
+                        <i class="fa-solid fa-bolt"></i> Prender Demo
+                      </button>
+                    `}
+                    <button type="button" class="btn-secondary" onclick="editDemoPrompt('${matchedDemo.id}')" style="padding: 5px 9px; font-size: 0.72rem;" title="Ver o editar System Prompt">
+                      <i class="fa-solid fa-pen-to-square"></i> Prompt
+                    </button>
+                  `;
+                }
+                return `
+                  <button type="button" class="btn-primary" onclick="openNewDemoModal('${item.businessName.replace(/'/g, "\\'")}', '${(item.rubro || 'General').replace(/'/g, "\\'")}')" style="padding: 5px 10px; font-size: 0.72rem; background: linear-gradient(135deg, #6366f1, #4f46e5); border-color: #6366f1;" title="Crear Prompt en Demos para este comercio">
+                    <i class="fa-solid fa-robot"></i> Crear Prompt
+                  </button>
+                `;
+              })()}
 
               <button type="button" onclick="${item.isRadar ? `toggleVerifyPrompt('${item.id}')` : `toggleVerifyProspectPrompt('${item.id}')`}" style="background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.35); color: #fca5a5; border-radius: 6px; padding: 4px 8px; cursor: pointer; font-size: 0.72rem;" title="Desmarcar / Quitar confirmación">
                 <i class="fa-solid fa-xmark"></i>
